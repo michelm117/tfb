@@ -15,7 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@tfb/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@tfb/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@tfb/web/core": ["libs/web/core/src/index.ts"],
+      "@tfb/web/data": ["libs/web/data/src/index.ts"],
+      "@tfb/web/layout": ["libs/web/layout/src/index.ts"],
+      "@tfb/web/modules": ["libs/web/modules/src/index.ts"],
+      "@tfb/web/shared": ["libs/web/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
