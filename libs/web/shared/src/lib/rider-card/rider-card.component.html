@@ -1,6 +1,5 @@
-<div class="bg-white w-full flex items-center p-2 rounded-md shadow border 
-            transform hover:scale-105 focus:scale-105 duration-300 ease-in-out
-            md:hidden">
+<div
+  class="flex items-center w-full p-2 duration-300 ease-in-out transform bg-white border rounded-md shadow hover:scale-105 focus:scale-105 md:hidden">
   <div class="flex items-center space-x-4">
     <img class="w-16 h-16 rounded-xl" src={{rider!.imgUrl}} alt="My profile">
   </div>
@@ -9,22 +8,21 @@
       {{rider!.name}} {{rider!.surname}}
     </div>
     <div class="text-sm text-gray-500">
-      <span class="flag-icon mr-2" [ngClass]="getFlagClass(rider!.langCode)"></span>{{rider!.country}}
+      <span class="mr-2 flag-icon" [ngClass]="getFlagClass(rider!.langCode)"></span>{{rider!.country}}
     </div>
   </div>
 </div>
 
-<div class="bg-white hidden 
-            md:block h-full">
-  <div class="shadow-lg hover:shadow-xl transform transition duration-500 hover:scale-105 h-full">
+<div class="hidden h-full bg-white md:block">
+  <div class="h-full transition duration-500 transform shadow-lg hover:shadow-xl hover:scale-105">
     <img class="w-full" src={{rider!.imgUrl}} />
-    <div class="px-4 py-2 flex flex-col justify-between">
-      <h1 class="text-xl font-gray-700 font-bold  flex-grow">
+    <div class="flex flex-col justify-between px-4 py-2">
+      <h1 class="flex-grow text-xl font-bold font-gray-700">
         {{rider!.name}} {{rider!.surname}}
       </h1>
-      <div class="flex space-x-2 mt flex-grow h-full">
-        <h3 class="text-lg text-gray-600 font-semibold mb-2 h-full">
-          <span class="flag-icon mr-2" [ngClass]="getFlagClass(rider!.langCode)"></span>
+      <div class="flex flex-grow h-full space-x-2 mt">
+        <h3 class="h-full mb-2 text-lg font-semibold text-gray-600">
+          <span class="mr-2 flag-icon" [ngClass]="getFlagClass(rider!.langCode)"></span>
           {{rider!.country}}
         </h3>
       </div>

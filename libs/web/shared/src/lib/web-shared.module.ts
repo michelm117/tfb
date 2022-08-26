@@ -8,6 +8,6 @@ import { HeadingComponent } from './heading/heading.component';
 @NgModule({
   imports: [CommonModule, FontAwesomeModule],
   declarations: [SocialBarComponent, RiderCardComponent, HeadingComponent],
-  exports: [SocialBarComponent, RiderCardComponent],
+  exports: [SocialBarComponent, RiderCardComponent, HeadingComponent],
 })
 export class WebSharedModule {}

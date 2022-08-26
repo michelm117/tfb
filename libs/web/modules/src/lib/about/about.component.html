@@ -1,15 +1,14 @@
 <div class="container mx-auto">
-  <div class="container mx-auto mb-12 md:px-24 md:mb-32">
+  <div class="container mx-auto mb-12 md:mb-32 ">
     <tfb-social-bar></tfb-social-bar>
 
-    <span class="heading-wrapper text-3xl md:text-5xl">
+    <span class="text-3xl heading-wrapper md:text-5xl">
       <h1>
         About<br>Team France Bleu
       </h1>
     </span>
 
-    <div class="mt-6 text-base text-gray-700
-                    md:mt-12">
+    <div class="mt-5 text-base text-gray-700 md:mt-12">
       <p class="">
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
         labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et
@@ -21,24 +20,18 @@
   </div>
 
   <div class="container">
-    <!-- <app-heading titel="The riders"></app-heading> -->
+    <tfb-heading titel="The riders"></tfb-heading>
 
-    <div class="mt-7 text-base
-                    md:hidden">
+    <div class="text-base mt-7 md:hidden">
       <tfb-rider-card *ngFor="let rider of sort(riders)" [rider]="rider"></tfb-rider-card>
     </div>
 
-    <div class="container mx-auto mt-8 hidden
-                    md:block">
-      <div class="riders-grid gap-4 space-y-4 auto-rows-fr
-                        sm:grid sm:grid-cols-2 sm:space-y-0
-                        md:grid-cols-3 
-                        lg:grid-cols-4
-                        xl:grid-cols-4">
+    <div class="container hidden mx-auto mt-8 md:block">
+      <div
+        class="gap-4 space-y-4 riders-grid auto-rows-fr sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <tfb-rider-card *ngFor="let rider of sort(riders)" [rider]="rider"></tfb-rider-card>
 
       </div>
     </div>
   </div>
-
 </div>
