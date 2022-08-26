@@ -1,1 +1,75 @@
-<p>header works!</p>
+<!-- Top navigation -->
+<header class="z-50" [ngClass]="{'transparent' : toggleTransparency, 'first-color': !toggleTransparency}">
+  <div class="logo left-0 sm:left-4">
+    <span><img src="assets/img/logo/segafredo_white.png" alt=""></span>
+    <div class="vline"></div>
+    <span><img src="assets/img/logo/skoda_white.png" alt=""></span>
+  </div>
+
+  <nav class="inpage-menu invisible md:visible text-base md:text-lg lg:text-xl xl:text-2xl">
+    <li>
+      <a routerLink="/" routerLinkActive="active" (click)="scrollToBanner()">About us</a>
+    </li>
+    <li>
+      <a routerLink="/stories" routerLinkActive="active" (click)="scrollToBanner()">Stories</a>
+    <li>
+      <a routerLink="/races" routerLinkActive="active" (click)="scrollToBanner()">Races</a>
+    </li>
+  </nav>
+
+  <div class="navbar-button-wrapper top-0">
+    <span class="navbar-button" (click)="toggleOverlayMenu()">
+      <div class="bar-wrapper">
+        <div class="bar" [ngClass]="{'anim-first-bar': showOverlayMenu}"></div>
+        <div class="bar" [ngClass]="{'anim-second-bar': showOverlayMenu}"></div>
+        <div class="bar" [ngClass]="{'anim-third-bar': showOverlayMenu}"></div>
+      </div>
+    </span>
+  </div>
+</header>
+
+<div class="overlay-nav z-40" [ngClass]="{'showOverlay' : showOverlayMenu, 'hideOverlay': !showOverlayMenu}">
+  <div class="overlay-nav-wrapper relative text-center 
+                md:flex md:space-x-4 md:items-start md:w-full md:text-left md:space-x-16
+                lg:space-x-28">
+
+    <div class="heading-wrapper md:w-1/2 md:items-end ">
+      <h2 class="overlay_heading text-5xl 
+            md:w-full md:flex md:justify-end
+            lg:text-7xl">
+        Team<br>France Bleu</h2>
+    </div>
+
+    <ul class="space-y-2 text-xl mt-10 
+                   md:mt-0 md:w-1/2 md:text-2xl
+                   lg:text-3xl lg:space-y-7">
+      <li>
+        <a routerLink="/" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">About us</a>
+      </li>
+      <li>
+        <a routerLink="/stories" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">Stories</a>
+      </li>
+      <li>
+        <a routerLink="/partner" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">Partner</a>
+      </li>
+      <li>
+        <a routerLink="/calendar" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">Calendar</a>
+      </li>
+      <li>
+        <a routerLink="/contact" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">Contact us</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Top banner -->
+<div class="bannerimage">
+  <div class="banner_bottom"></div>
+  <span class="text-center text-6xl
+                sm:text-7xl 
+                md:text-7xl
+                lg:text-8xl
+                xl:text-9xl">
+    <p class="w-min sm:w-max">Team France Bleu</p>
+  </span>
+</div>

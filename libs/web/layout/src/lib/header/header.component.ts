@@ -1,12 +1,90 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'tfb-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  constructor() {}
+export class HeaderComponent {
+  toggleTransparency = true;
+  showOverlayMenu = false;
 
-  ngOnInit(): void {}
+  toggleOverlayMenu() {
+    this.showOverlayMenu = !this.showOverlayMenu;
+
+    if (!this.showOverlayMenu) {
+      // activate Transparency when scrolling back to banner
+      const navbarHeight = 90;
+      const bannerHeight = 550;
+      const currentScrollHeight =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+      if (currentScrollHeight > bannerHeight - navbarHeight) {
+        this.toggleTransparency = false;
+      } else {
+        this.toggleTransparency = true;
+      }
+
+      if (this.showOverlayMenu) {
+        this.toggleTransparency = false;
+      }
+    } else {
+      // remove Transparency when overlayMenu is active.
+      this.toggleTransparency = false;
+    }
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const navbarHeight = 90;
+    const bannerHeight = 550;
+    const currentScrollHeight =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+    if (currentScrollHeight > bannerHeight - navbarHeight) {
+      this.toggleTransparency = false;
+    } else {
+      this.toggleTransparency = true;
+    }
+
+    if (this.showOverlayMenu) {
+      this.toggleTransparency = false;
+    }
+  }
+
+  scrollToTop() {
+    (function smoothscroll() {
+      const currentScroll =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      if (currentScroll > 550) {
+        window.requestAnimationFrame(smoothscroll);
+        window.scrollTo(0, currentScroll - currentScroll / 20);
+      }
+    })();
+  }
+
+  scrollToHeader() {
+    window.scroll({ top: 550, behavior: 'smooth' });
+  }
+
+  toggleOverlayAndScrollUp() {
+    this.toggleOverlayMenu();
+    this.scrollToBanner();
+  }
+
+  scrollToBanner() {
+    const currentScroll =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (currentScroll > 550) {
+      this.scrollToTop();
+      console.log('UNDER');
+    } else {
+      this.scrollToHeader();
+      console.log('OVER');
+    }
+  }
 }
