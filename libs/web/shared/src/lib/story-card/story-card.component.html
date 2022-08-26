@@ -1,0 +1,42 @@
+<div class="pb-3 bg-white sm:pb-0">
+  <div>
+    <div class="transition duration-500 transform shadow-2xl hover:scale-105">
+      <div>
+        <img class="object-cover w-full h-52" src={{story.imgUrls[0]}} />
+        <div class="flex flex-col px-4 py-2">
+          <h1 class="text-xl font-gray-700 font-bold truncate ...">{{story.title}}</h1>
+          <div class="flex mt-2 space-x-2">
+            <div class="flex items-center w-full pb-3">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-7 text-mainOrange" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </span>
+              <div class="flex-grow px-2 py-2">
+                <div class="font-semibold text-gray-700">
+                  {{story.place}}
+                </div>
+                <div class="text-sm text-gray-700">
+                  <span class="mr-2 flag-icon flag-icon-de"></span>{{story!.country}}
+                </div>
+              </div>
+              <div class="flex items-center h-full py-2 mb-auto ml-auto mr-4" [ngClass]="{'invisible': !onPodium}">
+                <fa-icon [icon]="faTrophy"></fa-icon>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="text-sm line-clamp-3 sm:line-clamp-4">{{shortenText(story.text, 125)}}</p>
+          </div>
+          <button class="w-full py-2 mt-8 mb-2 text-center text-white rounded-lg bg-secondary-color"
+            (click)=navigateToStory()>Read more
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

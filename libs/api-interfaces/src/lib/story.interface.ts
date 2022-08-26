@@ -5,7 +5,7 @@ export interface Story {
   country?: string;
   countryCode?: string;
   date: Date;
-  text?: string;
+  text: string;
   imgUrls: string[];
   podium?: boolean;
 }
