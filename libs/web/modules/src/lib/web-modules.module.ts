@@ -1,9 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { WebSharedModule } from '@tfb/web/shared';
+import { StoriesOverviewComponent } from './stories-overview/stories-overview.component';
 
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '/',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
+    children: [
+      {
+        path: 'about',
+        component: AboutComponent,
+      },
+      {
+        path: 'stories',
+        component: StoriesOverviewComponent,
+      },
+    ],
+  },
+];
 @NgModule({
   imports: [
     CommonModule,
@@ -11,11 +32,9 @@ import { WebSharedModule } from '@tfb/web/shared';
     // own modules
     WebSharedModule,
 
-    RouterModule.forChild([
-      /* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */
-    ]),
+    RouterModule.forChild(routes),
   ],
-  declarations: [AboutComponent],
-  exports: [AboutComponent],
+  declarations: [AboutComponent, StoriesOverviewComponent],
+  exports: [AboutComponent, StoriesOverviewComponent],
 })
 export class WebModulesModule {}
