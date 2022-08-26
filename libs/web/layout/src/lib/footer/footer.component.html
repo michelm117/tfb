@@ -1,1 +1,145 @@
-<p>footer works!</p>
+<footer class="bg-primary-color">
+  <div id="sponsors" class="flex flex-col pt-12 items-center gap-5 py-8
+                               md:py-16 md:gap-10">
+
+    <div class="flex flex-grow items-center w-1/2 gap-4 justify-center
+                    md:gap-20">
+      <span>
+        <img src="assets/img/logo/segafredo_white.png" alt="">
+      </span>
+      <span>
+        <img src="assets/img/logo/skoda_white.png" alt="">
+      </span>
+    </div>
+
+    <div class="flex flex-grow items-center gap-5 w-11/12
+                    md:w-10/12 md:gap-20
+                    lg:w-7/12">
+      <span>
+        <img src="assets/img/logo/tour_de_france.png" alt="">
+      </span>
+      <span>
+        <img src="assets/img/logo/abus.png" alt="">
+      </span>
+      <span>
+        <img src="assets/img/logo/leeze_white.png" alt="">
+      </span>
+      <span>
+        <img src="assets/img/logo/sks_white.png" alt="">
+      </span>
+    </div>
+  </div>
+
+  <div class="footer-menus-wrapper flex flex-col justify-center text-left p-5">
+    <div class="footer-menus flex flex-wrap gap-x-8 gap-y-5  justify-center text-sm
+                    sm:gap-x-24 sm:gap-y-10
+                    md:gap-x-36 md:text-xl
+                    lg:gap-x-20
+                    xl:gap-x-32">
+      <div class="footer-item">
+        <div class="footer-titel text-base 
+                            md:text-2xl md:pb-2">
+          Navigation</div>
+        <ul>
+          <li class="menu-item">
+            <a class="cursor-pointer" routerLink="" (click)="scrollToTop()">Home</a>
+          </li>
+          <li class="menu-item">
+            <a class="cursor-pointer" routerLink="/stories" (click)="scrollToTop()">Stories</a>
+          </li>
+          <li class="menu-item">
+            <a class="cursor-pointer" routerLink="" (click)="scrollToTop()">About us</a>
+          </li>
+          <li class="menu-item">
+            <a class="cursor-pointer" routerLink="/calendar" (click)="scrollToTop()">Calendar</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-item">
+        <div class="footer-titel text-base 
+                            md:text-2xl md:pb-2">
+          Follow us</div>
+        <ul>
+          <li class="menu-item">
+            <table>
+              <tr>
+                <a href="">
+                  <td>
+                    <fa-icon [icon]="faInstagram"></fa-icon>
+                  </td>
+                  <td class="pl-2">Instagram
+                  </td>
+                </a>
+
+              </tr>
+              <tr>
+                <a href="">
+                  <td>
+                    <fa-icon [icon]="faStrava"></fa-icon>
+                  </td>
+                  <td class="pl-2">Strava
+                  </td>
+                </a>
+
+              </tr>
+              <tr>
+                <a href="">
+                  <td>
+                    <fa-icon [icon]="faTwitter"></fa-icon>
+                  </td>
+                  <td class="pl-2">Twitter
+                  </td>
+                </a>
+              </tr>
+            </table>
+        </ul>
+      </div>
+
+      <div class="footer-item">
+        <div class="footer-titel text-base 
+                            md:text-2xl md:pb-2">
+          Contact</div>
+        <ul>
+          <li class="menu-item">
+            <a href="">Press</a>
+          </li>
+          <li class="menu-item">
+            <a href="">Legal notice</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-item">
+        <div class="footer-titel text-base pb-1
+                            md:text-2xl md:pb-3">
+          Stay updated
+        </div>
+
+        <form class="inline-block w-2/12">
+          <span class="flex text-sm
+                                 md:text-base">
+            <input class="rounded-l-md px-2 py-2 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white
+                               focus:outline-none focus:shadow-outline
+                               w-32 sm:w-44 md:w-48" placeholder="your@mail.com" />
+            <button
+              class="px-5 rounded-r-md bg-secondary-color  text-white font-bold p-1 uppercase border-secondary-color border-t border-b border-r
+                               focus:outline-none focus:shadow-outline hover:bg-opacity-50 hover:border-transparent">Subscribe</button>
+          </span>
+        </form>
+
+      </div>
+
+    </div>
+
+    <div class="text-white pt-12 pb-12 text-center text-xs flex flex-col space-y-1
+                    xl:pt-24">
+      <span class="text-sm pb-2">
+        Made with ❤️ by <a href="https://marc.michel.lu/" target="_blank" style="text-decoration: underline;">Marc
+          Michel</a>
+      </span>
+      <span>Copyright &copy; {{year}} Marc Michel. All rights reserved</span>
+
+    </div>
+  </div>
+</footer>

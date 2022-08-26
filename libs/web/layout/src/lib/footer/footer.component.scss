@@ -1,0 +1,30 @@
+.footer-item {
+  color: #fff;
+  font-family: theme("fontFamily.roboto");
+  .footer-titel {
+    font-weight: 700;
+  }
+
+  ul {
+    li {
+      padding-top: 0.1rem;
+      a {
+        &:hover,
+        &:focus {
+          color: theme("colors.secondary-color");
+        }
+      }
+
+      table {
+        tr {
+          a {
+            &:hover,
+            &:focus {
+              color: theme("colors.secondary-color");
+            }
+          }
+        }
+      }
+    }
+  }
+}
