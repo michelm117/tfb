@@ -18,7 +18,7 @@ export class AboutComponent {
         country: 'Luxembourg',
         langCode: 'lu',
         imgUrl:
-          'https://www.alpecin-fenix.com/images/team/laurens-de-vreese.jpg',
+          'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
       {
         id: 2,
@@ -27,7 +27,7 @@ export class AboutComponent {
         country: 'Germany',
         langCode: 'de',
         imgUrl:
-          'https://www.alpecin-fenix.com/images/team/gianni-vermeersch.jpg',
+          'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
       {
         id: 3,
@@ -36,7 +36,7 @@ export class AboutComponent {
         country: 'Brasil',
         langCode: 'br',
         imgUrl:
-          'https://www.alpecin-fenix.com/images/team/david-van-der-poel.jpg',
+          'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
       {
         id: 4,
@@ -45,7 +45,7 @@ export class AboutComponent {
         country: 'Germany',
         langCode: 'de',
         imgUrl:
-          'https://www.alpecin-fenix.com/images/team/edward-planckaert.jpg',
+          'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
       {
         id: 5,
@@ -54,7 +54,7 @@ export class AboutComponent {
         country: 'Germany',
         langCode: 'de',
         imgUrl:
-          'https://www.alpecin-fenix.com/images/team/jasper-philipsen.jpg',
+          'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
       {
         id: 6,
@@ -62,7 +62,8 @@ export class AboutComponent {
         surname: 'Hettich',
         country: 'Germany',
         langCode: 'de',
-        imgUrl: 'https://www.alpecin-fenix.com/images/team/roy-jans.jpg',
+        imgUrl:
+          'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
       {
         id: 7,
@@ -71,7 +72,7 @@ export class AboutComponent {
         country: 'Switzerland',
         langCode: 'ch',
         imgUrl:
-          'https://www.alpecin-fenix.com/images/team/puck-pieterse-mb.jpg',
+          'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
       {
         id: 8,
@@ -79,7 +80,8 @@ export class AboutComponent {
         surname: 'Schmitt',
         country: 'Germany',
         langCode: 'de',
-        imgUrl: 'https://www.alpecin-fenix.com/images/team/silvan-dillier.jpg',
+        imgUrl:
+          'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
     ];
   }

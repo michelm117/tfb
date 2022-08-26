@@ -7,6 +7,6 @@ import { RiderCardComponent } from './rider-card/rider-card.component';
 @NgModule({
   imports: [CommonModule, FontAwesomeModule],
   declarations: [SocialBarComponent, RiderCardComponent],
-  exports: [SocialBarComponent],
+  exports: [SocialBarComponent, RiderCardComponent],
 })
 export class WebSharedModule {}

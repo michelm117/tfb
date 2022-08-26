@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Rider } from '@tfb/api-interfaces';
 
 @Component({
   selector: 'tfb-rider-card',
   templateUrl: './rider-card.component.html',
   styleUrls: ['./rider-card.component.scss'],
 })
-export class RiderCardComponent implements OnInit {
-  constructor() {}
+export class RiderCardComponent {
+  @Input() rider?: Rider;
 
-  ngOnInit(): void {}
+  getFlagClass(langCode: string) {
+    return 'flag-icon-' + langCode;
+  }
 }

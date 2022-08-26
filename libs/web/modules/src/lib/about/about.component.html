@@ -25,7 +25,7 @@
 
     <div class="mt-7 text-base
                     md:hidden">
-      <!-- <app-rider-card *ngFor="let rider of sort(riders)" [rider]="rider"></app-rider-card> -->
+      <tfb-rider-card *ngFor="let rider of sort(riders)" [rider]="rider"></tfb-rider-card>
     </div>
 
     <div class="container mx-auto mt-8 hidden
@@ -35,7 +35,8 @@
                         md:grid-cols-3 
                         lg:grid-cols-4
                         xl:grid-cols-4">
-        <!-- <app-rider-card *ngFor="let rider of sort(riders)" [rider]="rider"></app-rider-card> -->
+        <tfb-rider-card *ngFor="let rider of sort(riders)" [rider]="rider"></tfb-rider-card>
+
       </div>
     </div>
   </div>
