@@ -14,8 +14,8 @@ export class HeaderComponent {
 
     if (!this.showOverlayMenu) {
       // activate Transparency when scrolling back to banner
-      const navbarHeight = 90;
-      const bannerHeight = 550;
+      const navbarHeight = 95;
+      const bannerHeight = 500;
       const currentScrollHeight =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
@@ -39,7 +39,7 @@ export class HeaderComponent {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const navbarHeight = 90;
-    const bannerHeight = 550;
+    const bannerHeight = 500;
     const currentScrollHeight =
       window.pageYOffset ||
       document.documentElement.scrollTop ||
@@ -60,7 +60,7 @@ export class HeaderComponent {
     (function smoothscroll() {
       const currentScroll =
         document.documentElement.scrollTop || document.body.scrollTop;
-      if (currentScroll > 550) {
+      if (currentScroll > 500) {
         window.requestAnimationFrame(smoothscroll);
         window.scrollTo(0, currentScroll - currentScroll / 20);
       }
@@ -68,7 +68,7 @@ export class HeaderComponent {
   }
 
   scrollToHeader() {
-    window.scroll({ top: 550, behavior: 'smooth' });
+    window.scroll({ top: 500, behavior: 'smooth' });
   }
 
   toggleOverlayAndScrollUp() {
@@ -79,7 +79,7 @@ export class HeaderComponent {
   scrollToBanner() {
     const currentScroll =
       document.documentElement.scrollTop || document.body.scrollTop;
-    if (currentScroll > 550) {
+    if (currentScroll > 500) {
       this.scrollToTop();
       console.log('UNDER');
     } else {

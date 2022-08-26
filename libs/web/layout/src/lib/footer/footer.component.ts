@@ -21,7 +21,7 @@ export class FooterComponent {
     (function smoothscroll() {
       const currentScroll =
         document.documentElement.scrollTop || document.body.scrollTop;
-      if (currentScroll > 550) {
+      if (currentScroll > 500) {
         window.requestAnimationFrame(smoothscroll);
         window.scrollTo(0, currentScroll - currentScroll / 20);
       }

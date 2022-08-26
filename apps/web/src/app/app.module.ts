@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WebLayoutModule } from '@tfb/web/layout';
+import { WebModulesModule } from '@tfb/web/modules';
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,6 +14,7 @@ import { WebLayoutModule } from '@tfb/web/layout';
 
     // own modules
     WebLayoutModule,
+    WebModulesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
