@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WebLayoutModule } from '@tfb/web/layout';
 import { WebModulesModule } from '@tfb/web/modules';
+import { WebSharedModule } from '@tfb/web/shared';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { WebModulesModule } from '@tfb/web/modules';
     // own modules
     WebLayoutModule,
     WebModulesModule,
+    WebSharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

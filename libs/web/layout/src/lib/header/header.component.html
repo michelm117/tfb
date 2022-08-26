@@ -30,7 +30,7 @@
 
 <div class="overlay-nav z-40" [ngClass]="{'showOverlay' : showOverlayMenu, 'hideOverlay': !showOverlayMenu}">
   <div class="overlay-nav-wrapper relative text-center 
-                md:flex md:space-x-4 md:items-start md:w-full md:text-left md:space-x-16
+                md:flex md:space-x-4 md:items-start md:w-full md:text-left
                 lg:space-x-28">
 
     <div class="heading-wrapper md:w-1/2 md:items-end ">
@@ -44,19 +44,24 @@
                    md:mt-0 md:w-1/2 md:text-2xl
                    lg:text-3xl lg:space-y-7">
       <li>
-        <a routerLink="/" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">About us</a>
+        <a class="cursor-pointer" routerLink="/" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">About
+          us</a>
       </li>
       <li>
-        <a routerLink="/stories" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">Stories</a>
+        <a class="cursor-pointer" routerLink="/stories" routerLinkActive="active"
+          (click)="toggleOverlayAndScrollUp()">Stories</a>
       </li>
       <li>
-        <a routerLink="/partner" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">Partner</a>
+        <a class="cursor-pointer" routerLink="/partner" routerLinkActive="active"
+          (click)="toggleOverlayAndScrollUp()">Partner</a>
       </li>
       <li>
-        <a routerLink="/calendar" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">Calendar</a>
+        <a class="cursor-pointer" routerLink="/calendar" routerLinkActive="active"
+          (click)="toggleOverlayAndScrollUp()">Calendar</a>
       </li>
       <li>
-        <a routerLink="/contact" routerLinkActive="active" (click)="toggleOverlayAndScrollUp()">Contact us</a>
+        <a class="cursor-pointer" routerLink="/contact" routerLinkActive="active"
+          (click)="toggleOverlayAndScrollUp()">Contact us</a>
       </li>
     </ul>
   </div>
