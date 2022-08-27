@@ -1,0 +1,12 @@
+.hide {
+  display: none;
+}
+
+.indexShow {
+  font-family: theme("fontFamily.roboto");
+  z-index: 1;
+}
+
+button {
+  z-index: 10;
+}
