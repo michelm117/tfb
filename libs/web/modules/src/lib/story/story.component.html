@@ -1,0 +1,42 @@
+<div class="container mx-auto md:px-16 lg:px-24 xl:px-80">
+  <!-- Social Media Buttons -->
+  <tfb-social-bar></tfb-social-bar>
+
+  <!-- Story Header -->
+  <div class="">
+
+    <tfb-heading titel="{{story.title}}">
+    </tfb-heading>
+
+    <div class="flex mt-4 space-x-2">
+      <fa-icon [icon]="faTrophy" [ngClass]="{'hide': !onPodium}"></fa-icon>
+
+      <div>
+        <!-- <span class="flag-icon" [ngClass]="getFlagClass()"></span> -->
+      </div>
+
+      <div>{{story.country}}, </div>
+
+      <div class="w-full">{{story.place}}</div>
+
+      <div class="w-full text-right">
+        {{story.date.getUTCDate()}}.{{story.date.getMonth()}}.{{story.date.getFullYear()}}
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Content-->
+  <div style="white-space: pre-line" class="container py-10 text-justify md:py-16">
+    {{story.text}}
+  </div>
+
+  <!-- <app-gallery [imgUrls]=story.imgUrls [ngClass]="{'hide': story.imgUrls.length < 1}"></app-gallery> -->
+
+  <div class="pt-10 md:pt-16">
+    <!-- <app-race-result-table [raceId]="story.id"></app-race-result-table> -->
+  </div>
+
+  <div class="pt-10 md:pt-16">
+    <!-- <app-quote></app-quote> -->
+  </div>
+</div>
