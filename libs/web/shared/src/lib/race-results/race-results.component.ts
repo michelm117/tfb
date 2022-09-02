@@ -12,11 +12,4 @@ export class RaceResultsComponent {
   races: Race[] = [];
 
   constructor(private raceService: RaceService) {}
-
-  // ngOnInit(): void {
-  //   // this.raceService.getRaceById(this.raceId).subscribe((race) => {
-  //   //   this.races = [race];
-  //   //   console.log(this.races);
-  //   // });
-  // }
 }

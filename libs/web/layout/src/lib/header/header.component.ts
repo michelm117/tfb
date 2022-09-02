@@ -81,10 +81,8 @@ export class HeaderComponent {
       document.documentElement.scrollTop || document.body.scrollTop;
     if (currentScroll > 500) {
       this.scrollToTop();
-      console.log('UNDER');
     } else {
       this.scrollToHeader();
-      console.log('OVER');
     }
   }
 }
