@@ -8,6 +8,7 @@ import { StoryComponent } from './story/story.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RacesOverviewComponent } from './races-overview/races-overview.component';
 import { RaceComponent } from './race/race.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
         path: 'races/:id',
         component: RaceComponent,
       },
+      {
+        path: 'admin',
+        component: AdminComponent,
+      },
     ],
   },
 ];
@@ -57,6 +62,7 @@ const routes: Routes = [
     StoryComponent,
     RacesOverviewComponent,
     RaceComponent,
+    AdminComponent,
   ],
   exports: [AboutComponent, StoriesOverviewComponent],
 })
