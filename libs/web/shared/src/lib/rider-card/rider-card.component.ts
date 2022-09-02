@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Rider } from '@tfb/api-interfaces';
+import { RiderInterface } from '@tfb/api-interfaces';
+import { FlagService } from '@tfb/web/data';
 
 @Component({
   selector: 'tfb-rider-card',
@@ -7,9 +8,12 @@ import { Rider } from '@tfb/api-interfaces';
   styleUrls: ['./rider-card.component.scss'],
 })
 export class RiderCardComponent {
-  @Input() rider?: Rider;
+  @Input() rider?: RiderInterface;
 
-  getFlagClass(langCode: string) {
-    return 'flag-icon-' + langCode;
+  constructor(private flagService: FlagService) {}
+
+  getFlag() {
+    // return this.flagService.get(this.rider?.country);
+    return this.flagService.get('zzz');
   }
 }

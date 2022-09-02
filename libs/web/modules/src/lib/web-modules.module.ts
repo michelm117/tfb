@@ -6,6 +6,8 @@ import { WebSharedModule } from '@tfb/web/shared';
 import { StoriesOverviewComponent } from './stories-overview/stories-overview.component';
 import { StoryComponent } from './story/story.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RacesOverviewComponent } from './races-overview/races-overview.component';
+import { RaceComponent } from './race/race.component';
 
 const routes: Routes = [
   {
@@ -28,6 +30,14 @@ const routes: Routes = [
         path: 'stories/:id',
         component: StoryComponent,
       },
+      {
+        path: 'races',
+        component: RacesOverviewComponent,
+      },
+      {
+        path: 'races/:id',
+        component: RaceComponent,
+      },
     ],
   },
 ];
@@ -41,7 +51,13 @@ const routes: Routes = [
 
     RouterModule.forChild(routes),
   ],
-  declarations: [AboutComponent, StoriesOverviewComponent, StoryComponent],
+  declarations: [
+    AboutComponent,
+    StoriesOverviewComponent,
+    StoryComponent,
+    RacesOverviewComponent,
+    RaceComponent,
+  ],
   exports: [AboutComponent, StoriesOverviewComponent],
 })
 export class WebModulesModule {}

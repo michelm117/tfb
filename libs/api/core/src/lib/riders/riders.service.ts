@@ -1,0 +1,51 @@
+import { Injectable } from '@nestjs/common';
+import { CreateRiderDto } from './dto/create-rider.dto';
+import { UpdateRiderDto } from './dto/update-rider.dto';
+import { Rider } from './entities/rider.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CountryService } from '../country/country.service';
+
+@Injectable()
+export class RidersService {
+  constructor(
+    @InjectRepository(Rider)
+    private ridersRepository: Repository<Rider>,
+    private countryService: CountryService
+  ) {}
+
+  async create(createRiderDto: CreateRiderDto) {
+    const rider = this.ridersRepository.create(createRiderDto);
+    await this.ridersRepository.save(rider);
+    return rider;
+  }
+
+  findAll() {
+    return this.ridersRepository.find();
+  }
+
+  findOne(id: number) {
+    return this.ridersRepository.find({ where: { id } });
+  }
+
+  async update(id: number, updateRiderDto: UpdateRiderDto) {
+    const rider = await this.ridersRepository.findOneBy({ id });
+    if (!rider) {
+      return;
+    }
+    const country = updateRiderDto.country;
+    if (country) {
+      const countryEntity = await this.countryService.findOne(country.id);
+      if (!countryEntity) {
+        return;
+      }
+      rider.country = countryEntity;
+    }
+    const newRider = { ...rider, ...updateRiderDto };
+    return await this.ridersRepository.update(id, newRider);
+  }
+
+  async remove(id: number) {
+    return await this.ridersRepository.delete(id);
+  }
+}

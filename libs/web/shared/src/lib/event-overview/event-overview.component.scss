@@ -1,0 +1,25 @@
+.container {
+  font-family: theme("fontFamily.roboto");
+}
+
+.heading-wrapper {
+  font-family: theme("fontFamily.roboto");
+  font-weight: 800;
+
+  .riders-heading {
+    display: block;
+    position: relative;
+
+    &:after {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+
+      content: "";
+      width: 50px;
+      height: 5px;
+      background: theme("colors.secondary-color");
+    }
+  }
+}

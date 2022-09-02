@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Story } from '@tfb/api-interfaces';
+import { Event } from '@tfb/api-interfaces';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StoryService {
-  stories: Story[] = [];
+  stories: Event[] = [];
   constructor() {
     this.stories = [
       {
@@ -69,7 +69,7 @@ export class StoryService {
         place: 'Geneve',
         country: 'Switzerland',
         countryCode: 'ch',
-        date: new Date('2021-09-04'),
+        date: new Date('2022-09-04'),
         text: 'Ride through all of the 26 Cantons, ride fast but do not forget to punch you brevet card. And more so, make sure you take a bit of the different flavors we have put in this new recipe, you won’t regret it. Being a Swiss race, there will be cheese and chocolate involved, but much more than that…and make sure to bring your good spirit and your appetite to the finish line for the traditional finisher party on the Sunday with all these tasty ingredients.',
         imgUrls: [
           'https://i2.wp.com/such.bike/wp-content/uploads/2021/02/image0-1.jpeg?w=1537&ssl=1',
@@ -80,14 +80,27 @@ export class StoryService {
     ];
   }
 
-  getStoriesById(id: number): Observable<Story> {
+  getStoriesById(id: number): Observable<Event> {
     return of(this.stories.filter((story) => story.id == id)[0]);
   }
-  getStories(): Observable<Story[]> {
+
+  getStories(): Observable<Event[]> {
     return of(this.stories);
   }
 
-  sortByDate(stories: Story[]) {
+  sortByDate(stories: Event[]) {
     return stories.sort((a, b) => (a?.date > b?.date ? 1 : -1));
+  }
+
+  getYearStoryMap(): Observable<Map<number, Event[]>> {
+    const map = new Map<number, Event[]>();
+    this.stories.forEach((story) => {
+      const year = story.date.getFullYear();
+      if (!map.has(year)) {
+        map.set(year, []);
+      }
+      map.get(year)?.push(story);
+    });
+    return of(map);
   }
 }

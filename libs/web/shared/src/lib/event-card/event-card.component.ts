@@ -1,15 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
-import { Story } from '@tfb/api-interfaces';
+import { Event } from '@tfb/api-interfaces';
+import getUnicodeFlagIcon from 'country-flag-icons/unicode';
 
 @Component({
-  selector: 'tfb-story-card',
-  templateUrl: './story-card.component.html',
-  styleUrls: ['./story-card.component.scss'],
+  selector: 'tfb-event-card',
+  templateUrl: './event-card.component.html',
+  styleUrls: ['./event-card.component.scss'],
 })
-export class StoryCardComponent implements OnInit {
-  @Input() story!: Story;
+export class EventCardComponent implements OnInit {
+  @Input() event!: Event;
+  @Input() urlPrefix = 'stories';
 
   faTrophy = faTrophy;
   onPodium = false;
@@ -18,11 +20,12 @@ export class StoryCardComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if (this.story.podium == true) {
-      this.onPodium = true;
+    if (this.event) {
+      if (this.event?.podium == true) {
+        this.onPodium = true;
+      }
+      this.storyId = this.event.id;
     }
-
-    this.storyId = this.story.id;
   }
 
   shortenText(text: string, maxLength: number) {
@@ -36,8 +39,8 @@ export class StoryCardComponent implements OnInit {
     return trimmedString + ' ...';
   }
 
-  navigateToStory() {
-    this.router.navigate(['stories/' + this.storyId]);
+  navigateToPage() {
+    this.router.navigate([this.urlPrefix + '/' + this.storyId]);
     this.scrollToTop();
   }
 
@@ -50,5 +53,10 @@ export class StoryCardComponent implements OnInit {
         window.scrollTo(0, currentScroll - currentScroll / 20);
       }
     })();
+  }
+
+  getFlag() {
+    const flag = getUnicodeFlagIcon(this.event.countryCode);
+    return flag;
   }
 }

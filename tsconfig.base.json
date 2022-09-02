@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@tfb/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@tfb/api/core": ["libs/api/core/src/index.ts"],
       "@tfb/web/core": ["libs/web/core/src/index.ts"],
       "@tfb/web/data": ["libs/web/data/src/index.ts"],
       "@tfb/web/layout": ["libs/web/layout/src/index.ts"],

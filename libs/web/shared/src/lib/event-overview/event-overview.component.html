@@ -1,0 +1,16 @@
+<div class="container">
+  <tfb-social-bar class="my-28"></tfb-social-bar>
+
+  <div class="mb-7 md:mb-8">
+    <tfb-heading titel="{{title}}">
+    </tfb-heading>
+  </div>
+  <div *ngFor="let year of years" class="w-full h-full ">
+    <h1 *ngIf="years.length > 1" class="mb-5 text-1xl heading-wrapper md:text-3xl">{{year}}</h1>
+
+    <div class="gap-4 mb-12 space-y-4 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:space-y-0">
+      <tfb-event-card *ngFor="let event of getEventFromYear(year)" [event]="event" [urlPrefix]="urlPrefix">
+      </tfb-event-card>
+    </div>
+  </div>
+</div>

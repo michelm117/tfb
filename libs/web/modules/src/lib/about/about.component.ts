@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Rider } from '@tfb/api-interfaces';
+import { RiderInterface } from '@tfb/api-interfaces';
 
 @Component({
   selector: 'tfb-about',
@@ -7,7 +7,7 @@ import { Rider } from '@tfb/api-interfaces';
   styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent {
-  riders: Rider[] = [];
+  riders: RiderInterface[] = [];
 
   constructor() {
     this.riders = [
@@ -15,8 +15,7 @@ export class AboutComponent {
         id: 1,
         name: 'Marc',
         surname: 'Michel',
-        country: 'Luxembourg',
-        langCode: 'lu',
+        country: { id: 0, name: 'Luxembourg', iso: 'lux' },
         imgUrl:
           'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
@@ -24,8 +23,7 @@ export class AboutComponent {
         id: 2,
         name: 'Claas',
         surname: 'Bollen',
-        country: 'Germany',
-        langCode: 'de',
+        country: { id: 0, name: 'Luxembourg', iso: 'lux' },
         imgUrl:
           'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
@@ -33,8 +31,7 @@ export class AboutComponent {
         id: 3,
         name: 'Juliano',
         surname: 'Almeida Bonfim',
-        country: 'Brasil',
-        langCode: 'br',
+        country: { id: 0, name: 'Luxembourg', iso: 'lux' },
         imgUrl:
           'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
@@ -42,8 +39,7 @@ export class AboutComponent {
         id: 4,
         name: 'Patrick',
         surname: 'Altefrohne',
-        country: 'Germany',
-        langCode: 'de',
+        country: { id: 0, name: 'Luxembourg', iso: 'lux' },
         imgUrl:
           'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
@@ -51,8 +47,7 @@ export class AboutComponent {
         id: 5,
         name: 'Christian',
         surname: 'Hackenberg',
-        country: 'Germany',
-        langCode: 'de',
+        country: { id: 0, name: 'Luxembourg', iso: 'lux' },
         imgUrl:
           'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
@@ -60,8 +55,7 @@ export class AboutComponent {
         id: 6,
         name: 'Bastian',
         surname: 'Hettich',
-        country: 'Germany',
-        langCode: 'de',
+        country: { id: 0, name: 'Luxembourg', iso: 'lux' },
         imgUrl:
           'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
@@ -69,8 +63,7 @@ export class AboutComponent {
         id: 7,
         name: 'Carolyn',
         surname: 'Schaltegger',
-        country: 'Switzerland',
-        langCode: 'ch',
+        country: { id: 0, name: 'Luxembourg', iso: 'lux' },
         imgUrl:
           'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
@@ -78,15 +71,14 @@ export class AboutComponent {
         id: 8,
         name: 'Sebastian',
         surname: 'Schmitt',
-        country: 'Germany',
-        langCode: 'de',
+        country: { id: 0, name: 'Luxembourg', iso: 'lux' },
         imgUrl:
           'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
       },
     ];
   }
 
-  sort(riders: Rider[]) {
+  sort(riders: RiderInterface[]) {
     return riders.sort((a, b) => (a?.surname > b?.surname ? 1 : -1));
   }
 }

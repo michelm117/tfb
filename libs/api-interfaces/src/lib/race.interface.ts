@@ -1,4 +1,4 @@
-export interface Story {
+export interface Race {
   id: number;
   title: string;
   place: string;

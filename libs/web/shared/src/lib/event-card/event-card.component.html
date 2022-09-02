@@ -2,9 +2,9 @@
   <div>
     <div class="transition duration-500 transform shadow-2xl hover:scale-105">
       <div>
-        <img class="object-cover w-full h-52" src={{story.imgUrls[0]}} />
+        <img class="object-cover w-full h-52" src={{event.imgUrls[0]}} />
         <div class="flex flex-col px-4 py-2">
-          <h1 class="text-xl font-gray-700 font-bold truncate ...">{{story.title}}</h1>
+          <h1 class="text-xl font-gray-700 font-bold truncate ...">{{event.title}}</h1>
           <div class="flex mt-2 space-x-2">
             <div class="flex items-center w-full pb-3">
               <span>
@@ -18,10 +18,10 @@
               </span>
               <div class="flex-grow px-2 py-2">
                 <div class="font-semibold text-gray-700">
-                  {{story.place}}
+                  {{event.place}}
                 </div>
                 <div class="text-sm text-gray-700">
-                  <span class="mr-2 flag-icon flag-icon-de"></span>{{story!.country}}
+                  <span class="mr-2">{{getFlag()}}</span>{{event!.country}}
                 </div>
               </div>
               <div class="flex items-center h-full py-2 mb-auto ml-auto mr-4" [ngClass]="{'invisible': !onPodium}">
@@ -30,10 +30,10 @@
             </div>
           </div>
           <div>
-            <p class="text-sm line-clamp-3 sm:line-clamp-4">{{shortenText(story.text, 125)}}</p>
+            <p class="text-sm line-clamp-3 sm:line-clamp-4">{{shortenText(event.text, 125)}}</p>
           </div>
           <button class="w-full py-2 mt-8 mb-2 text-center text-white rounded-lg bg-secondary-color"
-            (click)=navigateToStory()>Read more
+            (click)=navigateToPage()>Read more
           </button>
         </div>
       </div>

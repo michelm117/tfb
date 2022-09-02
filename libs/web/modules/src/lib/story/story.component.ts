@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
-import { Story } from '@tfb/api-interfaces';
-import { StoryService } from '@tfb/web/data';
+import { Event } from '@tfb/api-interfaces';
+import { FlagService, StoryService } from '@tfb/web/data';
 
 @Component({
   selector: 'tfb-story',
@@ -10,14 +10,15 @@ import { StoryService } from '@tfb/web/data';
   styleUrls: ['./story.component.scss'],
 })
 export class StoryComponent implements OnInit {
-  story!: Story;
+  story!: Event;
   faTrophy = faTrophy;
 
   onPodium = false;
 
   constructor(
     private route: ActivatedRoute,
-    private storyService: StoryService
+    private storyService: StoryService,
+    private flagService: FlagService
   ) {}
 
   ngOnInit(): void {
@@ -32,5 +33,9 @@ export class StoryComponent implements OnInit {
         this.onPodium = story.podium;
       });
     });
+  }
+
+  getFlag() {
+    return this.flagService.get(this.story.countryCode);
   }
 }

@@ -1,8 +1,7 @@
-export interface Rider {
+export interface RiderInterface {
   id: number;
   name: string;
   surname: string;
-  country: string;
-  langCode: string;
+  country: any;
   imgUrl: string;
 }

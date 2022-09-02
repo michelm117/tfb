@@ -1,11 +1,1 @@
-<div class="container">
-  <tfb-social-bar class="my-28"></tfb-social-bar>
-
-  <div class="mb-7 md:mb-8">
-    <tfb-heading titel="Our stories">
-    </tfb-heading>
-  </div>
-  <div class="gap-4 space-y-4 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:space-y-0">
-    <tfb-story-card *ngFor="let story of stories" [story]="story"></tfb-story-card>
-  </div>
-</div>
+<tfb-event-overview title="Our stories" [events]="stories" [urlPrefix]="urlPrefix"></tfb-event-overview>

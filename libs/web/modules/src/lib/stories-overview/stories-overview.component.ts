@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Story } from '@tfb/api-interfaces';
+import { Event } from '@tfb/api-interfaces';
 import { StoryService } from '@tfb/web/data';
 
 @Component({
@@ -8,14 +8,26 @@ import { StoryService } from '@tfb/web/data';
   styleUrls: ['./stories-overview.component.scss'],
 })
 export class StoriesOverviewComponent implements OnInit {
-  stories: Story[] = [];
+  urlPrefix = 'stories';
+  stories = new Map<number, Event[]>();
+  years: number[] = [];
 
   constructor(private storyService: StoryService) {}
 
   ngOnInit(): void {
-    this.storyService.getStories().subscribe((stories) => {
-      const sortedStories = this.storyService.sortByDate(stories);
-      this.stories = sortedStories;
+    this.storyService.getYearStoryMap().subscribe((map) => {
+      this.stories = map;
+      this.years = Array.from(map.keys()).sort((a, b) => {
+        return b - a;
+      });
     });
+  }
+
+  getStoriesFromYear(year: number): Event[] {
+    const stories = this.stories.get(year);
+    if (stories) {
+      return stories;
+    }
+    return [];
   }
 }
