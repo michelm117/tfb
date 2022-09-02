@@ -22,6 +22,10 @@ export class RiderService {
     });
   }
 
+  getProfilePicture(imageName: string) {
+    return `${this.url}/image/${imageName}`;
+  }
+
   // sortByDate(riders: Event[]) {
   //   return riders.sort((a, b) => (a?.date > b?.date ? 1 : -1));
   // }

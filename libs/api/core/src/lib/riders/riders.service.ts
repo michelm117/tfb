@@ -67,4 +67,12 @@ export class RidersService {
     }
     return await this.ridersRepository.update(id, { imgName: 'default.png' });
   }
+
+  async getProfilePictureName(id: number) {
+    const rider = await this.ridersRepository.findOneBy({ id });
+    if (!rider) {
+      return;
+    }
+    return rider.imgName;
+  }
 }

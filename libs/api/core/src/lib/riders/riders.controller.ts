@@ -71,12 +71,13 @@ export class RidersController {
     return this.ridersService.deleteProfilePicture(+id);
   }
 
-  @Get('profile/:imagename')
-  findProfileImage(
-    @Param('imagename') imagename: string,
+  @Get('image/:fileName')
+  async findProfileImage(
+    @Param('fileName') fileName: string,
     @Res() res: Response
   ) {
-    return res.sendFile(join(process.cwd(), 'upload/riders/' + imagename));
+    // const fileName = await this.ridersService.getProfilePictureName(+id);
+    return res.sendFile(join(process.cwd(), 'upload/riders/' + fileName));
   }
 
   @Delete(':id')
