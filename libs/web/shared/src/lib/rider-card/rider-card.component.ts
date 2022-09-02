@@ -8,12 +8,11 @@ import { FlagService } from '@tfb/web/data';
   styleUrls: ['./rider-card.component.scss'],
 })
 export class RiderCardComponent {
-  @Input() rider?: RiderInterface;
+  @Input() rider!: RiderInterface;
 
   constructor(private flagService: FlagService) {}
 
   getFlag() {
-    // return this.flagService.get(this.rider?.country);
-    return this.flagService.get('zzz');
+    return this.flagService.get(this.rider.country.iso);
   }
 }

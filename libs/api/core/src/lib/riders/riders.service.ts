@@ -21,11 +21,14 @@ export class RidersService {
   }
 
   findAll() {
-    return this.ridersRepository.find();
+    return this.ridersRepository.find({ relations: ['country'] });
   }
 
   findOne(id: number) {
-    return this.ridersRepository.find({ where: { id } });
+    return this.ridersRepository.find({
+      where: { id },
+      relations: ['country'],
+    });
   }
 
   async update(id: number, updateRiderDto: UpdateRiderDto) {

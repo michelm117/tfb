@@ -1,6 +1,16 @@
 {
+  "/riders": {
+    "target": "http://localhost:3333/api/riders",
+    "secure": false,
+    "pathRewrite": {
+      "/riders": "/"
+    }
+  },
   "/api": {
-    "target": "http://localhost:3333",
-    "secure": false
+    "target": "http://localhost:3333/api",
+    "secure": false,
+    "pathRewrite": {
+      "/api": "/"
+    }
   }
 }
