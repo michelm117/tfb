@@ -5,5 +5,5 @@ export interface RiderInterface {
   name: string;
   surname: string;
   country: CountryInterface;
-  imgUrl: string;
+  imgName: string;
 }

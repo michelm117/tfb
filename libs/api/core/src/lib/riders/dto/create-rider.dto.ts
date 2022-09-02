@@ -4,4 +4,5 @@ export class CreateRiderDto {
   public name: string;
   public surname: string;
   public country: Country;
+  public imgUrl: string;
 }

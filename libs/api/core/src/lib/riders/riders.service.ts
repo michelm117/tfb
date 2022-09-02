@@ -51,4 +51,20 @@ export class RidersService {
   async remove(id: number) {
     return await this.ridersRepository.delete(id);
   }
+
+  async updateProfilePicture(id: number, filename: string) {
+    const rider = await this.ridersRepository.findOneBy({ id });
+    if (!rider) {
+      return;
+    }
+    return await this.ridersRepository.update(id, { imgName: filename });
+  }
+
+  async deleteProfilePicture(id: number) {
+    const rider = await this.ridersRepository.findOneBy({ id });
+    if (!rider) {
+      return;
+    }
+    return await this.ridersRepository.update(id, { imgName: 'default.png' });
+  }
 }
