@@ -11,6 +11,10 @@ import { RaceComponent } from './race/race.component';
 import { AdminComponent } from './admin/admin.component';
 import { RiderTabComponent } from './admin/tabs/rider-tab/rider-tab.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { StoryTabComponent } from './admin/tabs/story-tab/story-tab.component';
+import { RaceTabComponent } from './admin/tabs/race-tab/race-tab.component';
+import { CalendarTabComponent } from './admin/tabs/calendar-tab/calendar-tab.component';
+import { AboutTabComponent } from './admin/tabs/about-tab/about-tab.component';
 
 const routes: Routes = [
   {
@@ -69,6 +73,10 @@ const routes: Routes = [
     RaceComponent,
     AdminComponent,
     RiderTabComponent,
+    StoryTabComponent,
+    RaceTabComponent,
+    CalendarTabComponent,
+    AboutTabComponent,
   ],
   exports: [AboutComponent, StoriesOverviewComponent],
 })
