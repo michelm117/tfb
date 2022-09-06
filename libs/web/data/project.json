@@ -5,7 +5,9 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/web/data"],
+      "outputs": [
+        "coverage/libs/web/data"
+      ],
       "options": {
         "jestConfig": "libs/web/data/jest.config.ts",
         "passWithNoTests": true
@@ -14,7 +16,10 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["libs/web/data/**/*.ts", "libs/web/data/**/*.html"]
+        "lintFilePatterns": [
+          "libs/web/data/**/*.ts",
+          "libs/web/data/**/*.html"
+        ]
       }
     }
   },

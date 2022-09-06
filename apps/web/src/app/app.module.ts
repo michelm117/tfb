@@ -7,6 +7,7 @@ import { WebLayoutModule } from '@tfb/web/layout';
 import { WebModulesModule } from '@tfb/web/modules';
 import { WebSharedModule } from '@tfb/web/shared';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
     WebLayoutModule,
     WebModulesModule,
     WebSharedModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

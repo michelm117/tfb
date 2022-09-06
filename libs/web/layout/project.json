@@ -5,7 +5,9 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/web/layout"],
+      "outputs": [
+        "coverage/libs/web/layout"
+      ],
       "options": {
         "jestConfig": "libs/web/layout/jest.config.ts",
         "passWithNoTests": true
