@@ -9,6 +9,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RacesOverviewComponent } from './races-overview/races-overview.component';
 import { RaceComponent } from './race/race.component';
 import { AdminComponent } from './admin/admin.component';
+import { RiderTabComponent } from './admin/tabs/rider-tab/rider-tab.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const routes: Routes = [
   {
@@ -55,6 +57,9 @@ const routes: Routes = [
     WebSharedModule,
 
     RouterModule.forChild(routes),
+
+    // nx material
+    MatTabsModule,
   ],
   declarations: [
     AboutComponent,
@@ -63,6 +68,7 @@ const routes: Routes = [
     RacesOverviewComponent,
     RaceComponent,
     AdminComponent,
+    RiderTabComponent,
   ],
   exports: [AboutComponent, StoriesOverviewComponent],
 })

@@ -1,36 +1,19 @@
 <tfb-heading titel="Admin Page"></tfb-heading>
 
-<div class="container w-1/2 p-5 mx-auto mt-8 bg-red-100 shadow-xl">
-
-  <h4 class="text-xl heading md:text-3xl ">Rider</h4>
-  <form class="flex flex-col" action="">
-
-    <input
-      class="w-full px-2 py-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:outline-none focus:shadow-outline"
-      placeholder="Name" />
-    <input
-      class="w-full px-2 py-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:outline-none focus:shadow-outline"
-      placeholder="Surname" />
-
-
-
-
-    <div>
-      <label for="countries" class="pr-3">Choose a country:</label>
-      <select name="countries" id="countries">
-        <option *ngFor="let country of countries" value="{{country.name}}">
-          <span>{{getFlag(country.iso)}}</span>
-          {{country.name}}
-        </option>
-      </select>
-      <br><br>
-    </div>
-
-    <button
-      class="w-1/3 px-5 py-2 font-bold text-white uppercase border rounded-md bg-secondary-color border-secondary-color focus:outline-none focus:shadow-outline hover:bg-opacity-50 hover:border-transparent">
-      Subscribe
-    </button>
-
-  </form>
-
-</div>
+<mat-tab-group>
+  <mat-tab label="Riders">
+    <ng-template matTabContent>
+      <tfb-rider-tab></tfb-rider-tab>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Second">
+    <ng-template matTabContent>
+      <tfb-rider-tab></tfb-rider-tab>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Third">
+    <ng-template matTabContent>
+      <tfb-rider-tab></tfb-rider-tab>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
