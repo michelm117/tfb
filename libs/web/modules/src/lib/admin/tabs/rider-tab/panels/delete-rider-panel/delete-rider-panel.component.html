@@ -18,10 +18,8 @@
     </mat-selection-list>
 
     <button mat-raised-button class="text-white bg-secondary-color" [disabled]="selectedRidersId.length !== 1"
-      (click)="openDialog()">
+      (click)="openDialog(selectedRidersId[0])">
       Remove
     </button>
   </div>
-
-
 </mat-expansion-panel>

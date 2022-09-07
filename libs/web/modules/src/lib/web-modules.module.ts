@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
@@ -26,7 +27,7 @@ import { AboutTabComponent } from './admin/tabs/about-tab/about-tab.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { DeleteRiderPanelComponent } from './admin/tabs/rider-tab/panels/delete-rider-panel/delete-rider-panel.component';
-import { UpdateRiderPanelComponent } from './admin/tabs/rider-tab/panels/update-rider-panel/update-rider-panel.component';
+import UpdateRiderPanelComponent from './admin/tabs/rider-tab/panels/update-rider-panel/update-rider-panel.component';
 import { AddRiderPanelComponent } from './admin/tabs/rider-tab/panels/add-rider-panel/add-rider-panel.component';
 
 const routes: Routes = [
@@ -86,6 +87,7 @@ const routes: Routes = [
     MatCardModule,
     MatExpansionModule,
     MatDialogModule,
+    MatTableModule,
     NgxMatFileInputModule,
   ],
   declarations: [

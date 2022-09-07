@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { RiderInterface } from '@tfb/api-interfaces';
 import { FlagService } from '@tfb/web/data';
-import { DialogComponent } from 'libs/web/shared/src/lib/dialog/dialog.component';
+import { DialogComponent } from '@tfb/web/shared';
 
 @Component({
   selector: 'tfb-delete-rider-panel',
@@ -11,7 +11,7 @@ import { DialogComponent } from 'libs/web/shared/src/lib/dialog/dialog.component
 })
 export class DeleteRiderPanelComponent {
   @Input() riders: RiderInterface[] = [];
-  selectedRidersId: RiderInterface[] = [];
+  selectedRidersId: number[] = [];
 
   constructor(private flagService: FlagService, public dialog: MatDialog) {}
 
@@ -27,17 +27,22 @@ export class DeleteRiderPanelComponent {
     return '';
   }
 
-  openDialog(): void {
+  openDialog(id: number): void {
+    console.log(JSON.stringify(id));
+
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '250px',
+      width: '450px',
       data: {
-        titel: 'Are you sure?',
-        text: 'Are you sure you want to delete?',
+        titel: 'Deleting Rider?',
+        text: `Are you sure you want to delete rider "${this.getNameFromId(
+          id
+        )}"?`,
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-    });
+    const dialogSubmitSubscription =
+      dialogRef.componentInstance.submitClicked.subscribe((result) => {
+        dialogSubmitSubscription.unsubscribe();
+      });
   }
 }

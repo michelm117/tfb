@@ -1,11 +1,8 @@
-<h1 mat-dialog-title>Hi {{data.titel}}</h1>
+<h1 mat-dialog-title>{{data.titel}}</h1>
 <div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.text">
-  </mat-form-field>
+  <p>{{data.text}}</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.text" cdkFocusInitial>Ok</button>
+  <button mat-raised-button color="warn" (click)="onNoClick()">No Thanks</button>
+  <button mat-raised-button (click)="onOkClick()" cdkFocusInitial>Ok</button>
 </div>

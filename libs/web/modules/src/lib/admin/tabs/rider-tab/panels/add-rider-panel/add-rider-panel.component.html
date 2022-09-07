@@ -42,12 +42,8 @@
           <input matInput [value]="selectedFileName.length ? selectedFileName : 'Select Profile Image'"
             [multiple]="false" />
 
-          <!-- <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="uploadFiles()">
-                      Upload
-                    </button> -->
-
           <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="false"
-            (change)="selectFiles($event)" placeholder="ok" />
+            (change)="selectFiles($event)" />
         </div>
       </mat-form-field>
 
