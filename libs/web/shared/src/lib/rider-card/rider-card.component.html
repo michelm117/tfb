@@ -8,12 +8,12 @@
       {{rider!.name}} {{rider!.surname}}
     </div>
     <div class="text-sm text-gray-500">
-      <span class="mr-2">{{getFlag()}}</span>{{rider!.country}}
+      <span class="mr-2">{{getFlag()}}</span>{{rider!.country.name}}
     </div>
   </div>
 </div>
 
-<div class="hidden h-full bg-white md:block">
+<!-- <div class="hidden h-full bg-white md:block">
   <div class="h-full transition duration-500 transform shadow-lg hover:shadow-xl hover:scale-105">
     <img class="w-full" src={{getPicture()}} />
     <div class="flex flex-col justify-between px-4 py-2 ">
@@ -30,4 +30,26 @@
       </div>
     </div>
   </div>
+</div> -->
+
+<!-- Remove top/bottom padding when first/last child -->
+<div class="flex flex-col h-full transition duration-500 transform shadow-lg w-60 hover:shadow-xl hover:scale-105">
+  <img class="object-cover h-64 w-60" src="{{getPicture()}}" alt="" />
+  <div class="">
+    <div class="flex flex-col justify-between px-4 py-2 ">
+      <h1 class="flex-grow text-xl font-bold overflow-clip font-gray-700">
+        {{rider!.name}} {{rider!.surname}}
+      </h1>
+      <div class="w-full h-full spacer"></div>
+      <div class="flex flex-grow h-full space-x-2 mt">
+        <h3 class="h-full mb-2 text-lg font-semibold text-gray-600">
+          <span class="mr-2">{{getFlag()}}</span>
+          {{rider!.country.name}}
+        </h3>
+      </div>
+    </div>
+  </div>
 </div>
+<!-- <div class="hidden h-full bg-white md:block">
+  <img class="h-72 object-fit w-60" src={{getPicture()}} />
+</div> -->
