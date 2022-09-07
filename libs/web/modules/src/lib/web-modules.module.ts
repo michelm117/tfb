@@ -11,10 +11,21 @@ import { RaceComponent } from './race/race.component';
 import { AdminComponent } from './admin/admin.component';
 import { RiderTabComponent } from './admin/tabs/rider-tab/rider-tab.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
 import { StoryTabComponent } from './admin/tabs/story-tab/story-tab.component';
 import { RaceTabComponent } from './admin/tabs/race-tab/race-tab.component';
 import { CalendarTabComponent } from './admin/tabs/calendar-tab/calendar-tab.component';
 import { AboutTabComponent } from './admin/tabs/about-tab/about-tab.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 const routes: Routes = [
   {
@@ -56,14 +67,22 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FontAwesomeModule,
-
+    FormsModule,
+    ReactiveFormsModule,
     // own modules
     WebSharedModule,
-
+    // WebModulesRoutingModule,
     RouterModule.forChild(routes),
 
     // nx material
     MatTabsModule,
+    MatListModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatCardModule,
+    NgxMatFileInputModule,
   ],
   declarations: [
     AboutComponent,

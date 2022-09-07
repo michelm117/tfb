@@ -1,19 +1,27 @@
 <tfb-heading titel="Admin Page"></tfb-heading>
 
-<mat-tab-group>
+<mat-tab-group class="mt-8 ">
+  <mat-tab label="About">
+    <ng-template matTabContent>
+      <tfb-about-tab></tfb-about-tab>
+    </ng-template>
+  </mat-tab>
+
   <mat-tab label="Riders">
     <ng-template matTabContent>
       <tfb-rider-tab></tfb-rider-tab>
     </ng-template>
   </mat-tab>
-  <mat-tab label="Second">
+
+  <mat-tab label="Story">
     <ng-template matTabContent>
-      <tfb-rider-tab></tfb-rider-tab>
+      <tfb-story-tab></tfb-story-tab>
     </ng-template>
   </mat-tab>
-  <mat-tab label="Third">
+
+  <mat-tab label="Calendar">
     <ng-template matTabContent>
-      <tfb-rider-tab></tfb-rider-tab>
+      <tfb-calendar-tab></tfb-calendar-tab>
     </ng-template>
   </mat-tab>
 </mat-tab-group>
