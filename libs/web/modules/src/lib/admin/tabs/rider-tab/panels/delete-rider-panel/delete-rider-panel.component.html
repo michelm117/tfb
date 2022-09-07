@@ -1,0 +1,21 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+
+    <mat-panel-title>
+      Delete a rider
+    </mat-panel-title>
+    <mat-panel-description>
+      Remove rider from the team
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <mat-selection-list [multiple]="false">
+    <mat-list-option *ngFor="let rider of riders">
+      {{rider.name}} {{rider.surname}} {{getFlag(rider.country.iso)}}
+    </mat-list-option>
+  </mat-selection-list>
+  <button mat-raised-button class="text-white bg-secondary-color">
+    Remove
+  </button>
+
+</mat-expansion-panel>

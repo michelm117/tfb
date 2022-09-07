@@ -1,70 +1,9 @@
-<div class="container p-5 mx-auto mt-8 shadow-xl">
+<div class="container p-5 m-auto mt-8 shadow-xl">
 
-  <h4 class="text-xl heading md:text-3xl ">Add a Rider</h4>
+  <mat-accordion>
+    <tfb-add-rider-panel [countries]="countries"></tfb-add-rider-panel>
 
-  <!-- <mat-card class="zone zone-picker">
-    <mat-form-field>
-      <ngx-mat-file-input [formControl]="fileControl" [multiple]="false" accept="image/*" [color]="'primary'">
-      </ngx-mat-file-input>
-    </mat-form-field>
-  <img *ngFor='let preview of previews' [src]="preview" class="preview">
-  </mat-card> -->
+    <tfb-delete-rider-panel [riders]="riders"></tfb-delete-rider-panel>
 
-  <mat-form-field>
-    <div>
-      <mat-toolbar>
-        <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Select Images'" [multiple]="false" />
-
-        <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="uploadFiles()">
-          Upload
-        </button>
-      </mat-toolbar>
-
-      <input type="file" id="fileInput" name="fileInput" accept="image/*" (change)="selectFiles($event)" />
-    </div>
-  </mat-form-field>
-
-  <div>
-    <img *ngFor='let preview of previews' [src]="preview" class="preview">
-  </div>
-
-
-  <div class="flex justify-between ">
-
-    <form class="flex flex-col mx-auto form" action="">
-      <mat-form-field class="full-width" appearance="fill">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Riders name">
-      </mat-form-field>
-
-      <mat-form-field class="full-width" appearance="fill">
-        <mat-label>Surname</mat-label>
-        <input matInput placeholder="Riders surname">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Nationality</mat-label>
-        <mat-select [(value)]="selectedCountry">
-          <mat-option class="text-center" *ngFor="let country of countries" [value]="country.id">
-            {{getFlag(country.iso)}} {{country.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <button mat-raised-button class="text-white bg-secondary-color">
-        Add
-      </button>
-    </form>
-
-    <!-- <div class="w-full">
-      <mat-label>Current riders: {{riders.length}}</mat-label>
-      <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let rider of riders">
-          {{rider.name}} {{rider.surname}}
-        </mat-list-option>
-      </mat-selection-list>
-    </div> -->
-
-  </div>
-
+  </mat-accordion>
 </div>

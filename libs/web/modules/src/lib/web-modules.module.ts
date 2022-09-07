@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { StoryTabComponent } from './admin/tabs/story-tab/story-tab.component';
@@ -23,9 +24,9 @@ import { CalendarTabComponent } from './admin/tabs/calendar-tab/calendar-tab.com
 import { AboutTabComponent } from './admin/tabs/about-tab/about-tab.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { DeleteRiderPanelComponent } from './admin/tabs/rider-tab/panels/delete-rider-panel/delete-rider-panel.component';
+import { UpdateRiderPanelComponent } from './admin/tabs/rider-tab/panels/update-rider-panel/update-rider-panel.component';
+import { AddRiderPanelComponent } from './admin/tabs/rider-tab/panels/add-rider-panel/add-rider-panel.component';
 
 const routes: Routes = [
   {
@@ -82,6 +83,7 @@ const routes: Routes = [
     MatButtonModule,
     MatToolbarModule,
     MatCardModule,
+    MatExpansionModule,
     NgxMatFileInputModule,
   ],
   declarations: [
@@ -96,6 +98,9 @@ const routes: Routes = [
     RaceTabComponent,
     CalendarTabComponent,
     AboutTabComponent,
+    DeleteRiderPanelComponent,
+    UpdateRiderPanelComponent,
+    AddRiderPanelComponent,
   ],
   exports: [AboutComponent, StoriesOverviewComponent],
 })

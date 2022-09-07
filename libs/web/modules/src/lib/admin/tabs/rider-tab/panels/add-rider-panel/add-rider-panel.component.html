@@ -1,0 +1,60 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Add a Rider
+    </mat-panel-title>
+    <mat-panel-description>
+      Add a new rider to the team
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div class="flex flex-row justify-center space-x-32">
+    <!-- Image Preview -->
+    <div class="bg-indigo-300 w-60 h-fit">
+      <img *ngFor='let preview of previews' [src]="preview" class="object-cover h-64 w-60">
+      <img *ngIf="!previews.length" src="assets/img/default/profile.jpg" class="object-cover">
+    </div>
+
+    <!-- Rider Form -->
+    <form class="flex flex-col form" action="">
+
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Riders name">
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Surname</mat-label>
+        <input matInput placeholder="Riders surname">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Nationality</mat-label>
+        <mat-select [(value)]="selectedCountry">
+          <mat-option class="text-center" *ngFor="let country of countries" [value]="country.id">
+            {{getFlag(country.iso)}} {{country.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <input matInput [value]="selectedFileName.length ? selectedFileName : 'Select Profile Image'"
+            [multiple]="false" />
+
+          <!-- <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="uploadFiles()">
+                      Upload
+                    </button> -->
+
+          <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="false"
+            (change)="selectFiles($event)" placeholder="ok" />
+        </div>
+      </mat-form-field>
+
+      <button mat-raised-button class="text-white bg-secondary-color">
+        Submit
+      </button>
+    </form>
+  </div>
+
+</mat-expansion-panel>

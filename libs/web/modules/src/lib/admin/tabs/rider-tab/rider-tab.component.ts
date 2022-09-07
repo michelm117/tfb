@@ -12,11 +12,6 @@ import { MaxSizeValidator } from '@angular-material-components/file-input';
 export class RiderTabComponent implements OnInit {
   countries: CountryInterface[] = [];
   riders: RiderInterface[] = [];
-  selectedCountry = 2;
-
-  selectedFiles?: FileList;
-  selectedFileNames: string[] = [];
-  previews: string[] = [];
 
   constructor(
     private countryService: CountryService,
@@ -36,30 +31,4 @@ export class RiderTabComponent implements OnInit {
   getFlag(iso: string) {
     return this.flagService.get(iso);
   }
-
-  selectFiles(event: any): void {
-    this.selectedFileNames = [];
-    this.selectedFiles = event.target.files;
-
-    this.previews = [];
-    if (this.selectedFiles && this.selectedFiles[0]) {
-      const numberOfFiles = this.selectedFiles.length;
-      for (let i = 0; i < numberOfFiles; i++) {
-        const reader = new FileReader();
-
-        reader.onload = (e: any) => {
-          console.log(e.target.result);
-          this.previews.push(e.target.result);
-        };
-
-        reader.readAsDataURL(this.selectedFiles[i]);
-
-        this.selectedFileNames.push(this.selectedFiles[i].name);
-      }
-    }
-  }
-
-  upload(idx: number, file: File): void {}
-
-  uploadFiles(): void {}
 }
