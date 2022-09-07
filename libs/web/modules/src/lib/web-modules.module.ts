@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
 import { StoryTabComponent } from './admin/tabs/story-tab/story-tab.component';
 import { RaceTabComponent } from './admin/tabs/race-tab/race-tab.component';
 import { CalendarTabComponent } from './admin/tabs/calendar-tab/calendar-tab.component';
@@ -84,6 +85,7 @@ const routes: Routes = [
     MatToolbarModule,
     MatCardModule,
     MatExpansionModule,
+    MatDialogModule,
     NgxMatFileInputModule,
   ],
   declarations: [

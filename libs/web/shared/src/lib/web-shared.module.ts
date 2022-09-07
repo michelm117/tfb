@@ -9,9 +9,23 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { RaceResultsComponent } from './race-results/race-results.component';
 import { EventOverviewComponent } from './event-overview/event-overview.component';
 import { EventContentComponent } from './event-content/event-content.component';
+import { DialogComponent } from './dialog/dialog.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
+    MatDialogModule,
+  ],
   declarations: [
     SocialBarComponent,
     RiderCardComponent,
@@ -21,6 +35,7 @@ import { EventContentComponent } from './event-content/event-content.component';
     RaceResultsComponent,
     EventOverviewComponent,
     EventContentComponent,
+    DialogComponent,
   ],
   exports: [
     SocialBarComponent,
@@ -31,6 +46,7 @@ import { EventContentComponent } from './event-content/event-content.component';
     RaceResultsComponent,
     EventOverviewComponent,
     EventContentComponent,
+    DialogComponent,
   ],
 })
 export class WebSharedModule {}

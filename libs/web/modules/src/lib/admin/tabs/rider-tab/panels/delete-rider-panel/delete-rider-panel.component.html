@@ -9,13 +9,19 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <mat-selection-list [multiple]="false">
-    <mat-list-option *ngFor="let rider of riders">
-      {{rider.name}} {{rider.surname}} {{getFlag(rider.country.iso)}}
-    </mat-list-option>
-  </mat-selection-list>
-  <button mat-raised-button class="text-white bg-secondary-color">
-    Remove
-  </button>
+
+  <div class="flex flex-col mx-auto form">
+    <mat-selection-list [multiple]="false" [(ngModel)]="selectedRidersId">
+      <mat-list-option *ngFor="let rider of riders" [value]="rider.id">
+        {{rider.id}}. {{rider.name}} {{rider.surname}} {{getFlag(rider.country.iso)}}
+      </mat-list-option>
+    </mat-selection-list>
+
+    <button mat-raised-button class="text-white bg-secondary-color" [disabled]="selectedRidersId.length !== 1"
+      (click)="openDialog()">
+      Remove
+    </button>
+  </div>
+
 
 </mat-expansion-panel>
