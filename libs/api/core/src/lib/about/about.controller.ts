@@ -11,7 +11,7 @@ import { AboutService } from './about.service';
 import { CreateAboutDto } from './dto/create-about.dto';
 import { UpdateAboutDto } from './dto/update-about.dto';
 
-@Controller('about')
+@Controller('abouttext')
 export class AboutController {
   constructor(private readonly aboutService: AboutService) {}
 

@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Race, Event, Result, AboutInterface } from '@tfb/api-interfaces';
-import { Observable, of } from 'rxjs';
+import { AboutInterface } from '@tfb/api-interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AboutService {
-  url = 'about';
+  url = 'abouttext';
   constructor(private http: HttpClient) {}
 
   get() {
