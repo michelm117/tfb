@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ImgDialogComponent } from './imgDialog/img-dialog.component';
 import { SkeletonLoaderComponent } from './skeleton-loader/skeleton-loader.component';
+import { SkeletonRiderCardComponent } from './skeleton-rider-card/skeleton-rider-card.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { SkeletonLoaderComponent } from './skeleton-loader/skeleton-loader.compo
     DialogComponent,
     ImgDialogComponent,
     SkeletonLoaderComponent,
+    SkeletonRiderCardComponent,
   ],
   exports: [
     SocialBarComponent,
@@ -52,6 +54,7 @@ import { SkeletonLoaderComponent } from './skeleton-loader/skeleton-loader.compo
     EventContentComponent,
     ImgDialogComponent,
     DialogComponent,
+    SkeletonRiderCardComponent,
     SkeletonLoaderComponent,
   ],
 })

@@ -22,11 +22,14 @@
 
     <div class="text-base mt-7 md:hidden">
       <tfb-rider-card *ngFor="let rider of sort(riders)" [rider]="rider"></tfb-rider-card>
+      <tfb-skeleton-rider-card [show]="!ridersLoaded" *ngFor="let item of [].constructor(5)"></tfb-skeleton-rider-card>
     </div>
 
     <div class="container hidden mx-auto mt-8 md:block">
       <div class="grid card-grid">
         <tfb-rider-card *ngFor="let rider of sort(riders)" [rider]="rider"></tfb-rider-card>
+        <tfb-skeleton-rider-card [show]="!ridersLoaded" *ngFor="let item of [].constructor(5)">
+        </tfb-skeleton-rider-card>
       </div>
     </div>
   </div>

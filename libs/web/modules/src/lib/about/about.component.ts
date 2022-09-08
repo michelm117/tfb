@@ -11,6 +11,7 @@ export class AboutComponent implements OnInit {
   tmp = '';
   aboutText = '';
   aboutLoaded = false;
+  ridersLoaded = false;
 
   riders: RiderInterface[] = [];
 
@@ -21,6 +22,7 @@ export class AboutComponent implements OnInit {
   ngOnInit(): void {
     this.riderService.getRiders().subscribe((riders) => {
       this.riders = riders;
+      this.ridersLoaded = true;
     });
     this.aboutService.get().subscribe((aboutTextArray) => {
       if (aboutTextArray.length < 1) {
