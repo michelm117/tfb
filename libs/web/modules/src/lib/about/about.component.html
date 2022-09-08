@@ -27,8 +27,7 @@
     </div>
 
     <div class="container hidden mx-auto mt-8 md:block">
-      <div
-        class="gap-4 space-y-4 riders-grid auto-rows-fr sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+      <div class="grid card-grid xl:bg-red-100 lg:bg-red-500 md:bg-indigo-100">
         <tfb-rider-card *ngFor="let rider of sort(riders)" [rider]="rider"></tfb-rider-card>
 
       </div>

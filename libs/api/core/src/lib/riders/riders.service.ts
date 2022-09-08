@@ -95,6 +95,11 @@ export class RidersService {
   }
 
   private deleteProfileImage(rider: Rider) {
+    // Do not delete default image
+    if (rider.imgName === 'profile.jpg') {
+      return;
+    }
+
     const path = './upload/riders';
     fs.unlink(`${path}/${rider.imgName}`, (err) => {
       if (err) {

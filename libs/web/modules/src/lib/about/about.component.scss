@@ -21,3 +21,16 @@
     }
   }
 }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* see notes below */
+  grid-gap: 1em;
+  justify-items: center;
+}
+
+@media (min-width: 1280px) {
+  .card-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
