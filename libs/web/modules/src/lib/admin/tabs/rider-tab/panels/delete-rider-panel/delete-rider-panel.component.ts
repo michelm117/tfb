@@ -28,8 +28,6 @@ export class DeleteRiderPanelComponent {
   }
 
   openDialog(id: number): void {
-    console.log(JSON.stringify(id));
-
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '450px',
       data: {

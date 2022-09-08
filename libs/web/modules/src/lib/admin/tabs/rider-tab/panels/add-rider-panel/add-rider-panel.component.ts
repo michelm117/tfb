@@ -27,12 +27,9 @@ export class AddRiderPanelComponent {
 
     this.previews = [];
     if (this.selectedFiles && this.selectedFiles[0]) {
-      console.log(this.selectedFiles);
-
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        console.log(e.target.result);
         this.previews.push(e.target.result);
       };
 
