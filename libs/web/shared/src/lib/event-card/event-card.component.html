@@ -1,4 +1,4 @@
-<div class="pb-3 bg-white sm:pb-0">
+<div class="pb-3 bg-white cursor-pointer sm:pb-0" (click)=navigateToPage()>
   <div>
     <div class="transition duration-500 transform shadow-2xl hover:scale-105">
       <div>
@@ -30,7 +30,9 @@
             </div>
           </div>
           <div>
-            <p class="text-sm line-clamp-3 sm:line-clamp-4">{{shortenText(event.text, 125)}}</p>
+            <p class="text-sm description">
+              {{shortenText(event.text, 125)}}
+            </p>
           </div>
           <button class="w-full py-2 mt-8 mb-2 text-center text-white rounded-lg bg-secondary-color"
             (click)=navigateToPage()>Read more
