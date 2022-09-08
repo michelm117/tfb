@@ -131,7 +131,8 @@ header {
     .navbar-button {
       height: 50px;
       width: 50px;
-      background: theme("colors.secondary-color");
+      // background: theme("colors.secondary-color");
+      background-color: transparent;
 
       display: -webkit-box;
       display: -ms-flexbox;
@@ -149,7 +150,8 @@ header {
         .bar {
           width: 35px;
           height: 3px;
-          background-color: #333;
+          background-color: theme("colors.secondary-color");
+          // background-color: #333;
           margin: 8px auto;
           transition: 0.4s;
         }

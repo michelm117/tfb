@@ -30,6 +30,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { DeleteRiderPanelComponent } from './admin/tabs/rider-tab/panels/delete-rider-panel/delete-rider-panel.component';
 import UpdateRiderPanelComponent from './admin/tabs/rider-tab/panels/update-rider-panel/update-rider-panel.component';
 import { AddRiderPanelComponent } from './admin/tabs/rider-tab/panels/add-rider-panel/add-rider-panel.component';
+import { CountryTabComponent } from './admin/tabs/country-tab/country-tab.component';
 
 const routes: Routes = [
   {
@@ -107,6 +108,7 @@ const routes: Routes = [
     DeleteRiderPanelComponent,
     UpdateRiderPanelComponent,
     AddRiderPanelComponent,
+    CountryTabComponent,
   ],
   exports: [AboutComponent, StoriesOverviewComponent],
 })

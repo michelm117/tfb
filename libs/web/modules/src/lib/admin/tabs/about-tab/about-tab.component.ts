@@ -19,7 +19,6 @@ export class AboutTabComponent implements OnInit {
       }
       this.aboutService.get().subscribe((texts) => {
         this.aboutText = texts[0].text;
-        console.log(this.aboutText);
       });
     });
   }
@@ -30,9 +29,7 @@ export class AboutTabComponent implements OnInit {
         this.aboutText = texts[0].text;
       });
     } else {
-      this.aboutService.update(text).subscribe((res) => {
-        console.log(res);
-      });
+      this.aboutService.update(text).subscribe();
     }
   }
 }
