@@ -6,7 +6,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { Country, CountryModule, Rider, RidersModule } from '@tfb/api/core';
+import {
+  Country,
+  CountryModule,
+  Rider,
+  About,
+  RidersModule,
+  AboutModule,
+} from '@tfb/api/core';
 
 @Module({
   imports: [
@@ -20,13 +27,14 @@ import { Country, CountryModule, Rider, RidersModule } from '@tfb/api/core';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
-        entities: [Rider, Country],
+        entities: [Rider, Country, About],
         synchronize: true,
         logging: true,
       }),
     }),
     RidersModule,
     CountryModule,
+    AboutModule,
   ],
   controllers: [AppController],
   providers: [AppService],
