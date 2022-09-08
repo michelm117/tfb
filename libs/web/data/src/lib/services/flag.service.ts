@@ -7,7 +7,11 @@ import getUnicodeFlagIcon from 'country-flag-icons/unicode';
 export class FlagService {
   get(countryCode: string | undefined): string {
     if (countryCode) {
-      return getUnicodeFlagIcon(countryCode);
+      try {
+        return getUnicodeFlagIcon(countryCode);
+      } catch (error) {
+        return getUnicodeFlagIcon('ZZ');
+      }
     }
     return getUnicodeFlagIcon('ZZ');
   }
