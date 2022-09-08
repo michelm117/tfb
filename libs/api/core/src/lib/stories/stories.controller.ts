@@ -1,7 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Res,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { StoriesService } from './stories.service';
 import { CreateStoryDto } from './dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express, Response } from 'express';
+import { diskStorage } from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import path = require('path');
+import { join } from 'path';
+
+export const storage = {
+  storage: diskStorage({
+    destination: './upload/stories',
+    filename: (req, file, cb) => {
+      const filename =
+        path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+      const extension = path.parse(file.originalname).ext;
+
+      cb(null, `${filename}${extension}`);
+    },
+  }),
+};
 
 @Controller('stories')
 export class StoriesController {
@@ -30,5 +60,23 @@ export class StoriesController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.storiesService.remove(+id);
+  }
+
+  @Post('upload/:id')
+  @UseInterceptors(FileInterceptor('file', storage))
+  async uploadProfilePicture(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    await this.storiesService.addPicture(+id, file.filename);
+    return { imagePath: file.filename };
+  }
+
+  @Get('image/:fileName')
+  async findProfileImage(
+    @Param('fileName') fileName: string,
+    @Res() res: Response
+  ) {
+    return res.sendFile(join(process.cwd(), 'upload/stories/' + fileName));
   }
 }

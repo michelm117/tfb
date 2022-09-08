@@ -29,6 +29,6 @@ export class Story implements StoryInterface {
   text: string;
 
   @Expose()
-  @Column('simple-array')
+  @Column('simple-array', { nullable: true })
   imgNames: string[];
 }

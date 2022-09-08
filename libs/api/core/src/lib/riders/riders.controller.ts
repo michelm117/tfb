@@ -66,7 +66,7 @@ export class RidersController {
     return { imagePath: file.filename };
   }
 
-  @Post()
+  @Delete()
   deleteProfilePicture(@Param('id') id: string) {
     return this.ridersService.deleteProfilePicture(+id);
   }

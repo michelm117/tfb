@@ -59,4 +59,23 @@ export class StoriesService {
   async remove(id: number) {
     return await this.storiesRepository.delete({ id });
   }
+
+  async addPicture(id: number, filename: string) {
+    const rider = await this.storiesRepository.findOneBy({ id });
+    if (!rider) {
+      return;
+    }
+
+    // Adding new image to array
+    let images = rider.imgNames;
+    if (!images) {
+      images = [];
+    }
+    images.push(filename);
+    return await this.storiesRepository.update(id, { imgNames: images });
+  }
+
+  async deletePicture(filename: string) {
+    console.log('Delete');
+  }
 }
