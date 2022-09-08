@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ImgDialogComponent } from './imgDialog/img-dialog.component';
+import { SkeletonLoaderComponent } from './skeleton-loader/skeleton-loader.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { ImgDialogComponent } from './imgDialog/img-dialog.component';
     EventContentComponent,
     DialogComponent,
     ImgDialogComponent,
+    SkeletonLoaderComponent,
   ],
   exports: [
     SocialBarComponent,
@@ -50,6 +52,7 @@ import { ImgDialogComponent } from './imgDialog/img-dialog.component';
     EventContentComponent,
     ImgDialogComponent,
     DialogComponent,
+    SkeletonLoaderComponent,
   ],
 })
 export class WebSharedModule {}

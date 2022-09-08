@@ -18,10 +18,10 @@ export class AboutService {
   }
 
   create(text: string) {
-    return this.http.post<number>(`${this.url}/count`, text);
+    return this.http.post<AboutInterface[]>(this.url, { text: text });
   }
 
   update(text: string) {
-    return this.http.patch<number>(`${this.url}/count`, text);
+    return this.http.patch<any>(this.url, { text: text });
   }
 }

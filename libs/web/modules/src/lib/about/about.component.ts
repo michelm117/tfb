@@ -8,7 +8,9 @@ import { AboutService, RiderService } from '@tfb/web/data';
   styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent implements OnInit {
+  tmp = '';
   aboutText = '';
+  aboutLoaded = false;
 
   riders: RiderInterface[] = [];
 
@@ -25,7 +27,7 @@ export class AboutComponent implements OnInit {
         return;
       }
       const aboutText = aboutTextArray[0];
-      this.aboutText = aboutText.text;
+      this.aboutLoaded = true;
     });
   }
 

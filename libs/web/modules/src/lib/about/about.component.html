@@ -12,6 +12,8 @@
       <p>
         {{aboutText}}
       </p>
+      <tfb-skeleton-loader *ngIf="!aboutLoaded" [Cheight]="100"></tfb-skeleton-loader>
+
     </div>
   </div>
 

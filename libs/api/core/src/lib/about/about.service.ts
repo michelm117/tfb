@@ -38,6 +38,7 @@ export class AboutService {
     }
 
     const abouts = await this.find();
+
     return await this.aboutRepository.update(abouts[0].id, updateAboutDto);
   }
 }
