@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RiderInterface } from '@tfb/api-interfaces';
 
@@ -26,19 +26,25 @@ export class RiderService {
     return `${this.url}/image/${imageName}`;
   }
 
-  // sortByDate(riders: Event[]) {
-  //   return riders.sort((a, b) => (a?.date > b?.date ? 1 : -1));
-  // }
+  uploadImage(id: number, file: File) {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
 
-  // getYearStoryMap(): Observable<Map<number, Event[]>> {
-  //   const map = new Map<number, Event[]>();
-  //   this.riders.forEach((story) => {
-  //     const year = story.date.getFullYear();
-  //     if (!map.has(year)) {
-  //       map.set(year, []);
-  //     }
-  //     map.get(year)?.push(story);
-  //   });
-  //   return of(map);
-  // }
+    const params = new HttpParams();
+
+    const options = {
+      params: params,
+      reportProgress: true,
+    };
+
+    return this.http.post(`${this.url}/upload/${id}`, formData, options);
+  }
+
+  updateRider(rider: RiderInterface) {
+    return this.http.patch(`${this.url}/${rider.id}`, {
+      name: rider.name,
+      surname: rider.surname,
+      country: rider.country.id,
+    });
+  }
 }

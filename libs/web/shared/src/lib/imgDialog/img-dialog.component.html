@@ -22,6 +22,6 @@
   </div>
 </mat-form-field>
 <div mat-dialog-actions>
-  <button mat-raised-button color="warn" (click)="onNoClick()">No Thanks</button>
-  <button mat-raised-button (click)="onOkClick()" cdkFocusInitial>Ok</button>
+  <button mat-raised-button color="warn" (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button (click)="onOkClick()" [disabled]="previews.length < 1">Upload</button>
 </div>

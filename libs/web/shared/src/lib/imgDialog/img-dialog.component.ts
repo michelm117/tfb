@@ -8,7 +8,7 @@ import { DialogImgData } from '@tfb/api-interfaces';
   styleUrls: ['./img-dialog.component.scss'],
 })
 export class ImgDialogComponent {
-  @Output() submitClicked = new EventEmitter<any>();
+  @Output() submitClicked = new EventEmitter<FileList>();
   selectedFiles?: FileList;
   selectedFileName = '';
   previews: string[] = [];
@@ -23,7 +23,7 @@ export class ImgDialogComponent {
   }
 
   onOkClick(): void {
-    this.submitClicked.emit(200);
+    this.submitClicked.emit(this.selectedFiles);
     this.dialogRef.close();
   }
 

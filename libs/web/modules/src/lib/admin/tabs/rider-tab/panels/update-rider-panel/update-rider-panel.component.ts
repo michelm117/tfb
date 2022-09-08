@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSort, MatSortable } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { CountryInterface, RiderInterface } from '@tfb/api-interfaces';
 import { FlagService, RiderService } from '@tfb/web/data';
 import { ImgDialogComponent } from '@tfb/web/shared';
@@ -17,7 +19,7 @@ export default class UpdateRiderPanelComponent implements OnInit {
     'id',
     'name',
     'surname',
-    'flag',
+    'country',
     'profileImage',
     'isEdit',
   ];
@@ -31,6 +33,7 @@ export default class UpdateRiderPanelComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.riders.sort((a, b) => b.id - a.id);
     this.riders.forEach((rider) => {
       this.editing.set(rider.id, false);
     });
@@ -53,6 +56,14 @@ export default class UpdateRiderPanelComponent implements OnInit {
     return this.riderService.getProfilePicture(imgName);
   }
 
+  updatedClicked(id: number) {
+    this.editing.set(id, false);
+    const rider = this.getRiderFromId(id);
+    this.riderService.updateRider(rider).subscribe((res) => {
+      console.log(res);
+    });
+  }
+
   private openDialog(id: number): void {
     const rider = this.getRiderFromId(id);
 
@@ -60,13 +71,23 @@ export default class UpdateRiderPanelComponent implements OnInit {
       width: '450px',
       data: {
         titel: 'Updating Profile Picture?',
-        text: `Updating rider ${rider.name}'s profile picture.`,
+        text: `Updating rider ${rider.name}'s profile picture will immediate take effect!`,
         imgPath: this.getPicture(rider.imgName),
       },
     });
 
     const dialogSubmitSubscription =
-      dialogRef.componentInstance.submitClicked.subscribe((result) => {
+      dialogRef.componentInstance.submitClicked.subscribe((fileList) => {
+        if (fileList.length < 1) {
+          return;
+        }
+        this.riderService.uploadImage(id, fileList[0]).subscribe((res) => {
+          console.log(res);
+          this.riderService.getRiders().subscribe((riders) => {
+            this.riders = riders.sort((a, b) => a.id - b.id);
+          });
+        });
+
         dialogSubmitSubscription.unsubscribe();
       });
   }
