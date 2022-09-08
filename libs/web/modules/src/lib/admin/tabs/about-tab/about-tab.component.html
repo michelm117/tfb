@@ -1,1 +1,8 @@
-<p>about-tab works!</p>
+<div class="container p-5 m-auto mt-8 shadow-xl">
+
+  <mat-form-field class="full-width" appearance="fill">
+    <mat-label>About Text</mat-label>
+    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"> </textarea>
+  </mat-form-field>
+  <button class="justify-end" mat-raised-button color="warn">Submit</button>
+</div>
