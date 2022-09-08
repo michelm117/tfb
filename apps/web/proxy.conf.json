@@ -6,6 +6,13 @@
       "/riders": "/"
     }
   },
+  "/stories": {
+    "target": "http://localhost:3333/api/stories",
+    "secure": false,
+    "pathRewrite": {
+      "/stories": "/"
+    }
+  },
   "/abouttext": {
     "target": "http://localhost:3333/api/abouttext",
     "secure": false,
