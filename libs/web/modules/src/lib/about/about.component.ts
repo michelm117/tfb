@@ -28,7 +28,7 @@ export class AboutComponent implements OnInit {
       if (aboutTextArray.length < 1) {
         return;
       }
-      const aboutText = aboutTextArray[0];
+      this.aboutText = aboutTextArray[0].text;
       this.aboutLoaded = true;
     });
   }

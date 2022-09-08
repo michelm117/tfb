@@ -9,7 +9,7 @@
     </span>
 
     <div class="mt-5 text-base text-gray-700 md:mt-12">
-      <p>
+      <p *ngIf="aboutLoaded">
         {{aboutText}}
       </p>
       <tfb-skeleton-loader *ngIf="!aboutLoaded" [Cheight]="100"></tfb-skeleton-loader>
