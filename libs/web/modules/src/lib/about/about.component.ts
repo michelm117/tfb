@@ -1,18 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RiderInterface } from '@tfb/api-interfaces';
-import { RiderService } from '@tfb/web/data';
+import { AboutService, RiderService } from '@tfb/web/data';
 
 @Component({
   selector: 'tfb-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
 })
-export class AboutComponent {
+export class AboutComponent implements OnInit {
+  aboutText = '';
+
   riders: RiderInterface[] = [];
 
-  constructor(private riderService: RiderService) {
+  constructor(
+    private riderService: RiderService,
+    private aboutService: AboutService
+  ) {}
+  ngOnInit(): void {
     this.riderService.getRiders().subscribe((riders) => {
       this.riders = riders;
+    });
+    this.aboutService.get().subscribe((aboutTextArray) => {
+      if (aboutTextArray.length < 1) {
+        return;
+      }
+      const aboutText = aboutTextArray[0];
+      this.aboutText = aboutText.text;
     });
   }
 
