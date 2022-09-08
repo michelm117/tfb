@@ -1,5 +1,6 @@
+<!-- Mobile Card -->
 <div
-  class="flex items-center w-full p-2 duration-300 ease-in-out transform bg-white border rounded-md shadow hover:scale-105 focus:scale-105 md:hidden">
+  class="z-auto flex items-center w-full p-2 duration-300 ease-in-out transform border shadow bg-gray-50 hover:scale-105 focus:scale-105 md:hidden">
   <div class="flex items-center space-x-4">
     <img class="w-16 h-16 rounded-xl" src={{getPicture()}} alt="My profile">
   </div>
@@ -13,28 +14,10 @@
   </div>
 </div>
 
-<!-- <div class="hidden h-full bg-white md:block">
-  <div class="h-full transition duration-500 transform shadow-lg hover:shadow-xl hover:scale-105">
-    <img class="w-full" src={{getPicture()}} />
-    <div class="flex flex-col justify-between px-4 py-2 ">
-      <h1 class="flex-grow text-xl font-bold font-gray-700">
-        {{rider!.name}} {{rider!.surname}}
-      </h1>
-      <div class="w-full h-full spacer"></div>
-      <div class="flex flex-grow h-full space-x-2 mt">
-        <h3 class="h-full mb-2 text-lg font-semibold text-gray-600">
-          <span class="w-full h-full bg-red-200"></span>
-          <span class="mr-2">{{getFlag()}}</span>
-          {{rider!.country.name}}
-        </h3>
-      </div>
-    </div>
-  </div>
-</div> -->
 
-<!-- Remove top/bottom padding when first/last child -->
+<!-- Desktop Card -->
 <div
-  class="flex-col hidden h-full transition duration-500 transform shadow-lg md:flex w-60 hover:shadow-xl hover:scale-105">
+  class="flex-col hidden h-full transition duration-500 transform bg-gray-100 shadow-lg md:flex w-60 hover:shadow-xl hover:scale-105">
   <img class="object-cover h-64 w-60" src="{{getPicture()}}" alt="" />
   <div>
     <div class="flex flex-col justify-between px-4 py-2 ">
@@ -51,6 +34,3 @@
     </div>
   </div>
 </div>
-<!-- <div class="hidden h-full bg-white md:block">
-  <img class="h-72 object-fit w-60" src={{getPicture()}} />
-</div> -->
