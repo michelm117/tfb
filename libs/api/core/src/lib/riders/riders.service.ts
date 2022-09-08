@@ -5,6 +5,7 @@ import { Rider } from './entities/rider.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CountryService } from '../country/country.service';
+import * as fs from 'fs';
 
 @Injectable()
 export class RidersService {
@@ -57,6 +58,15 @@ export class RidersService {
     if (!rider) {
       return;
     }
+    // delete old picture from disk
+    const path = './upload/riders';
+    fs.unlink(`${path}/${rider.imgName}`, (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
+
+    // updating new filename
     return await this.ridersRepository.update(id, { imgName: filename });
   }
 
