@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRiderDto } from './dto/create-rider.dto';
 import { UpdateRiderDto } from './dto/update-rider.dto';
 import { Rider } from './entities/rider.entity';
@@ -30,10 +30,14 @@ export class RidersService {
   }
 
   findOne(id: number) {
-    return this.ridersRepository.find({
+    const rider = this.ridersRepository.find({
       where: { id },
       relations: ['country'],
     });
+    if (!rider) {
+      return new NotFoundException();
+    }
+    return rider;
   }
 
   async update(id: number, updateRiderDto: UpdateRiderDto) {
