@@ -16,21 +16,21 @@
     </div>
 
     <!-- Rider Form -->
-    <form class="flex flex-col form" action="">
+    <form class="flex flex-col form" action="" [formGroup]="riderForm" (ngSubmit)="onSubmit()">
 
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput placeholder="Riders name">
+        <input matInput placeholder="Riders name" formControlName="name">
       </mat-form-field>
 
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Surname</mat-label>
-        <input matInput placeholder="Riders surname">
+        <input matInput placeholder="Riders surname" formControlName="surname">
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Nationality</mat-label>
-        <mat-select [(value)]="selectedCountry">
+        <mat-select [value]="selectedCountry" formControlName="country">
           <mat-option class="text-center" *ngFor="let country of countries" [value]="country.id">
             {{getFlag(country.iso)}} {{country.name}}
           </mat-option>
@@ -47,7 +47,7 @@
         </div>
       </mat-form-field>
 
-      <button mat-raised-button class="text-white bg-secondary-color">
+      <button mat-raised-button class="text-white bg-secondary-color" type="submit">
         Submit
       </button>
     </form>

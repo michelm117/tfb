@@ -1,9 +1,10 @@
 <div class="container p-5 m-auto mt-8 shadow-xl">
 
   <mat-accordion>
-    <tfb-add-rider-panel [countries]="countries"></tfb-add-rider-panel>
-    <tfb-delete-rider-panel [riders]="riders"></tfb-delete-rider-panel>
-    <tfb-update-rider-panel [riders]="riders" [countries]="countries"></tfb-update-rider-panel>
+    <tfb-add-rider-panel (refreshRiders)="refreshRiders($event)" [countries]="countries"></tfb-add-rider-panel>
+    <tfb-delete-rider-panel (refreshRiders)="refreshRiders($event)" [riders]="riders"></tfb-delete-rider-panel>
+    <tfb-update-rider-panel (refreshRiders)="refreshRiders($event)" [riders]="riders" [countries]="countries">
+    </tfb-update-rider-panel>
 
   </mat-accordion>
 </div>

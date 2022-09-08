@@ -47,4 +47,16 @@ export class RiderService {
       country: rider.country.id,
     });
   }
+
+  deleteRider(id: number) {
+    return this.http.delete(`${this.url}/${id}`);
+  }
+
+  addRider(name: string, surname: string, country: number) {
+    return this.http.post<RiderInterface>(this.url, {
+      name: name,
+      surname: surname,
+      country: country,
+    });
+  }
 }

@@ -31,4 +31,12 @@ export class RiderTabComponent implements OnInit {
   getFlag(iso: string) {
     return this.flagService.get(iso);
   }
+
+  refreshRiders($event: any) {
+    console.log('Refreshing riders');
+
+    this.riderService.getRiders().subscribe((riders) => {
+      this.riders = riders;
+    });
+  }
 }

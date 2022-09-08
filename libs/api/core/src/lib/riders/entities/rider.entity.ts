@@ -22,7 +22,7 @@ export class Rider implements RiderInterface {
   public country: Country;
 
   @Column({
-    default: 'https://www.alpecin-deceuninck.com/images/team/no-image-2022.jpg',
+    default: 'profile.jpg',
   })
   @Expose()
   public imgName: string;

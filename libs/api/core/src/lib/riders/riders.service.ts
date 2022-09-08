@@ -21,8 +21,12 @@ export class RidersService {
     return rider;
   }
 
-  findAll() {
-    return this.ridersRepository.find({ relations: ['country'] });
+  async findAll() {
+    const riders = await this.ridersRepository.find({ relations: ['country'] });
+    riders.sort((a, b) => {
+      return a.id - b.id;
+    });
+    return riders;
   }
 
   findOne(id: number) {
@@ -50,6 +54,13 @@ export class RidersService {
   }
 
   async remove(id: number) {
+    const rider = await this.ridersRepository.findOneBy({ id });
+    if (!rider) {
+      return;
+    }
+    // delete old picture from disk
+    this.deleteProfileImage(rider);
+
     return await this.ridersRepository.delete(id);
   }
 
@@ -59,12 +70,7 @@ export class RidersService {
       return;
     }
     // delete old picture from disk
-    const path = './upload/riders';
-    fs.unlink(`${path}/${rider.imgName}`, (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
+    this.deleteProfileImage(rider);
 
     // updating new filename
     return await this.ridersRepository.update(id, { imgName: filename });
@@ -75,7 +81,9 @@ export class RidersService {
     if (!rider) {
       return;
     }
-    return await this.ridersRepository.update(id, { imgName: 'default.png' });
+    return await this.ridersRepository.update(id, {
+      imgName: 'profile.jpg',
+    });
   }
 
   async getProfilePictureName(id: number) {
@@ -84,5 +92,14 @@ export class RidersService {
       return;
     }
     return rider.imgName;
+  }
+
+  private deleteProfileImage(rider: Rider) {
+    const path = './upload/riders';
+    fs.unlink(`${path}/${rider.imgName}`, (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
   }
 }

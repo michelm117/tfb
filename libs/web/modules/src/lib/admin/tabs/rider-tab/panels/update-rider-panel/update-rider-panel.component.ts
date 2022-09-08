@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, MatSortable } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,6 +19,8 @@ import { ImgDialogComponent } from '@tfb/web/shared';
   styleUrls: ['./update-rider-panel.component.scss'],
 })
 export default class UpdateRiderPanelComponent implements OnInit {
+  @Output() refreshRiders = new EventEmitter<any>();
+
   @Input() riders: RiderInterface[] = [];
   @Input() countries: CountryInterface[] = [];
 
@@ -83,9 +92,7 @@ export default class UpdateRiderPanelComponent implements OnInit {
         }
         this.riderService.uploadImage(id, fileList[0]).subscribe((res) => {
           console.log(res);
-          this.riderService.getRiders().subscribe((riders) => {
-            this.riders = riders.sort((a, b) => a.id - b.id);
-          });
+          this.refreshRiders.emit();
         });
 
         dialogSubmitSubscription.unsubscribe();
