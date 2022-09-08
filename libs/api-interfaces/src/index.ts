@@ -4,3 +4,4 @@ export * from './lib/event.interface';
 export * from './lib/race.interface';
 export * from './lib/result.interface';
 export * from './lib/country.interface';
+export * from './lib/dialog-interfaces';

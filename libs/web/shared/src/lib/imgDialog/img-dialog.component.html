@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>{{data.titel}}</h1>
+
+<div mat-dialog-content>
+  <p>{{data.text}}</p>
+</div>
+
+<!-- Image Preview -->
+<div class="bg-indigo-300 w-60 h-fit">
+  <!-- <img *ngIf="!data.imgPath" src="assets/img/default/profile.jpg" class="object-cover">
+  <img *ngIf="data.imgPath" src="{{data.imgPath}}" class="object-cover"> -->
+  <img *ngFor='let preview of previews' [src]="preview" class="object-cover h-64 w-60">
+  <img *ngIf="!previews.length" src="{{data.imgPath}}" class="object-cover">
+</div>
+
+<mat-form-field class="cursor-pointer">
+  <div>
+    <input class="cursor-pointer" matInput [value]="selectedFileName.length ? selectedFileName : 'Select Profile Image'"
+      [multiple]="false" />
+
+    <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="false"
+      (change)="selectFiles($event)" />
+  </div>
+</mat-form-field>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onNoClick()">No Thanks</button>
+  <button mat-raised-button (click)="onOkClick()" cdkFocusInitial>Ok</button>
+</div>

@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ImgDialogComponent } from './imgDialog/img-dialog.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     EventOverviewComponent,
     EventContentComponent,
     DialogComponent,
+    ImgDialogComponent,
   ],
   exports: [
     SocialBarComponent,
@@ -46,6 +48,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     RaceResultsComponent,
     EventOverviewComponent,
     EventContentComponent,
+    ImgDialogComponent,
     DialogComponent,
   ],
 })
