@@ -1,11 +1,4 @@
-import { CountryInterface } from './country.interface';
+import { EventInterface } from './event.interface';
 
-export interface StoryInterface {
-  id: number;
-  title: string;
-  place: string;
-  country: CountryInterface;
-  // date: Date;
-  text: string;
-  imgNames: string[];
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface StoryInterface extends EventInterface {}

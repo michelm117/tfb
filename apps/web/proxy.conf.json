@@ -6,11 +6,11 @@
       "/riders": "/"
     }
   },
-  "/stories": {
-    "target": "http://localhost:3333/api/stories",
+  "/story": {
+    "target": "http://localhost:3333/api/story",
     "secure": false,
     "pathRewrite": {
-      "/stories": "/"
+      "/story": "/"
     }
   },
   "/abouttext": {

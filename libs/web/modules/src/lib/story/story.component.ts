@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
-import { Event } from '@tfb/api-interfaces';
+import { StoryInterface } from '@tfb/api-interfaces';
 import { FlagService, StoryService } from '@tfb/web/data';
+import { map, pipe } from 'rxjs';
 
 @Component({
   selector: 'tfb-story',
@@ -10,13 +11,12 @@ import { FlagService, StoryService } from '@tfb/web/data';
   styleUrls: ['./story.component.scss'],
 })
 export class StoryComponent implements OnInit {
-  story!: Event;
+  story!: StoryInterface;
   faTrophy = faTrophy;
-
-  onPodium = false;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private storyService: StoryService,
     private flagService: FlagService
   ) {}
@@ -28,14 +28,44 @@ export class StoryComponent implements OnInit {
         return;
       }
 
-      this.storyService.getStoriesById(id).subscribe((story) => {
-        this.story = story;
-        this.onPodium = story.podium;
+      this.storyService.getStory(id).subscribe((value) => {
+        if (!value.id) {
+          const res = <any>value;
+          if (res['status'] === 404) {
+            console.error('UPS');
+          }
+
+          return;
+        }
       });
     });
   }
 
   getFlag() {
-    return this.flagService.get(this.story.countryCode);
+    return this.flagService.get(this.story?.country.iso);
+  }
+
+  getDate() {
+    if (!this.story) {
+      return '';
+    }
+    const d = new Date(this.story.date);
+    return `${d.getUTCDate()}.${d.getMonth()}.${d.getFullYear()}`;
+  }
+
+  navigateToPage(url: string) {
+    this.router.navigate([url]);
+    this.scrollToTop();
+  }
+
+  scrollToTop() {
+    (function smoothscroll() {
+      const currentScroll =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      if (currentScroll > 550) {
+        window.requestAnimationFrame(smoothscroll);
+        window.scrollTo(0, currentScroll - currentScroll / 20);
+      }
+    })();
   }
 }

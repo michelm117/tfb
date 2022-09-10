@@ -7,4 +7,5 @@ export class CreateStoryDto {
   date: Date;
   text: string;
   imgNames: string[];
+  podium: boolean;
 }

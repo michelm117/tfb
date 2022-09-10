@@ -33,13 +33,23 @@ export const storage = {
   }),
 };
 
-@Controller('stories')
+@Controller('story')
 export class StoriesController {
   constructor(private readonly storiesService: StoriesService) {}
 
   @Post()
   create(@Body() createStoryDto: CreateStoryDto) {
     return this.storiesService.create(createStoryDto);
+  }
+
+  @Get('map')
+  getMap() {
+    return this.storiesService.getMap();
+  }
+
+  @Get('years')
+  getYears() {
+    return this.storiesService.getYears();
   }
 
   @Get()

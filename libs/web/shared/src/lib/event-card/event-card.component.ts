@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
-import { Event } from '@tfb/api-interfaces';
+import { EventInterface } from '@tfb/api-interfaces';
 import getUnicodeFlagIcon from 'country-flag-icons/unicode';
 
 @Component({
@@ -10,7 +10,7 @@ import getUnicodeFlagIcon from 'country-flag-icons/unicode';
   styleUrls: ['./event-card.component.scss'],
 })
 export class EventCardComponent implements OnInit {
-  @Input() event!: Event;
+  @Input() event!: EventInterface;
   @Input() urlPrefix = 'stories';
 
   faTrophy = faTrophy;
@@ -20,12 +20,13 @@ export class EventCardComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if (this.event) {
-      if (this.event?.podium == true) {
-        this.onPodium = true;
-      }
-      this.storyId = this.event.id;
+    console.log(this.event);
+
+    if (!this.event) {
+      return;
     }
+    this.onPodium = this.event.podium;
+    this.storyId = this.event.id;
   }
 
   shortenText(text: string, maxLength: number) {
@@ -56,7 +57,7 @@ export class EventCardComponent implements OnInit {
   }
 
   getFlag() {
-    const flag = getUnicodeFlagIcon(this.event.countryCode);
+    const flag = getUnicodeFlagIcon(this.event.country.iso);
     return flag;
   }
 }

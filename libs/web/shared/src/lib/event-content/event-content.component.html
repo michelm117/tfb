@@ -15,7 +15,7 @@
         <span>{{getFlag()}}</span>
       </div>
 
-      <div>{{event.country}}, </div>
+      <div>{{event.country.name}}, </div>
 
       <div class="w-full">{{event.place}}</div>
 
@@ -30,7 +30,7 @@
     {{event.text}}
   </div>
 
-  <tfb-gallery [imgUrls]=event.imgUrls [ngClass]="{'hide': event.imgUrls.length < 1}"></tfb-gallery>
+  <tfb-gallery *ngIf="event.imgNames.length > 0" [imgUrls]=event.imgNames></tfb-gallery>
 
   <div class="pt-10 md:pt-16">
     <tfb-race-results [raceId]="event.id"></tfb-race-results>

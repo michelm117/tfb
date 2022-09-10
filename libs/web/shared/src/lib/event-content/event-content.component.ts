@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
-import { Event } from '@tfb/api-interfaces';
+import { EventInterface } from '@tfb/api-interfaces';
 import { FlagService } from '@tfb/web/data';
 
 @Component({
@@ -9,7 +10,7 @@ import { FlagService } from '@tfb/web/data';
   styleUrls: ['./event-content.component.scss'],
 })
 export class EventContentComponent implements OnInit {
-  @Input() event!: Event;
+  event!: EventInterface;
   faTrophy = faTrophy;
   onPodium = false;
 
@@ -20,6 +21,6 @@ export class EventContentComponent implements OnInit {
   }
 
   getFlag() {
-    return this.flagService.get(this.event.countryCode);
+    return this.flagService.get(this.event.country.iso);
   }
 }

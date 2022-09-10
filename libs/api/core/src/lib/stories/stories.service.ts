@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { StoryInterface } from '@tfb/api-interfaces';
 import { Repository } from 'typeorm';
 import { CountryService } from '../country/country.service';
 import { Rider } from '../riders/entities/rider.entity';
@@ -21,11 +22,33 @@ export class StoriesService {
 
   async create(createStoryDto: CreateStoryDto) {
     const story = this.storiesRepository.create(createStoryDto);
+    if (!story.imgNames) {
+      story.imgNames = [];
+    }
     return await this.storiesRepository.save(story);
   }
 
   async findAll() {
     return await this.storiesRepository.find({ relations: ['country'] });
+  }
+
+  async getMap() {
+    const stories = await this.findAll();
+
+    const map: Record<number, StoryInterface[]> = {};
+    for (const story of stories) {
+      const year = new Date(story.date).getFullYear();
+      if (!map[year]) {
+        map[year] = [];
+      }
+      map[year].push(story);
+    }
+    return map;
+  }
+
+  async getYears() {
+    const map = await this.getMap();
+    return Object.keys(map);
   }
 
   async findOne(id: number) {

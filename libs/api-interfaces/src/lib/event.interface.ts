@@ -1,11 +1,12 @@
-export interface Event {
+import { CountryInterface } from './country.interface';
+
+export interface EventInterface {
   id: number;
   title: string;
   place: string;
-  country: string;
-  countryCode: string;
+  country: CountryInterface;
   date: Date;
   text: string;
-  imgUrls: string[];
+  imgNames: string[];
   podium: boolean;
 }
