@@ -22,6 +22,7 @@ export class StoryTabComponent implements OnInit {
   selectedDate: Date | undefined;
   selectedPodium = false;
   selectedContent = '';
+  selectedImages: string[] = [];
 
   faTrophy = faTrophy;
   faBan = faBan;
@@ -49,6 +50,7 @@ export class StoryTabComponent implements OnInit {
     this.selectedDate = clickedStory.date;
     this.selectedPodium = clickedStory.podium;
     this.selectedContent = clickedStory.text;
+    this.selectedImages = clickedStory.imgNames;
   }
 
   deselectStory() {
@@ -59,10 +61,15 @@ export class StoryTabComponent implements OnInit {
     // this.selectedDate?: Date;
     this.selectedPodium = false;
     this.selectedContent = '';
+    this.selectedImages = [];
   }
 
   getFlag(iso: string) {
     return this.flagService.get(iso);
+  }
+
+  getImage(imgName: string) {
+    return this.storyService.getPicture(imgName);
   }
 
   onSubmit() {

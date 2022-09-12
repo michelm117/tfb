@@ -11,5 +11,12 @@ table {
 
 .content-card {
   margin-top: 10px;
-  width: 480px;
+  width: 780px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  grid-gap: 1em;
+  justify-items: center;
 }

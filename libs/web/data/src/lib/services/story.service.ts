@@ -33,4 +33,8 @@ export class StoryService {
       responseType: 'json',
     });
   }
+
+  getPicture(imageName: string) {
+    return `${this.url}/image/${imageName}`;
+  }
 }

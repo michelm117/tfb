@@ -53,8 +53,8 @@
   </mat-card-title>
   <mat-card-content>
 
-    <div class="flex w-full justify-evenly">
-      <form class="flex flex-col justify-center content-card">
+    <div class="flex justify-between w-full">
+      <div class="flex flex-col justify-center w-full content-card">
         <mat-form-field appearance="fill">
           <mat-label>Titel</mat-label>
           <input matInput type="text" placeholder="Story titel" [value]="selectedTitel">
@@ -94,15 +94,17 @@
           <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="20"
             [value]="selectedContent"></textarea>
         </mat-form-field>
-      </form>
-
-      <div class="images">
-        <mat-card-subtitle>Images</mat-card-subtitle>
-
-        <div class="object-contain w-32 h-32">
-          <img src="assets/img/default/add_image.png" alt="">
-        </div>
       </div>
+
+      <mat-card class="w-full">
+        <mat-card-subtitle>Images</mat-card-subtitle>
+        <div class="flex card-grid">
+          <img class="object-cover w-32 h-32 m-5 cursor-pointer" src="assets/img/default/add_image.png" alt="">
+
+          <img *ngFor="let image of selectedStory?.imgNames" class="object-cover w-32 h-32 m-5 bg-gray-400"
+            src="{{getImage(image)}}" alt="">
+        </div>
+      </mat-card>
     </div>
 
   </mat-card-content>
