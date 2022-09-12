@@ -48,77 +48,105 @@
   </table>
 </mat-card>
 
-<mat-card class="w-full mx-auto">
-  <mat-card-title>{{!selectedStory ? 'Add a new story' : 'Update story #' + selectedStory!.id}}
-  </mat-card-title>
-  <mat-card-content>
+<mat-card>
+  <form [formGroup]="storyForm" (ngSubmit)="onSubmit()" class="w-full mx-auto">
+    <mat-card-title>{{!selectedStory ? 'Add a new story' : 'Update story #' + selectedStory!.id}}
+    </mat-card-title>
+    <mat-card-content>
+      <div class="flex w-full space-x-6">
+        <div class="flex flex-col w-full content-card">
+          <mat-form-field appearance="fill">
+            <mat-label>Titel</mat-label>
+            <input matInput type="text" placeholder="Story title" formControlName="title">
+            <mat-error *ngIf="f['title'].errors!">
+              This field is required
+            </mat-error>
+          </mat-form-field>
 
-    <div class="flex justify-between w-full">
-      <div class="flex flex-col justify-center w-full content-card">
-        <mat-form-field appearance="fill">
-          <mat-label>Titel</mat-label>
-          <input matInput type="text" placeholder="Story titel" [value]="selectedTitel">
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Place</mat-label>
+            <input matInput type="text" placeholder="Story place" formControlName="place">
+            <mat-error *ngIf="f['place'].errors!">
+              This field is required
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Place</mat-label>
-          <input matInput type="text" placeholder="Story place" [value]="selectedPlace">
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Country</mat-label>
+            <select matNativeControl required formControlName="country">
+              <option *ngFor="let country of countries" value="{{country}}">
+                {{getFlag(country.iso)}} {{country.name}}
+              </option>
+            </select>
+            <mat-error *ngIf="f['country'].errors!">
+              This field is required
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Country</mat-label>
+          <mat-form-field appearance="fill">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="f['date'].errors!">
+              This field is required
+            </mat-error>
+          </mat-form-field>
 
-          <mat-select [value]="selectedCountry ? selectedCountry.id : -1">
-            <mat-option *ngFor=" let country of countries" [value]="country.id">
-              {{getFlag(country.iso)}} {{country.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Date</mat-label>
-          <input matInput [matDatepicker]="picker" [value]="selectedDate">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <section>
-          <mat-checkbox class="example-margin" [(ngModel)]="selectedPodium">
-            <mat-label>Podium</mat-label>
-          </mat-checkbox>
-        </section>
+          <section>
+            <mat-checkbox class="example-margin" formControlName="podium">
+              <mat-label>Podium</mat-label>
+            </mat-checkbox>
+          </section>
 
 
-        <mat-form-field class="w-full" appearance="fill">
-          <mat-label>Content</mat-label>
-          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="20"
-            [value]="selectedContent"></textarea>
-        </mat-form-field>
+          <mat-form-field class="w-full" appearance="fill">
+            <mat-label>Content</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="20"
+              formControlName="content"></textarea>
+            <mat-error *ngIf="f['content'].errors!">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <mat-card class="w-full mb-4">
+          <mat-card-subtitle>Images</mat-card-subtitle>
+          <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
+            (change)="selectFiles($event)" />
+          <div class="flex card-grid">
+
+            <img *ngFor="let image of selectedStory?.imgNames" class="object-cover w-32 h-32 m-5 cursor-pointer"
+              src="{{getImage(image)}}" alt="" (click)="deleteImage(image)">
+
+            <img *ngFor='let preview of previews' [src]="preview" class="object-cover w-32 h-32 m-5">
+
+          </div>
+        </mat-card>
       </div>
 
-      <mat-card class="w-full">
-        <mat-card-subtitle>Images</mat-card-subtitle>
-        <div class="flex card-grid">
-          <img class="object-cover w-32 h-32 m-5 cursor-pointer" src="assets/img/default/add_image.png" alt="">
-
-          <img *ngFor="let image of selectedStory?.imgNames" class="object-cover w-32 h-32 m-5 bg-gray-400"
-            src="{{getImage(image)}}" alt="">
-        </div>
-      </mat-card>
-    </div>
-
-  </mat-card-content>
+    </mat-card-content>
 
 
 
-  <mat-divider inset></mat-divider>
+    <mat-divider inset></mat-divider>
 
-  <mat-card-actions align="end">
-    <button *ngIf="!selectedStory" mat-button mat-raised-button color="warn">Add new Story</button>
-    <button *ngIf="selectedStory" mat-button mat-raised-button color="warn">Update Story</button>
-  </mat-card-actions>
+    <mat-card-actions align="end">
+      <button *ngIf="selectedStory" mat-button mat-raised-button (click)="resetSelection()">
+        Reset Selection
+      </button>
 
-  <mat-card-footer>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </mat-card-footer>
+      <button *ngIf="!selectedStory" mat-button mat-raised-button color="warn" type="submit">
+        Add new Story
+      </button>
+      <button *ngIf="selectedStory" mat-button mat-raised-button color="warn" type="submit">
+        Update Story
+      </button>
+    </mat-card-actions>
+
+    <mat-card-footer>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+  </form>
 </mat-card>

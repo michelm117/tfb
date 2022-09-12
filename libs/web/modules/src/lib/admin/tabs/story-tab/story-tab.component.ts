@@ -3,6 +3,15 @@ import { CountryInterface, StoryInterface } from '@tfb/api-interfaces';
 import { CountryService, FlagService, StoryService } from '@tfb/web/data';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '@tfb/web/shared';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'tfb-story-tab',
@@ -14,15 +23,13 @@ export class StoryTabComponent implements OnInit {
 
   displayedColumns = ['id', 'title', 'place', 'country', 'date', 'podium'];
 
-  stories: StoryInterface[] = [];
   selectedStory: StoryInterface | undefined;
-  selectedTitel = '';
-  selectedPlace = '';
-  selectedCountry?: CountryInterface;
-  selectedDate: Date | undefined;
-  selectedPodium = false;
-  selectedContent = '';
-  selectedImages: string[] = [];
+  stories: StoryInterface[] = [];
+  storyForm!: FormGroup;
+
+  previews: string[] = [];
+  selectedFiles?: FileList;
+  selectedFileNames: string[] = [];
 
   faTrophy = faTrophy;
   faBan = faBan;
@@ -30,38 +37,36 @@ export class StoryTabComponent implements OnInit {
   constructor(
     private storyService: StoryService,
     private countryService: CountryService,
-    private flagService: FlagService
+    public dialog: MatDialog,
+    private flagService: FlagService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.storyService.getStories().subscribe((stories) => {
-      this.stories = stories;
+    this.storyForm = this.formBuilder.group({
+      title: ['', [Validators.required]],
+      place: ['', [Validators.required]],
+      content: ['', [Validators.required]],
+      podium: [false, [Validators.required]],
+      country: [null, [Validators.required]],
+      date: [null, [Validators.required]],
     });
+    this.fetchStories();
     this.countryService.getCountries().subscribe((countries) => {
       this.countries = countries;
     });
   }
 
   updateSelectedStory(clickedStory: StoryInterface) {
+    this.storyForm.setValue({
+      title: clickedStory.title,
+      content: clickedStory.text,
+      country: clickedStory.country,
+      date: clickedStory.date,
+      place: clickedStory.place,
+      podium: clickedStory.podium,
+    });
     this.selectedStory = clickedStory;
-    this.selectedTitel = clickedStory.title;
-    this.selectedPlace = clickedStory.place;
-    this.selectedCountry = clickedStory.country;
-    this.selectedDate = clickedStory.date;
-    this.selectedPodium = clickedStory.podium;
-    this.selectedContent = clickedStory.text;
-    this.selectedImages = clickedStory.imgNames;
-  }
-
-  deselectStory() {
-    this.selectedStory = undefined;
-    this.selectedTitel = '';
-    this.selectedPlace = '';
-    // this.selectedCountry?: CountryInterface;
-    // this.selectedDate?: Date;
-    this.selectedPodium = false;
-    this.selectedContent = '';
-    this.selectedImages = [];
   }
 
   getFlag(iso: string) {
@@ -72,15 +77,73 @@ export class StoryTabComponent implements OnInit {
     return this.storyService.getPicture(imgName);
   }
 
+  addImage() {
+    console.log('CLICK');
+  }
+
+  selectFiles(event: any): void {
+    this.selectedFiles = event.target.files;
+    this.selectedFiles = event.target.files;
+    this.previews = [];
+    if (this.selectedFiles && this.selectedFiles[0]) {
+      const numberOfFiles = this.selectedFiles.length;
+      for (let i = 0; i < numberOfFiles; i++) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.previews.push(e.target.result);
+        };
+        reader.readAsDataURL(this.selectedFiles[i]);
+        this.selectedFileNames.push(this.selectedFiles[i].name);
+      }
+    }
+  }
+
   onSubmit() {
-    // this.riderService.addRider(name, surname, country).subscribe((rider) => {
-    //   if (this.selectedFiles && this.selectedFiles[0]) {
-    //     this.riderService
-    //       .uploadImage(rider.id, this.selectedFiles[0])
-    //       .subscribe((imgName) => {
-    //         console.log(imgName);
-    //       });
-    //   }
-    // this.refreshRiders.emit();
+    console.log('SUBMIT');
+  }
+
+  addNewStory() {
+    console.log('ADD STORY');
+  }
+
+  deleteImage(imageName: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '450px',
+      data: {
+        titel: 'Deleting Image?',
+        text: 'Are you sure you want to delete the selected image?',
+      },
+    });
+
+    const dialogSubmitSubscription =
+      dialogRef.componentInstance.submitClicked.subscribe((result) => {
+        // this.riderService.deleteRider(id).subscribe(() => {
+        //   this.refreshRiders.emit();
+        // });
+        this.fetchStories();
+        dialogSubmitSubscription.unsubscribe();
+      });
+  }
+
+  resetSelection() {
+    this.storyForm.setValue({
+      title: '',
+      content: '',
+      country: null,
+      date: null,
+      place: '',
+      podium: false,
+    });
+    this.selectedStory = undefined;
+  }
+
+  private fetchStories() {
+    this.storyService.getStories().subscribe((stories) => {
+      this.stories = stories;
+    });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.storyForm.controls;
   }
 }
