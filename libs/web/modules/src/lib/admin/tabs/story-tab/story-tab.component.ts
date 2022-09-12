@@ -8,7 +8,6 @@ import { DialogComponent } from '@tfb/web/shared';
 import {
   AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -48,7 +47,7 @@ export class StoryTabComponent implements OnInit {
       place: ['', [Validators.required]],
       content: ['', [Validators.required]],
       podium: [false, [Validators.required]],
-      country: [null, [Validators.required]],
+      country: [-1, [Validators.required]],
       date: [null, [Validators.required]],
     });
     this.fetchStories();
@@ -61,7 +60,7 @@ export class StoryTabComponent implements OnInit {
     this.storyForm.setValue({
       title: clickedStory.title,
       content: clickedStory.text,
-      country: clickedStory.country,
+      country: clickedStory.country.id,
       date: clickedStory.date,
       place: clickedStory.place,
       podium: clickedStory.podium,
@@ -99,11 +98,43 @@ export class StoryTabComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('SUBMIT');
+    const title = this.storyForm.get('title')?.value;
+    const place = this.storyForm.get('place')?.value;
+    const text = this.storyForm.get('content')?.value;
+    const podium = this.storyForm.get('podium')?.value;
+    const country = this.storyForm.get('country')?.value;
+    const date = this.storyForm.get('date')?.value;
+
+    const storyDto: Partial<StoryInterface> = {
+      title,
+      place,
+      text,
+      podium,
+      country,
+      date,
+    };
+    if (this.selectedStory) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { imgNames, ...updateStory } = storyDto;
+      this.updateStory(this.selectedStory.id, updateStory);
+    } else {
+      this.createStory(storyDto);
+    }
   }
 
-  addNewStory() {
-    console.log('ADD STORY');
+  updateStory(id: number, story: Partial<StoryInterface>) {
+    this.storyService.updateStory(id, story).subscribe((res) => {
+      console.log(res);
+      this.fetchStories();
+    });
+  }
+
+  createStory(story: Partial<StoryInterface>) {
+    console.log('Create', JSON.stringify(story));
+
+    this.storyService.createStory(story).subscribe((story) => {
+      console.log(story);
+    });
   }
 
   deleteImage(imageName: string) {
@@ -129,7 +160,7 @@ export class StoryTabComponent implements OnInit {
     this.storyForm.setValue({
       title: '',
       content: '',
-      country: null,
+      country: -1,
       date: null,
       place: '',
       podium: false,

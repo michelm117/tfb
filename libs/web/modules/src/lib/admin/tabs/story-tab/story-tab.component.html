@@ -74,7 +74,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Country</mat-label>
             <select matNativeControl required formControlName="country">
-              <option *ngFor="let country of countries" value="{{country}}">
+              <option *ngFor="let country of countries" [ngValue]="country.id">
                 {{getFlag(country.iso)}} {{country.name}}
               </option>
             </select>
@@ -116,19 +116,14 @@
           <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
             (change)="selectFiles($event)" />
           <div class="flex card-grid">
-
             <img *ngFor="let image of selectedStory?.imgNames" class="object-cover w-32 h-32 m-5 cursor-pointer"
               src="{{getImage(image)}}" alt="" (click)="deleteImage(image)">
 
             <img *ngFor='let preview of previews' [src]="preview" class="object-cover w-32 h-32 m-5">
-
           </div>
         </mat-card>
       </div>
-
     </mat-card-content>
-
-
 
     <mat-divider inset></mat-divider>
 

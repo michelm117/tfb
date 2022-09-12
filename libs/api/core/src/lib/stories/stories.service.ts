@@ -67,7 +67,10 @@ export class StoriesService {
     if (!story) {
       return;
     }
+
     const country = updateStoryDto.country;
+    console.log('OK', JSON.stringify(country));
+
     if (country) {
       const countryEntity = await this.countryService.findOne(country.id);
       if (!countryEntity) {
@@ -76,6 +79,8 @@ export class StoriesService {
       story.country = countryEntity;
     }
     const newStory = { ...story, ...updateStoryDto };
+    console.log(JSON.stringify(newStory));
+
     return await this.storiesRepository.update(id, newStory);
   }
 
