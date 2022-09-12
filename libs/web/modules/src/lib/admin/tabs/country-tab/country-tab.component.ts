@@ -62,7 +62,6 @@ export class CountryTabComponent implements OnInit {
   }
 
   add(id: number) {
-    console.log(id);
     const countries = this.countries.filter((country) => country.id === id);
     if (countries.length !== 1) {
       return;
