@@ -24,6 +24,7 @@ export class StoryComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => {
       const id = params['id'];
+
       if (!id) {
         return;
       }
@@ -32,10 +33,11 @@ export class StoryComponent implements OnInit {
         if (!value.id) {
           const res = <any>value;
           if (res['status'] === 404) {
-            console.error('UPS');
+            this.router.navigate(['404']);
           }
-
           return;
+        } else {
+          this.story = value;
         }
       });
     });
