@@ -55,6 +55,15 @@ export class StoryComponent implements OnInit {
     return `${d.getUTCDate()}.${d.getMonth()}.${d.getFullYear()}`;
   }
 
+  getImageUrls() {
+    const urls: string[] = [];
+    for (const imgName of this.story.imgNames) {
+      const url = this.storyService.getPicture(imgName);
+      urls.push(url);
+    }
+    return urls;
+  }
+
   navigateToPage(url: string) {
     this.router.navigate([url]);
     this.scrollToTop();
