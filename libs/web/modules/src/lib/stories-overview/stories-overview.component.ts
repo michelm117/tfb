@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventInterface, StoryInterface } from '@tfb/api-interfaces';
+import { StoryInterface } from '@tfb/api-interfaces';
 import { StoryService } from '@tfb/web/data';
 
 @Component({

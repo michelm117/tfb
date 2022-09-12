@@ -31,6 +31,7 @@ import { DeleteRiderPanelComponent } from './admin/tabs/rider-tab/panels/delete-
 import UpdateRiderPanelComponent from './admin/tabs/rider-tab/panels/update-rider-panel/update-rider-panel.component';
 import { AddRiderPanelComponent } from './admin/tabs/rider-tab/panels/add-rider-panel/add-rider-panel.component';
 import { CountryTabComponent } from './admin/tabs/country-tab/country-tab.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,14 @@ const routes: Routes = [
         component: AdminComponent,
       },
     ],
+  },
+  {
+    path: '404',
+    component: PageNotFoundComponent,
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
   },
 ];
 @NgModule({
@@ -109,6 +118,7 @@ const routes: Routes = [
     UpdateRiderPanelComponent,
     AddRiderPanelComponent,
     CountryTabComponent,
+    PageNotFoundComponent,
   ],
   exports: [AboutComponent, StoriesOverviewComponent],
 })
