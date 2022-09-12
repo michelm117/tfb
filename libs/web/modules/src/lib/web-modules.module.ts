@@ -19,13 +19,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { StoryTabComponent } from './admin/tabs/story-tab/story-tab.component';
 import { RaceTabComponent } from './admin/tabs/race-tab/race-tab.component';
 import { CalendarTabComponent } from './admin/tabs/calendar-tab/calendar-tab.component';
 import { AboutTabComponent } from './admin/tabs/about-tab/about-tab.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { DeleteRiderPanelComponent } from './admin/tabs/rider-tab/panels/delete-rider-panel/delete-rider-panel.component';
 import UpdateRiderPanelComponent from './admin/tabs/rider-tab/panels/update-rider-panel/update-rider-panel.component';
@@ -100,6 +104,10 @@ const routes: Routes = [
     MatDialogModule,
     MatTableModule,
     MatSortModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatProgressBarModule,
     NgxMatFileInputModule,
   ],
   declarations: [

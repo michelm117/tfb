@@ -1,8 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CountryInterface, RiderInterface } from '@tfb/api-interfaces';
 import { CountryService, FlagService, RiderService } from '@tfb/web/data';
-import { FormControl, Validators } from '@angular/forms';
-import { MaxSizeValidator } from '@angular-material-components/file-input';
 
 @Component({
   selector: 'tfb-rider-tab',

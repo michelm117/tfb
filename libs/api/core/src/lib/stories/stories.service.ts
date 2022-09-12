@@ -84,13 +84,13 @@ export class StoriesService {
   }
 
   async addPicture(id: number, filename: string) {
-    const rider = await this.storiesRepository.findOneBy({ id });
-    if (!rider) {
+    const story = await this.storiesRepository.findOneBy({ id });
+    if (!story) {
       return;
     }
 
     // Adding new image to array
-    let images = rider.imgNames;
+    let images = story.imgNames;
     if (!images) {
       images = [];
     }
