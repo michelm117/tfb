@@ -12,6 +12,7 @@ import getUnicodeFlagIcon from 'country-flag-icons/unicode';
 export class EventCardComponent implements OnInit {
   @Input() event!: EventInterface;
   @Input() urlPrefix = 'stories';
+  @Input() thumbnail = '';
 
   faTrophy = faTrophy;
   onPodium = false;
@@ -20,8 +21,6 @@ export class EventCardComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    console.log(this.event);
-
     if (!this.event) {
       return;
     }
@@ -59,5 +58,10 @@ export class EventCardComponent implements OnInit {
   getFlag() {
     const flag = getUnicodeFlagIcon(this.event.country.iso);
     return flag;
+  }
+
+  getThumbnail() {
+    const url = this.thumbnail;
+    return url;
   }
 }

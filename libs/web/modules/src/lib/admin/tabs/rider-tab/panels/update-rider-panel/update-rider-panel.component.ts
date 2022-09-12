@@ -68,9 +68,7 @@ export default class UpdateRiderPanelComponent implements OnInit {
   updatedClicked(id: number) {
     this.editing.set(id, false);
     const rider = this.getRiderFromId(id);
-    this.riderService.updateRider(rider).subscribe((res) => {
-      console.log(res);
-    });
+    this.riderService.updateRider(rider).subscribe();
   }
 
   private openDialog(id: number): void {
@@ -91,7 +89,6 @@ export default class UpdateRiderPanelComponent implements OnInit {
           return;
         }
         this.riderService.uploadImage(id, fileList[0]).subscribe((res) => {
-          console.log(res);
           this.refreshRiders.emit();
         });
 

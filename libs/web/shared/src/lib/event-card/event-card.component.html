@@ -2,8 +2,7 @@
   <div>
     <div class="transition duration-500 transform shadow-2xl hover:scale-105">
       <div>
-        <img class="object-cover w-full h-52" src={{event.imgNames[0]}} *ngIf="event.imgNames.length > 0" />
-        <img class="object-cover w-full h-52" src="assets/img/default/story.jpg" *ngIf="event.imgNames.length === 0" />
+        <img class="object-cover w-full h-52" src={{getThumbnail()}} />
         <div class="flex flex-col px-4 py-2">
           <h1 class="text-xl font-gray-700 font-bold truncate ...">{{event.title}}</h1>
           <div class="flex mt-2 space-x-2">
@@ -25,7 +24,7 @@
                   <span class="mr-2">{{getFlag()}}</span>{{event!.country.name}}
                 </div>
               </div>
-              <div class="flex items-center h-full py-2 mb-auto ml-auto mr-4" [ngClass]="{'invisible': !onPodium}">
+              <div class="flex items-center h-full py-2 mb-auto ml-auto mr-4" *ngIf="onPodium">
                 <fa-icon [icon]="faTrophy"></fa-icon>
               </div>
             </div>

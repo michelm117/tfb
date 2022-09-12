@@ -11,6 +11,7 @@ export class EventOverviewComponent {
   @Input() urlPrefix = 'stories';
   @Input() events: Record<string, EventInterface[]> = {};
   @Input() years: string[] = [];
+  @Input() thumbnails: Record<string, string> = {};
 
   getEventsFromYear(year: string): EventInterface[] {
     const stories = this.events[year];
@@ -18,5 +19,10 @@ export class EventOverviewComponent {
       return stories;
     }
     return [];
+  }
+
+  getEventThumbnail(eventId: number) {
+    const url = this.thumbnails[eventId];
+    return url;
   }
 }

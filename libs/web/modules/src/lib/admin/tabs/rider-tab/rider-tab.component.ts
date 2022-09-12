@@ -31,8 +31,6 @@ export class RiderTabComponent implements OnInit {
   }
 
   refreshRiders($event: any) {
-    console.log('Refreshing riders');
-
     this.riderService.getRiders().subscribe((riders) => {
       this.riders = riders;
     });

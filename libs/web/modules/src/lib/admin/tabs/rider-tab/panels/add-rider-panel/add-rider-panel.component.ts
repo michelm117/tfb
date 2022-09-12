@@ -60,14 +60,11 @@ export class AddRiderPanelComponent {
       return;
     }
 
-    console.log(name, surname, country);
     this.riderService.addRider(name, surname, country).subscribe((rider) => {
       if (this.selectedFiles && this.selectedFiles[0]) {
         this.riderService
           .uploadImage(rider.id, this.selectedFiles[0])
-          .subscribe((imgName) => {
-            console.log(imgName);
-          });
+          .subscribe();
       }
 
       this.refreshRiders.emit();
