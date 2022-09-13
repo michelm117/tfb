@@ -80,9 +80,7 @@ export class StoryService {
     );
   }
 
-  deleteImage(imageName: string) {
-    // return this.http.post<StoryInterface>(this.url, story, {
-    //   responseType: 'json',
-    // });
+  deleteStory(id: number) {
+    return this.http.delete<any>(`${this.url}/${id}`, { responseType: 'json' });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CountryInterface, StoryInterface } from '@tfb/api-interfaces';
 import { CountryService, FlagService, StoryService } from '@tfb/web/data';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +9,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { forkJoin, Observable, of } from 'rxjs';
@@ -31,6 +32,8 @@ export class StoryTabComponent implements OnInit {
   selectedFiles?: FileList = undefined;
   selectedFileNames: string[] = [];
 
+  createNewStory = true;
+
   faTrophy = faTrophy;
   faBan = faBan;
   showLoading = false;
@@ -47,9 +50,9 @@ export class StoryTabComponent implements OnInit {
     this.storyForm = this.formBuilder.group({
       title: ['', [Validators.required]],
       place: ['', [Validators.required]],
-      content: ['', [Validators.required]],
+      content: ['', [Validators.required, Validators.minLength(450)]],
       podium: [false, [Validators.required]],
-      country: [-1, [Validators.required]],
+      country: [-1, [Validators.required, Validators.min(0)]],
       date: [null, [Validators.required]],
     });
     this.fetchStories();
@@ -58,7 +61,7 @@ export class StoryTabComponent implements OnInit {
     });
   }
 
-  updateSelectedStory(clickedStory: StoryInterface) {
+  rowClicked(clickedStory: StoryInterface) {
     this.storyForm.setValue({
       title: clickedStory.title,
       content: clickedStory.text,
@@ -68,6 +71,7 @@ export class StoryTabComponent implements OnInit {
       podium: clickedStory.podium,
     });
     this.selectedStory = clickedStory;
+    this.createNewStory = false;
   }
 
   getFlag(iso: string) {
@@ -99,13 +103,11 @@ export class StoryTabComponent implements OnInit {
   }
 
   async onSubmit() {
-    // Update Story
-    if (!this.selectedStory) {
+    if (this.getFormValidationErrors()?.length > 0) {
       return;
     }
     this.showLoading = true;
 
-    const id = this.selectedStory.id;
     const title = this.storyForm.get('title')?.value;
     const place = this.storyForm.get('place')?.value;
     const text = this.storyForm.get('content')?.value;
@@ -120,12 +122,56 @@ export class StoryTabComponent implements OnInit {
       text,
       podium,
       date,
-      imgNames: this.selectedStory.imgNames,
+      imgNames: [],
     };
 
-    // First upload images and then update selected story with the returned
-    // imageNames.
+    if (this.createNewStory) {
+      // Create Story
+      this.storyService.createStory(story).subscribe((story) => {
+        // Update the new story locally
+        if (this.selectedFiles) {
+          this.uploadImagesAndUpdateStory(story.id, story);
+        } else {
+          this.fetchStories();
+        }
+      });
+    } else {
+      // Update Story
+      if (!this.selectedStory) {
+        return;
+      }
+
+      const id = this.selectedStory.id;
+      story.imgNames = this.selectedStory.imgNames;
+
+      if (this.selectedFiles) {
+        // Upload selected images and update the story with the generated image names
+        this.uploadImagesAndUpdateStory(id, story);
+      } else {
+        // No images where added
+        this.storyService.updateStory(id, story).subscribe((story) => {
+          // Update the new story locally
+          this.updateLocalStory(id, story);
+        });
+      }
+    }
+  }
+
+  deleteStory() {
+    this.showLoading = true;
+    if (!this.selectedStory) {
+      return;
+    }
+    const id = this.selectedStory.id;
+    this.storyService.deleteStory(id).subscribe((res) => {
+      console.log(res);
+      this.fetchStories();
+    });
+  }
+
+  uploadImagesAndUpdateStory(id: number, story: Partial<StoryInterface>) {
     if (this.selectedFiles) {
+      // Create array of tasks. One task is to upload an image
       const tasks: Observable<{ imagePath: string }>[] = [];
       for (let i = 0; i < this.selectedFiles.length; i++) {
         const file = this.selectedFiles.item(i);
@@ -136,6 +182,7 @@ export class StoryTabComponent implements OnInit {
         tasks.push(task);
       }
 
+      // Upload all images and the update the story with the given image names
       forkJoin(tasks).subscribe((res) => {
         const addedImages: string[] = [];
         for (let i = 0; i < res.length; i++) {
@@ -143,52 +190,23 @@ export class StoryTabComponent implements OnInit {
           addedImages.push(imageName);
         }
 
-        if (!this.selectedStory) {
-          return;
+        if (this.selectedStory) {
+          // add old images
+          story.imgNames = addedImages.concat(this.selectedStory.imgNames);
+        } else {
+          story.imgNames = addedImages;
         }
-        const updatedImageNames = addedImages.concat(
-          this.selectedStory?.imgNames
-        );
-        console.log(updatedImageNames);
-        story.imgNames = updatedImageNames;
+
         this.storyService.updateStory(id, story).subscribe((story) => {
-          console.log(story);
-          if (!this.selectedStory) {
-            return;
-          }
-          this.selectedStory.imgNames = updatedImageNames;
-          this.selectedFileNames = [];
-          this.selectedFiles = undefined;
-          this.previews = [];
-          this.fetchStories();
+          this.updateLocalStory(id, story);
         });
-      });
-    } else {
-      this.storyService.updateStory(id, story).subscribe((story) => {
-        // Update the new story locally
-        this.stories.find((a) => {
-          if (a.id === id) {
-            a = story;
-          }
-        });
-        this.selectedStory = story;
-        this.showLoading = false;
       });
     }
-  }
-
-  updateStory(id: number, story: Partial<StoryInterface>) {
-    this.showLoading = true;
-    this.storyService.updateStory(id, story).subscribe((res) => {
-      console.log(res);
-      this.fetchStories();
-    });
   }
 
   createStory(story: Partial<StoryInterface>) {
     this.showLoading = true;
     this.storyService.createStory(story).subscribe((story) => {
-      console.log(story);
       this.fetchStories();
     });
   }
@@ -203,7 +221,7 @@ export class StoryTabComponent implements OnInit {
     });
 
     const dialogSubmitSubscription =
-      dialogRef.componentInstance.submitClicked.subscribe((result) => {
+      dialogRef.componentInstance.submitClicked.subscribe(() => {
         this.selectedStory?.imgNames.forEach((img, index) => {
           if (imageName === img) this.selectedStory?.imgNames.splice(index, 1);
         });
@@ -225,22 +243,65 @@ export class StoryTabComponent implements OnInit {
       podium: false,
     });
     this.selectedStory = undefined;
+    this.createNewStory = true;
   }
 
   private fetchStories() {
     this.storyService.getStories().subscribe((stories) => {
+      stories.sort((a, b) => {
+        return a.id - b.id;
+      });
       this.stories = stories;
+      this.resetSelection();
+      this.showLoading = false;
     });
-    this.showLoading = false;
+  }
+
+  private updateLocalStory(id: number, story: StoryInterface) {
+    console.log('updateLocalStory');
+
+    const foundIndex = this.stories.findIndex((x) => x.id == id);
+    if (foundIndex >= 0) {
+      this.stories[foundIndex] = story;
+    }
+
+    this.selectedStory = story;
+
+    // Reset selection
+    this.selectedFileNames = [];
+    this.selectedFiles = undefined;
+    this.previews = [];
+
+    this.fetchStories();
   }
 
   get f(): { [key: string]: AbstractControl } {
     return this.storyForm.controls;
   }
 
-  async delay(ms: number) {
-    await new Promise<void>((resolve) => setTimeout(() => resolve(), ms)).then(
-      () => console.log('fired')
-    );
+  getFormValidationErrors() {
+    const result: any[] = [];
+
+    if (!this.storyForm) {
+      return result;
+    }
+    Object.keys(this.storyForm.controls).forEach((key) => {
+      const control = this.storyForm.get(key);
+      if (!control) {
+        return;
+      }
+      const controlErrors: ValidationErrors | null = control.errors;
+      if (controlErrors) {
+        Object.keys(controlErrors).forEach((keyError) => {
+          result.push({
+            control: key,
+            error: keyError,
+            value: controlErrors[keyError],
+          });
+        });
+      }
+    });
+
+    return result;
   }
 }

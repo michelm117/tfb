@@ -80,8 +80,6 @@ export class StoriesService {
     }
 
     // Remove deleted images
-    console.log('NEW IMAGES:', updateStoryDto.imgNames);
-
     if (updateStoryDto.imgNames) {
       const diff = story.imgNames.filter((item) => {
         if (updateStoryDto.imgNames) {

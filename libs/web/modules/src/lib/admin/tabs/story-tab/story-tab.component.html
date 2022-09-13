@@ -42,7 +42,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row (click)="updateSelectedStory(story)" class="cursor-pointer content-row"
+    <tr mat-row (click)="rowClicked(story)" class="cursor-pointer content-row"
       [class.demo-row-is-clicked]="selectedStory && selectedStory.id === story?.id"
       *matRowDef="let story; columns: displayedColumns;"></tr>
   </table>
@@ -57,7 +57,7 @@
         <div class="flex flex-col w-full content-card">
           <mat-form-field appearance="fill">
             <mat-label>Titel</mat-label>
-            <input matInput type="text" placeholder="Story title" formControlName="title">
+            <input matInput type="text" placeholder="Story title" formControlName="title" autocomplete="off">
             <mat-error *ngIf="f['title'].errors!">
               This field is required
             </mat-error>
@@ -65,7 +65,7 @@
 
           <mat-form-field appearance="fill">
             <mat-label>Place</mat-label>
-            <input matInput type="text" placeholder="Story place" formControlName="place">
+            <input matInput type="text" placeholder="Story place" formControlName="place" autocomplete="off">
             <mat-error *ngIf="f['place'].errors!">
               This field is required
             </mat-error>
@@ -85,11 +85,11 @@
 
           <mat-form-field appearance="fill">
             <mat-label>Date</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="date">
+            <input matInput [matDatepicker]="picker" formControlName="date" autocomplete="off">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-            <mat-error *ngIf="f['date'].errors!">
-              This field is required
+            <mat-error *ngIf="f['date']!.errors!">
+              This field is required (MM/DD/YY)
             </mat-error>
           </mat-form-field>
 
@@ -103,9 +103,9 @@
           <mat-form-field class="w-full" appearance="fill">
             <mat-label>Content</mat-label>
             <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="20"
-              formControlName="content"></textarea>
+              formControlName="content" autocomplete="off"></textarea>
             <mat-error *ngIf="f['content'].errors!">
-              This field is required
+              This field is required (min. 450 characters)
             </mat-error>
           </mat-form-field>
 
@@ -113,8 +113,10 @@
 
         <mat-card class="w-full mb-4">
           <mat-card-subtitle>Images</mat-card-subtitle>
+          <!-- image input -->
           <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
             (change)="selectFiles($event)" />
+
           <div class="flex card-grid">
             <!-- current images -->
             <img *ngFor="let image of selectedStory?.imgNames" class="object-cover w-32 h-32 m-5 cursor-pointer"
@@ -139,6 +141,9 @@
       </button>
       <button *ngIf="selectedStory" mat-button mat-raised-button color="warn" type="submit">
         Update Story
+      </button>
+      <button *ngIf="selectedStory" mat-button mat-raised-button color="accent" (click)="deleteStory()">
+        Delete Story
       </button>
     </mat-card-actions>
 
