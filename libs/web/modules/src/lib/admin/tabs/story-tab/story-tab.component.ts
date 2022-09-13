@@ -11,6 +11,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { forkJoin, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'tfb-story-tab',
@@ -27,11 +28,12 @@ export class StoryTabComponent implements OnInit {
   storyForm!: FormGroup;
 
   previews: string[] = [];
-  selectedFiles?: FileList;
+  selectedFiles?: FileList = undefined;
   selectedFileNames: string[] = [];
 
   faTrophy = faTrophy;
   faBan = faBan;
+  showLoading = false;
 
   constructor(
     private storyService: StoryService,
@@ -82,7 +84,6 @@ export class StoryTabComponent implements OnInit {
 
   selectFiles(event: any): void {
     this.selectedFiles = event.target.files;
-    this.selectedFiles = event.target.files;
     this.previews = [];
     if (this.selectedFiles && this.selectedFiles[0]) {
       const numberOfFiles = this.selectedFiles.length;
@@ -97,7 +98,14 @@ export class StoryTabComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
+    // Update Story
+    if (!this.selectedStory) {
+      return;
+    }
+    this.showLoading = true;
+
+    const id = this.selectedStory.id;
     const title = this.storyForm.get('title')?.value;
     const place = this.storyForm.get('place')?.value;
     const text = this.storyForm.get('content')?.value;
@@ -105,24 +113,72 @@ export class StoryTabComponent implements OnInit {
     const country = this.storyForm.get('country')?.value;
     const date = this.storyForm.get('date')?.value;
 
-    const storyDto: Partial<StoryInterface> = {
+    const story: Partial<StoryInterface> = {
       title,
+      country,
       place,
       text,
       podium,
-      country,
       date,
+      imgNames: this.selectedStory.imgNames,
     };
-    if (this.selectedStory) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { imgNames, ...updateStory } = storyDto;
-      this.updateStory(this.selectedStory.id, updateStory);
+
+    // First upload images and then update selected story with the returned
+    // imageNames.
+    if (this.selectedFiles) {
+      const tasks: Observable<{ imagePath: string }>[] = [];
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        const file = this.selectedFiles.item(i);
+        if (!file) {
+          continue;
+        }
+        const task = this.storyService.uploadImage(id, file);
+        tasks.push(task);
+      }
+
+      forkJoin(tasks).subscribe((res) => {
+        const addedImages: string[] = [];
+        for (let i = 0; i < res.length; i++) {
+          const imageName = res[i].imagePath;
+          addedImages.push(imageName);
+        }
+
+        if (!this.selectedStory) {
+          return;
+        }
+        const updatedImageNames = addedImages.concat(
+          this.selectedStory?.imgNames
+        );
+        console.log(updatedImageNames);
+        story.imgNames = updatedImageNames;
+        this.storyService.updateStory(id, story).subscribe((story) => {
+          console.log(story);
+          if (!this.selectedStory) {
+            return;
+          }
+          this.selectedStory.imgNames = updatedImageNames;
+          this.selectedFileNames = [];
+          this.selectedFiles = undefined;
+          this.previews = [];
+          this.fetchStories();
+        });
+      });
     } else {
-      this.createStory(storyDto);
+      this.storyService.updateStory(id, story).subscribe((story) => {
+        // Update the new story locally
+        this.stories.find((a) => {
+          if (a.id === id) {
+            a = story;
+          }
+        });
+        this.selectedStory = story;
+        this.showLoading = false;
+      });
     }
   }
 
   updateStory(id: number, story: Partial<StoryInterface>) {
+    this.showLoading = true;
     this.storyService.updateStory(id, story).subscribe((res) => {
       console.log(res);
       this.fetchStories();
@@ -130,10 +186,10 @@ export class StoryTabComponent implements OnInit {
   }
 
   createStory(story: Partial<StoryInterface>) {
-    console.log('Create', JSON.stringify(story));
-
+    this.showLoading = true;
     this.storyService.createStory(story).subscribe((story) => {
       console.log(story);
+      this.fetchStories();
     });
   }
 
@@ -148,12 +204,15 @@ export class StoryTabComponent implements OnInit {
 
     const dialogSubmitSubscription =
       dialogRef.componentInstance.submitClicked.subscribe((result) => {
-        // this.riderService.deleteRider(id).subscribe(() => {
-        //   this.refreshRiders.emit();
-        // });
-        this.fetchStories();
+        this.selectedStory?.imgNames.forEach((img, index) => {
+          if (imageName === img) this.selectedStory?.imgNames.splice(index, 1);
+        });
         dialogSubmitSubscription.unsubscribe();
       });
+  }
+
+  uploadImage(id: number, file: File) {
+    return this.storyService.uploadImage(id, file);
   }
 
   resetSelection() {
@@ -172,9 +231,16 @@ export class StoryTabComponent implements OnInit {
     this.storyService.getStories().subscribe((stories) => {
       this.stories = stories;
     });
+    this.showLoading = false;
   }
 
   get f(): { [key: string]: AbstractControl } {
     return this.storyForm.controls;
+  }
+
+  async delay(ms: number) {
+    await new Promise<void>((resolve) => setTimeout(() => resolve(), ms)).then(
+      () => console.log('fired')
+    );
   }
 }

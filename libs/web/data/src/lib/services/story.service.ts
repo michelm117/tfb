@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EventInterface, StoryInterface } from '@tfb/api-interfaces';
 import { Observable, of } from 'rxjs';
@@ -39,12 +39,13 @@ export class StoryService {
   }
 
   updateStory(id: number, story: Partial<StoryInterface>) {
-    return this.http.patch<any>(
+    return this.http.patch<StoryInterface>(
       `${this.url}/${id}`,
       {
         title: story.title,
         place: story.place,
         country: story.country,
+        imgNames: story.imgNames,
         date: story.date,
         text: story.text,
         podium: story.podium,
@@ -59,5 +60,29 @@ export class StoryService {
     return this.http.post<StoryInterface>(this.url, story, {
       responseType: 'json',
     });
+  }
+
+  uploadImage(id: number, file: File) {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+
+    const params = new HttpParams();
+
+    const options = {
+      params: params,
+      reportProgress: true,
+    };
+
+    return this.http.post<{ imagePath: string }>(
+      `${this.url}/upload/${id}`,
+      formData,
+      options
+    );
+  }
+
+  deleteImage(imageName: string) {
+    // return this.http.post<StoryInterface>(this.url, story, {
+    //   responseType: 'json',
+    // });
   }
 }

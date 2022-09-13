@@ -11,6 +11,7 @@ import { Rider } from '../riders/entities/rider.entity';
 import { CreateStoryDto } from './dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto';
 import { Story } from './entities/story.entity';
+import * as fs from 'fs';
 
 @Injectable()
 export class StoriesService {
@@ -69,7 +70,6 @@ export class StoriesService {
     }
 
     const country = updateStoryDto.country;
-    console.log('OK', JSON.stringify(country));
 
     if (country) {
       const countryEntity = await this.countryService.findOne(country.id);
@@ -78,13 +78,30 @@ export class StoriesService {
       }
       story.country = countryEntity;
     }
-    const newStory = { ...story, ...updateStoryDto };
-    console.log(JSON.stringify(newStory));
 
-    return await this.storiesRepository.update(id, newStory);
+    // Remove deleted images
+    console.log('NEW IMAGES:', updateStoryDto.imgNames);
+
+    if (updateStoryDto.imgNames) {
+      const diff = story.imgNames.filter((item) => {
+        if (updateStoryDto.imgNames) {
+          return updateStoryDto.imgNames.indexOf(item) < 0;
+        }
+      });
+      this.deletePictures(diff);
+    }
+
+    const newStory = { ...story, ...updateStoryDto };
+    await this.storiesRepository.update(id, newStory);
+    return newStory;
   }
 
   async remove(id: number) {
+    const story = await this.storiesRepository.findOneBy({ id });
+    if (!story) {
+      return;
+    }
+    this.deletePictures(story.imgNames);
     return await this.storiesRepository.delete({ id });
   }
 
@@ -103,7 +120,20 @@ export class StoriesService {
     return await this.storiesRepository.update(id, { imgNames: images });
   }
 
+  async deletePictures(filenames: string[]) {
+    filenames.forEach((filename) => {
+      this.deletePicture(filename);
+    });
+  }
+
   async deletePicture(filename: string) {
-    console.log('Delete');
+    // Do not delete default image
+
+    const path = './upload/stories';
+    fs.unlink(`${path}/${filename}`, (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
   }
 }

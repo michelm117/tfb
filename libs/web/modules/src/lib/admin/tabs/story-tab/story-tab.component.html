@@ -23,7 +23,7 @@
     <!-- Country Column -->
     <ng-container matColumnDef="country">
       <th mat-header-cell *matHeaderCellDef> Country </th>
-      <td mat-cell *matCellDef="let story"> {{story.country.name}} </td>
+      <td mat-cell *matCellDef="let story"> {{getFlag(story.country.iso)}} {{story.country.name}} </td>
     </ng-container>
 
     <!-- Date Column -->
@@ -116,9 +116,11 @@
           <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
             (change)="selectFiles($event)" />
           <div class="flex card-grid">
+            <!-- current images -->
             <img *ngFor="let image of selectedStory?.imgNames" class="object-cover w-32 h-32 m-5 cursor-pointer"
               src="{{getImage(image)}}" alt="" (click)="deleteImage(image)">
 
+            <!-- images to add -->
             <img *ngFor='let preview of previews' [src]="preview" class="object-cover w-32 h-32 m-5">
           </div>
         </mat-card>
@@ -141,7 +143,7 @@
     </mat-card-actions>
 
     <mat-card-footer>
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <mat-progress-bar *ngIf="showLoading" mode="query"></mat-progress-bar>
     </mat-card-footer>
   </form>
 </mat-card>
