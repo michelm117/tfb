@@ -10,24 +10,28 @@ import { RaceService } from '@tfb/web/data';
 export class RacesOverviewComponent implements OnInit {
   races: Record<number, EventInterface[]> = {};
   urlPrefix = 'races';
-  years: number[] = [];
+  years: string[] = [];
+  thumbnails: Record<string, string> = {};
 
   constructor(private raceService: RaceService) {}
 
   ngOnInit(): void {
-    // this.raceService.getYearRaceMap().subscribe((map) => {
-    //   this.races = map;
-    //   this.years = Array.from(map.keys()).sort((a, b) => {
-    //     return b - a;
-    //   });
-    // });
-  }
+    this.raceService.getYearsRacesMap().subscribe((map) => {
+      this.races = map;
+    });
 
-  getStoriesFromYear(year: number): EventInterface[] {
-    // const stories = this.races.get(year);
-    // if (stories) {
-    //   return stories;
-    // }
-    return [];
+    this.raceService.getYears().subscribe((years) => {
+      this.years = years;
+    });
+
+    this.raceService.getRaces().subscribe((races) => {
+      races.forEach((race) => {
+        let imgUrl = 'assets/img/default/story.jpg';
+        if (race.imgNames.length != 0) {
+          imgUrl = this.raceService.getPicture(race.imgNames[0]);
+        }
+        this.thumbnails[race.id] = imgUrl;
+      });
+    });
   }
 }

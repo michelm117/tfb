@@ -1,1 +1,46 @@
-<p>race works!</p>
+<!-- <tfb-event-content></tfb-event-content> -->
+<div class="container mx-auto">
+  <div *ngIf="!race">UPS</div>
+  <div *ngIf="race">
+    <!-- Social Media Buttons -->
+    <tfb-social-bar></tfb-social-bar>
+
+    <!-- Story Header -->
+    <div>
+
+      <tfb-heading [titel]="race!.title">
+      </tfb-heading>
+
+      <div class="flex mt-4 space-x-2">
+        <fa-icon [icon]="faTrophy" [ngClass]="{'hide': !race.podium}"></fa-icon>
+
+        <div>
+          <span>{{getFlag()}}</span>
+        </div>
+
+        <div>{{race.country.name}}, </div>
+
+        <div class="w-full">{{race.place}}</div>
+
+        <div class="w-full text-right">
+          {{getDate()}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Content-->
+    <div style="white-space: pre-line" class="container py-10 text-justify md:py-16">
+      {{race.text}}
+    </div>
+
+    <tfb-gallery *ngIf="race.imgNames!.length > 0" [imgUrls]=getImageUrls()></tfb-gallery>
+
+    <!-- <div class="pt-10 md:pt-16">
+    <tfb-race-results [raceId]="race.id"></tfb-race-results>
+  </div> -->
+
+    <div class="pt-10 md:pt-16">
+      <!-- <app-quote></app-quote> -->
+    </div>
+  </div>
+</div>
