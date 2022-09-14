@@ -73,11 +73,11 @@
 
           <mat-form-field appearance="fill">
             <mat-label>Country</mat-label>
-            <select matNativeControl required formControlName="country">
-              <option *ngFor="let country of countries" [ngValue]="country.id">
+            <mat-select required formControlName="country">
+              <mat-option *ngFor="let country of countries" [value]="country.id">
                 {{getFlag(country.iso)}} {{country.name}}
-              </option>
-            </select>
+              </mat-option>
+            </mat-select>
             <mat-error *ngIf="f['country'].errors!">
               This field is required
             </mat-error>
