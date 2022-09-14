@@ -13,9 +13,9 @@
     <ng-container matColumnDef="result">
       <th mat-header-cell *matHeaderCellDef> Overall </th>
       <td mat-cell *matCellDef="let result">
-        <span *ngIf="result.result === 1">🥇</span>
-        <span *ngIf="result.result === 2">🥈</span>
-        <span *ngIf="result.result === 3">🥉</span>
+        <span class="text-xl" *ngIf="result.result === 1">🥇</span>
+        <span class="text-xl" *ngIf="result.result === 2">🥈</span>
+        <span class="text-xl" *ngIf="result.result === 3">🥉</span>
         <span *ngIf="result.result > 3">{{result.result}}</span>
       </td>
     </ng-container>
@@ -23,9 +23,9 @@
     <ng-container matColumnDef="acResult">
       <th mat-header-cell *matHeaderCellDef> Category </th>
       <td mat-cell *matCellDef="let result">
-        <span *ngIf="result.acResult === 1">🥇</span>
-        <span *ngIf="result.acResult === 2">🥈</span>
-        <span *ngIf="result.acResult === 3">🥉</span>
+        <span class="text-xl" *ngIf="result.acResult === 1">🥇</span>
+        <span class="text-xl" *ngIf="result.acResult === 2">🥈</span>
+        <span class="text-xl" *ngIf="result.acResult === 3">🥉</span>
         <span *ngIf="result.acResult > 3">{{result.acResult}}</span>
     </ng-container>
 
