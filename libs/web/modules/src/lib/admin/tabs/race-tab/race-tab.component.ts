@@ -316,6 +316,9 @@ export class RaceTabComponent implements OnInit {
             country: { id: 0, iso: 'zzz', name: 'Country' },
           },
         });
+        race.results.sort((a, b) => {
+          return a.id - b.id;
+        });
       }
       this.races = races;
       this.resetSelection();

@@ -44,8 +44,18 @@
     <mat-card-title>{{!selectedRace ? 'Add a new race' : 'Update race #' + selectedRace!.id}}
     </mat-card-title>
 
-    <mat-card class="mb-7">
-      <mat-card-content>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Race Results
+          </mat-panel-title>
+          <mat-panel-description>
+            Add, update or delete race results
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
         <mat-card-subtitle>Race Results</mat-card-subtitle>
         <table mat-table [dataSource]="results" class="mat-elevation-z8">
 
@@ -103,114 +113,125 @@
             [class.demo-row-is-clicked]="selectedResult && selectedResult.id === result?.id"
             *matRowDef="let result; columns: displayedColumnsResults;"></tr>
         </table>
-      </mat-card-content>
 
-      <mat-card-actions align="end">
-        <button *ngIf="!selectedResult" mat-button mat-raised-button color="warn">
-          Add new Result
-        </button>
-        <button *ngIf="selectedResult" mat-button mat-raised-button color="warn">
-          Update Result
-        </button>
-        <button *ngIf="selectedResult" mat-button mat-raised-button color="accent">
-          Delete Result
-        </button>
-      </mat-card-actions>
-    </mat-card>
+        <mat-card-actions align="end">
+          <button *ngIf="!selectedResult" mat-button mat-raised-button color="warn">
+            Add new Result
+          </button>
+          <button *ngIf="selectedResult" mat-button mat-raised-button color="warn">
+            Update Result
+          </button>
+          <button *ngIf="selectedResult" mat-button mat-raised-button color="accent">
+            Delete Result
+          </button>
+        </mat-card-actions>
+      </mat-expansion-panel>
 
-    <form [formGroup]="raceForm" (ngSubmit)="onSubmit()" class="w-full mx-auto">
-      <mat-card-content>
-        <div class="flex w-full space-x-6">
-          <div class="flex flex-col w-full content-card">
-            <mat-form-field appearance="fill">
-              <mat-label>Titel</mat-label>
-              <input matInput type="text" placeholder="Race title" formControlName="title" autocomplete="off">
-              <mat-error *ngIf="f['title'].errors!">
-                This field is required
-              </mat-error>
-            </mat-form-field>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Race Information
+          </mat-panel-title>
+          <mat-panel-description>
+            Add race informations
+          </mat-panel-description>
+        </mat-expansion-panel-header>
 
-            <mat-form-field appearance="fill">
-              <mat-label>Place</mat-label>
-              <input matInput type="text" placeholder="Race place" formControlName="place" autocomplete="off">
-              <mat-error *ngIf="f['place'].errors!">
-                This field is required
-              </mat-error>
-            </mat-form-field>
+        <form [formGroup]="raceForm" (ngSubmit)="onSubmit()" class="w-full mx-auto">
+          <mat-card-content>
+            <div class="flex w-full space-x-6">
+              <div class="flex flex-col w-full content-card">
+                <mat-form-field appearance="fill">
+                  <mat-label>Titel</mat-label>
+                  <input matInput type="text" placeholder="Race title" formControlName="title" autocomplete="off">
+                  <mat-error *ngIf="f['title'].errors!">
+                    This field is required
+                  </mat-error>
+                </mat-form-field>
 
-            <mat-form-field appearance="fill">
-              <mat-label>Country</mat-label>
-              <select matNativeControl required formControlName="country">
-                <option *ngFor="let country of countries" [ngValue]="country.id">
-                  {{getFlag(country.iso)}} {{country.name}}
-                </option>
-              </select>
-              <mat-error *ngIf="f['country'].errors!">
-                This field is required
-              </mat-error>
-            </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Place</mat-label>
+                  <input matInput type="text" placeholder="Race place" formControlName="place" autocomplete="off">
+                  <mat-error *ngIf="f['place'].errors!">
+                    This field is required
+                  </mat-error>
+                </mat-form-field>
 
-            <mat-form-field appearance="fill">
-              <mat-label>Date</mat-label>
-              <input matInput [matDatepicker]="picker" formControlName="date" autocomplete="off">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              <mat-error *ngIf="f['date']!.errors!">
-                This field is required (MM/DD/YY)
-              </mat-error>
-            </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Country</mat-label>
+                  <select matNativeControl required formControlName="country">
+                    <option *ngFor="let country of countries" [ngValue]="country.id">
+                      {{getFlag(country.iso)}} {{country.name}}
+                    </option>
+                  </select>
+                  <mat-error *ngIf="f['country'].errors!">
+                    This field is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="date" autocomplete="off">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-error *ngIf="f['date']!.errors!">
+                    This field is required (MM/DD/YY)
+                  </mat-error>
+                </mat-form-field>
 
 
-            <mat-form-field class="w-full" appearance="fill">
-              <mat-label>Content</mat-label>
-              <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="20"
-                formControlName="content" autocomplete="off"></textarea>
-              <mat-error *ngIf="f['content'].errors!">
-                This field is required (min. 450 characters)
-              </mat-error>
-            </mat-form-field>
+                <mat-form-field class="w-full" appearance="fill">
+                  <mat-label>Content</mat-label>
+                  <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="20"
+                    formControlName="content" autocomplete="off"></textarea>
+                  <mat-error *ngIf="f['content'].errors!">
+                    This field is required (min. 450 characters)
+                  </mat-error>
+                </mat-form-field>
 
-          </div>
+              </div>
 
-          <mat-card class="w-full mb-4">
-            <mat-card-subtitle>Images</mat-card-subtitle>
-            <!-- image input -->
-            <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
-              (change)="selectFiles($event)" />
+              <mat-card class="w-full mb-4">
+                <mat-card-subtitle>Images</mat-card-subtitle>
+                <!-- image input -->
+                <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
+                  (change)="selectFiles($event)" />
 
-            <div class="flex card-grid">
-              <!-- current images -->
-              <img *ngFor="let image of selectedRace?.imgNames" class="object-cover w-32 h-32 m-5 cursor-pointer"
-                src="{{getImage(image)}}" alt="" (click)="deleteImage(image)">
+                <div class="flex card-grid">
+                  <!-- current images -->
+                  <img *ngFor="let image of selectedRace?.imgNames" class="object-cover w-32 h-32 m-5 cursor-pointer"
+                    src="{{getImage(image)}}" alt="" (click)="deleteImage(image)">
 
-              <!-- images to add -->
-              <img *ngFor='let preview of previews' [src]="preview" class="object-cover w-32 h-32 m-5">
+                  <!-- images to add -->
+                  <img *ngFor='let preview of previews' [src]="preview" class="object-cover w-32 h-32 m-5">
+                </div>
+              </mat-card>
             </div>
-          </mat-card>
-        </div>
-      </mat-card-content>
+          </mat-card-content>
 
-      <mat-divider inset></mat-divider>
+          <mat-divider inset></mat-divider>
 
-      <mat-card-actions align="end">
-        <button *ngIf="selectedRace" mat-button mat-raised-button (click)="resetSelection()">
-          Reset Selection
-        </button>
+          <mat-card-actions align="end">
+            <button *ngIf="selectedRace" mat-button mat-raised-button (click)="resetSelection()">
+              Reset Selection
+            </button>
 
-        <button *ngIf="!selectedRace" mat-button mat-raised-button color="warn" type="submit">
-          Add new Race
-        </button>
-        <button *ngIf="selectedRace" mat-button mat-raised-button color="warn" type="submit">
-          Update Race
-        </button>
-        <button *ngIf="selectedRace" mat-button mat-raised-button color="accent" (click)="deleteRace()">
-          Delete Race
-        </button>
-      </mat-card-actions>
+            <button *ngIf="!selectedRace" mat-button mat-raised-button color="warn" type="submit">
+              Add new Race
+            </button>
+            <button *ngIf="selectedRace" mat-button mat-raised-button color="warn" type="submit">
+              Update Race
+            </button>
+            <button *ngIf="selectedRace" mat-button mat-raised-button color="accent" (click)="deleteRace()">
+              Delete Race
+            </button>
+          </mat-card-actions>
 
-      <mat-card-footer>
-        <mat-progress-bar *ngIf="showLoading" mode="query"></mat-progress-bar>
-      </mat-card-footer>
-    </form>
+          <mat-card-footer>
+            <mat-progress-bar *ngIf="showLoading" mode="query"></mat-progress-bar>
+          </mat-card-footer>
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </mat-card>
