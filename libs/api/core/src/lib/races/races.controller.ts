@@ -42,19 +42,19 @@ export class RacesController {
     return this.racesService.create(createRaceDto);
   }
 
-  @Get('map')
-  getMap() {
-    return this.racesService.getMap();
-  }
-
-  @Get('years')
-  getYears() {
-    return this.racesService.getYears();
-  }
-
   @Get()
   findAll() {
     return this.racesService.findAll();
+  }
+
+  @Get('map')
+  async getMap() {
+    return await this.racesService.getMap();
+  }
+
+  @Get('years')
+  async getYears() {
+    return await this.racesService.getYears();
   }
 
   @Get(':id')

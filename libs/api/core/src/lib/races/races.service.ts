@@ -6,6 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { RaceInterface } from '@tfb/api-interfaces';
 import { Repository } from 'typeorm';
 import { CountryService } from '../country/country.service';
 import { Result } from '../result/entities/result.entity';
@@ -74,12 +75,24 @@ export class RacesService {
     return this.raceRepository.delete(id);
   }
 
-  getMap() {
-    throw new Error('Method not implemented.');
+  async getMap() {
+    const races = await this.findAll();
+    console.log('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO\n', races);
+
+    const map: Record<number, RaceInterface[]> = {};
+    for (const race of races) {
+      const year = new Date(race.date).getFullYear();
+      if (!map[year]) {
+        map[year] = [];
+      }
+      map[year].push(race);
+    }
+    return map;
   }
 
-  getYears() {
-    throw new Error('Method not implemented.');
+  async getYears() {
+    const map = await this.getMap();
+    return Object.keys(map);
   }
   addPicture(arg0: number, filename: string) {
     throw new Error('Method not implemented.');

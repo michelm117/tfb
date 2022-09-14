@@ -42,6 +42,11 @@ export class StoriesController {
     return this.storiesService.create(createStoryDto);
   }
 
+  @Get()
+  findAll() {
+    return this.storiesService.findAll();
+  }
+
   @Get('map')
   getMap() {
     return this.storiesService.getMap();
@@ -50,11 +55,6 @@ export class StoriesController {
   @Get('years')
   getYears() {
     return this.storiesService.getYears();
-  }
-
-  @Get()
-  findAll() {
-    return this.storiesService.findAll();
   }
 
   @Get(':id')
