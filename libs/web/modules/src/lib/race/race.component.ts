@@ -25,6 +25,7 @@ export class RaceComponent implements OnInit {
       const id = params['id'];
 
       if (!id) {
+        this.router.navigate(['404']);
         return;
       }
 

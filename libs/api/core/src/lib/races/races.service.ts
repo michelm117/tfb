@@ -64,11 +64,15 @@ export class RacesService {
     });
   }
 
-  findOne(id: number) {
-    return this.raceRepository.findOne({
+  async findOne(id: number) {
+    const race = await this.raceRepository.findOne({
       where: { id },
       relations: ['country', 'results', 'results.rider', 'results.ageCategory'],
     });
+    if (!race) {
+      return new NotFoundException('Race was not found');
+    }
+    return race;
   }
 
   update(id: number, updateRaceDto: UpdateRaceDto) {
