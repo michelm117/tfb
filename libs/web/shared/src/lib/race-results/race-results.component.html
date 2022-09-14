@@ -1,38 +1,40 @@
-<!-- <div *ngFor="let race of races" class="w-full px-4 bg-white rounded-md">
-  <div class="flex justify-between w-full race-heading">
-    <h1>{{race.cat}}</h1>
-  </div>
+<div class="table_wrapper">
+  <table mat-table [dataSource]="results" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let result"> {{result.id}} </td>
+    </ng-container>
 
-  <div class="mt-1 overflow-x-auto shadow-xl sm:mt-4">
-    <table class="w-full bg-white border-collapse rounded-md table-fixed ">
-      <thead>
-        <tr class="text-sm font-medium text-left text-white bg-secondary-color">
-          <th class="py-3 pl-3 w-14 sm:hidden">🏆</th>
-          <th class="hidden w-full px-1 py-3 sm:block">Place</th>
-          <th class="px-1 py-3 ">Name</th>
-          <th class="py-3 pl-3 w-14 sm:hidden" [ngClass]="{'hide': !race.hasAC}">🏆 AC</th>
-          <th class="hidden w-full py-3 pl-5 sm:block" [ngClass]="{'hide': !race.hasAC}">AC Place</th>
-          <th class="px-3 py-3 " [ngClass]="{'hide': !race.hasAC}">AC</th>
-        </tr>
-      </thead>
-      <tbody *ngFor="let result of race.results" class="text-sm font-normal text-gray-700">
-        <tr class="py-4 border-b border-gray-200 hover:bg-gray-100 bg-gray-50">
-          <td class="py-2 pl-3 break-words">
-            <span [ngClass]="{'hide': !(result.place === 1)}">🥇</span>
-            <span [ngClass]="{'hide': !(result.place === 2)}">🥈</span>
-            <span [ngClass]="{'hide': !(result.place === 3)}">🥉</span>
-            <span class="pl-1" [ngClass]="{'hide': result.place < 4}">{{result.place}}</span>
-          </td>
-          <td class="px-1 py-2 break-words">{{result.name}}</td>
-          <td class="py-2 pl-5 text-left break-words" [ngClass]="{'hide': !race.hasAC}">
-            <span [ngClass]="{'hide': !(result.acPlace === 1)}">🥇</span>
-            <span [ngClass]="{'hide': !(result.acPlace === 2)}">🥈</span>
-            <span [ngClass]="{'hide': !(result.acPlace === 3)}">🥉</span>
-            <span class="pl-1" [ngClass]="{'hide': result.acPlace < 4}">{{result.acPlace}}</span>
-          </td>
-          <td class="px-3 py-2 break-words" [ngClass]="{'hide': !race.hasAC}">{{result.ac}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div> -->
+    <ng-container matColumnDef="rider">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let result"> {{result.rider.name}} {{result.rider.surname}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="result">
+      <th mat-header-cell *matHeaderCellDef> Overall </th>
+      <td mat-cell *matCellDef="let result">
+        <span *ngIf="result.result === 1">🥇</span>
+        <span *ngIf="result.result === 2">🥈</span>
+        <span *ngIf="result.result === 3">🥉</span>
+        <span *ngIf="result.result > 3">{{result.result}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acResult">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let result">
+        <span *ngIf="result.acResult === 1">🥇</span>
+        <span *ngIf="result.acResult === 2">🥈</span>
+        <span *ngIf="result.acResult === 3">🥉</span>
+        <span *ngIf="result.acResult > 3">{{result.acResult}}</span>
+    </ng-container>
+
+    <ng-container matColumnDef="ageCategory">
+      <th mat-header-cell *matHeaderCellDef> Category Name </th>
+      <td mat-cell *matCellDef="let result"> {{result.ageCategory.name}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

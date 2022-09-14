@@ -34,7 +34,7 @@ export const storage = {
   }),
 };
 
-@Controller('race')
+@Controller('myrace')
 export class RacesController {
   constructor(private readonly racesService: RacesService) {}
   @Post()

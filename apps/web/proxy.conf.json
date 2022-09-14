@@ -6,6 +6,13 @@
       "/riders": "/"
     }
   },
+  "/myrace": {
+    "target": "http://localhost:3333/api/myrace",
+    "secure": false,
+    "pathRewrite": {
+      "/myrace": "/"
+    }
+  },
   "/story": {
     "target": "http://localhost:3333/api/story",
     "secure": false,

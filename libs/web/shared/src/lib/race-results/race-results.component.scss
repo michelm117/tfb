@@ -1,11 +1,19 @@
-.hide {
-  display: none;
-}
-table {
-  font-family: theme("fontFamily.roboto");
+.table_wrapper {
+  width: 100%;
+  overflow: auto;
 }
 
-.race-heading {
-  font-weight: 700;
-  font-size: large;
+table {
+  font-family: theme("fontFamily.roboto");
+  width: 100%;
+}
+
+.mat-header-cell {
+  background-color: theme("colors.secondary-color");
+  color: white;
+  font-weight: bold;
+  padding: 0 5px 0 5px;
+}
+.mat-cell {
+  padding: 0 5px 0 5px;
 }

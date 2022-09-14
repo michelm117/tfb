@@ -25,6 +25,8 @@ export class RacesOverviewComponent implements OnInit {
     });
 
     this.raceService.getRaces().subscribe((races) => {
+      console.log(races);
+
       races.forEach((race) => {
         let imgUrl = 'assets/img/default/story.jpg';
         if (race.imgNames.length != 0) {

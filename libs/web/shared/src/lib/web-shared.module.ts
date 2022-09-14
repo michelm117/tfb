@@ -8,11 +8,11 @@ import { EventCardComponent } from './event-card/event-card.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { RaceResultsComponent } from './race-results/race-results.component';
 import { EventOverviewComponent } from './event-overview/event-overview.component';
-import { EventContentComponent } from './event-content/event-content.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ImgDialogComponent } from './imgDialog/img-dialog.component';
@@ -28,6 +28,7 @@ import { SkeletonRiderCardComponent } from './skeleton-rider-card/skeleton-rider
     MatButtonModule,
     MatInputModule,
     MatDialogModule,
+    MatTableModule,
   ],
   declarations: [
     SocialBarComponent,
@@ -37,7 +38,6 @@ import { SkeletonRiderCardComponent } from './skeleton-rider-card/skeleton-rider
     GalleryComponent,
     RaceResultsComponent,
     EventOverviewComponent,
-    EventContentComponent,
     DialogComponent,
     ImgDialogComponent,
     SkeletonLoaderComponent,
@@ -51,7 +51,6 @@ import { SkeletonRiderCardComponent } from './skeleton-rider-card/skeleton-rider
     GalleryComponent,
     RaceResultsComponent,
     EventOverviewComponent,
-    EventContentComponent,
     ImgDialogComponent,
     DialogComponent,
     SkeletonRiderCardComponent,
