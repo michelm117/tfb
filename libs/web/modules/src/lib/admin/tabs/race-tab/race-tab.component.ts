@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { faTrophy, faBan } from '@fortawesome/free-solid-svg-icons';
 import {
+  AgeCategoryInterface,
   CountryInterface,
   RaceInterface,
   ResultInterface,
@@ -21,6 +22,7 @@ import {
   CountryService,
   FlagService,
   RiderService,
+  AgeCategoryService,
 } from '@tfb/web/data';
 import { DialogComponent } from '@tfb/web/shared';
 import { Observable, forkJoin } from 'rxjs';
@@ -33,6 +35,7 @@ import { Observable, forkJoin } from 'rxjs';
 export class RaceTabComponent implements OnInit {
   countries: CountryInterface[] = [];
   riders: RiderInterface[] = [];
+  ageCategories: AgeCategoryInterface[] = [];
 
   displayedColumnsRaces = ['id', 'title', 'place', 'country', 'date'];
 
@@ -64,6 +67,7 @@ export class RaceTabComponent implements OnInit {
     private raceService: RaceService,
     private riderService: RiderService,
     private countryService: CountryService,
+    private ageCatService: AgeCategoryService,
     public dialog: MatDialog,
     private flagService: FlagService,
     private formBuilder: FormBuilder
@@ -88,6 +92,10 @@ export class RaceTabComponent implements OnInit {
 
     this.riderService.getRiders().subscribe((riders) => {
       this.riders = riders;
+    });
+
+    this.ageCatService.getAgeCats().subscribe((ageCats) => {
+      this.ageCategories = ageCats;
     });
   }
 

@@ -13,6 +13,13 @@
       "/myrace": "/"
     }
   },
+  "/age-category": {
+    "target": "http://localhost:3333/api/age-category",
+    "secure": false,
+    "pathRewrite": {
+      "/age-category": "/"
+    }
+  },
   "/story": {
     "target": "http://localhost:3333/api/story",
     "secure": false,
