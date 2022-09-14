@@ -111,7 +111,7 @@
 
         </div>
 
-        <mat-card class="w-full mb-4">
+        <div class="w-full">
           <mat-card-subtitle>Images</mat-card-subtitle>
           <!-- image input -->
           <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
@@ -125,7 +125,7 @@
             <!-- images to add -->
             <img *ngFor='let preview of previews' [src]="preview" class="object-cover w-32 h-32 m-5">
           </div>
-        </mat-card>
+        </div>
       </div>
     </mat-card-content>
 
