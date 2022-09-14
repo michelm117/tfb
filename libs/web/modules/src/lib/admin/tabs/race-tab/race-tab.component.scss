@@ -1,0 +1,22 @@
+table {
+  width: 100%;
+  .content-row:hover {
+    background-color: theme("colors.gray.100");
+  }
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+
+.content-card {
+  margin-top: 10px;
+  width: 780px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  grid-gap: 1em;
+  justify-items: center;
+}
