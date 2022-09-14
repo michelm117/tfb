@@ -1,29 +1,34 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Expose } from 'class-transformer';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { RiderInterface } from '@tfb/api-interfaces';
 import { Country } from '../../country/entities/country.entity';
+import { Result } from '../../result/entities/result.entity';
 
 @Entity()
 export class Rider implements RiderInterface {
   @PrimaryGeneratedColumn()
-  public id: number;
+  id: number;
 
   @Column()
-  @Expose()
-  public name: string;
+  name: string;
 
   @Column()
-  @Expose()
-  public surname: string;
+  surname: string;
 
-  @Expose()
   @ManyToOne(() => Country, (country) => country.riders)
-  public country: Country;
+  country: Country;
 
   @Column({
     default: 'profile.jpg',
   })
-  @Expose()
-  public imgName: string;
+  imgName: string;
+
+  @OneToMany(() => Result, (result) => result.rider)
+  results: Result[];
 }

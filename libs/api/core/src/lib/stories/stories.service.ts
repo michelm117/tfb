@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -7,7 +6,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { StoryInterface } from '@tfb/api-interfaces';
 import { Repository } from 'typeorm';
 import { CountryService } from '../country/country.service';
-import { Rider } from '../riders/entities/rider.entity';
 import { CreateStoryDto } from './dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto';
 import { Story } from './entities/story.entity';

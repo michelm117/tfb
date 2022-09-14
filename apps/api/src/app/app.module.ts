@@ -15,6 +15,12 @@ import {
   AboutModule,
   StoriesModule,
   Story,
+  Result,
+  AgeCategory,
+  Race,
+  AgeCategoryModule,
+  ResultModule,
+  RacesModule,
 } from '@tfb/api/core';
 
 @Module({
@@ -29,7 +35,7 @@ import {
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
-        entities: [Rider, Country, About, Story],
+        entities: [Rider, Country, About, Story, Result, AgeCategory, Race],
         synchronize: true,
         logging: true,
       }),
@@ -38,6 +44,9 @@ import {
     CountryModule,
     AboutModule,
     StoriesModule,
+    RacesModule,
+    AgeCategoryModule,
+    ResultModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -19,6 +19,7 @@ export class AboutComponent implements OnInit {
     private riderService: RiderService,
     private aboutService: AboutService
   ) {}
+
   ngOnInit(): void {
     this.riderService.getRiders().subscribe((riders) => {
       this.riders = riders;

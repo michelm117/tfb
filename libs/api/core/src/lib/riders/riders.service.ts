@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateRiderDto } from './dto/create-rider.dto';
 import { UpdateRiderDto } from './dto/update-rider.dto';
 import { Rider } from './entities/rider.entity';
@@ -29,15 +33,20 @@ export class RidersService {
     return riders;
   }
 
-  findOne(id: number) {
-    const rider = this.ridersRepository.find({
-      where: { id },
+  async findOne(id: number) {
+    if (!id) {
+      throw new InternalServerErrorException('ID is undefined');
+    }
+
+    const rider = await this.ridersRepository.find({
+      where: { id: id },
       relations: ['country'],
     });
-    if (!rider) {
-      return new NotFoundException();
+
+    if (rider.length === 0) {
+      return;
     }
-    return rider;
+    return rider[0];
   }
 
   async update(id: number, updateRiderDto: UpdateRiderDto) {

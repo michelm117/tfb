@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Race, EventInterface, Result } from '@tfb/api-interfaces';
+import { EventInterface } from '@tfb/api-interfaces';
 import { Observable, of } from 'rxjs';
 
 @Injectable({

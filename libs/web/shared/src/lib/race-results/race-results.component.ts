@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Race } from '@tfb/api-interfaces';
+import { RaceInterface } from '@tfb/api-interfaces';
 import { RaceService } from '@tfb/web/data';
 
 @Component({
@@ -9,7 +9,7 @@ import { RaceService } from '@tfb/web/data';
 })
 export class RaceResultsComponent {
   @Input() raceId!: number;
-  races: Race[] = [];
+  races: RaceInterface[] = [];
 
   constructor(private raceService: RaceService) {}
 }

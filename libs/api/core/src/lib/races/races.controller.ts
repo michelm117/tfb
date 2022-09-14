@@ -1,15 +1,55 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
+  Res,
+} from '@nestjs/common';
 import { RacesService } from './races.service';
 import { CreateRaceDto } from './dto/create-race.dto';
 import { UpdateRaceDto } from './dto/update-race.dto';
 
-@Controller('races')
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express, Response } from 'express';
+import { diskStorage } from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import path = require('path');
+import { join } from 'path';
+
+export const storage = {
+  storage: diskStorage({
+    destination: './upload/races',
+    filename: (req, file, cb) => {
+      const filename =
+        path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+      const extension = path.parse(file.originalname).ext;
+
+      cb(null, `${filename}${extension}`);
+    },
+  }),
+};
+
+@Controller('race')
 export class RacesController {
   constructor(private readonly racesService: RacesService) {}
-
   @Post()
   create(@Body() createRaceDto: CreateRaceDto) {
     return this.racesService.create(createRaceDto);
+  }
+
+  @Get('map')
+  getMap() {
+    return this.racesService.getMap();
+  }
+
+  @Get('years')
+  getYears() {
+    return this.racesService.getYears();
   }
 
   @Get()
@@ -30,5 +70,23 @@ export class RacesController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.racesService.remove(+id);
+  }
+
+  @Post('upload/:id')
+  @UseInterceptors(FileInterceptor('file', storage))
+  async uploadProfilePicture(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    await this.racesService.addPicture(+id, file.filename);
+    return { imagePath: file.filename };
+  }
+
+  @Get('image/:fileName')
+  async findProfileImage(
+    @Param('fileName') fileName: string,
+    @Res() res: Response
+  ) {
+    return res.sendFile(join(process.cwd(), 'upload/stories/' + fileName));
   }
 }
