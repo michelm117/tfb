@@ -38,12 +38,16 @@ export class RacesService {
       );
     }
     race.country = country;
+    race.podium = false;
 
     const results: Result[] = [];
     for (let i = 0; i < createRaceDto.results.length; i++) {
       const resultDto = createRaceDto.results[i];
       try {
         const result = await this.resultService.create(resultDto);
+        if (result.acResult < 4 || result.result < 4) {
+          race.podium = true;
+        }
         results.push(result);
       } catch (err: any) {
         throw new BadRequestException(err);
@@ -77,7 +81,6 @@ export class RacesService {
 
   async getMap() {
     const races = await this.findAll();
-    console.log('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO\n', races);
 
     const map: Record<number, RaceInterface[]> = {};
     for (const race of races) {
@@ -94,6 +97,7 @@ export class RacesService {
     const map = await this.getMap();
     return Object.keys(map);
   }
+
   addPicture(arg0: number, filename: string) {
     throw new Error('Method not implemented.');
   }

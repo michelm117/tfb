@@ -8,5 +8,4 @@ export class CreateRaceDto {
   date: Date;
   text: string;
   imgNames: string[];
-  podium: boolean;
 }
