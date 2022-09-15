@@ -194,18 +194,7 @@
               <tfb-image-upload-panel class="w-full" [imgNames]="getPictures()"
                 [clearPreviewEvent]="clearImagePreviewEvent" (imageDeletedEvent)="deleteImage($event)">
               </tfb-image-upload-panel>
-              <!-- <div class="w-full">
-                <mat-card-subtitle>Images</mat-card-subtitle>
-                <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
-                  (change)="selectFiles($event)" />
 
-                <div class="flex card-grid">
-                  <img *ngFor="let image of selectedRace?.imgNames" class="object-cover w-32 h-32 m-5 cursor-pointer"
-                    src="{{getImage(image)}}" alt="" (click)="deleteImage(image)">
-
-                  <img *ngFor='let preview of previews' [src]="preview" class="object-cover w-32 h-32 m-5">
-                </div>
-              </div> -->
             </div>
           </mat-card-content>
 

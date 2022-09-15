@@ -4,7 +4,7 @@ import { CountryService, FlagService, StoryService } from '@tfb/web/data';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@tfb/web/shared';
+import { DialogComponent, ImageUploadPanelComponent } from '@tfb/web/shared';
 import {
   AbstractControl,
   FormBuilder,
@@ -12,7 +12,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { forkJoin, Observable, of } from 'rxjs';
+import { forkJoin, Observable, of, Subject } from 'rxjs';
 
 @Component({
   selector: 'tfb-story-tab',
@@ -28,11 +28,9 @@ export class StoryTabComponent implements OnInit {
   stories: StoryInterface[] = [];
   storyForm!: FormGroup;
 
-  @ViewChild('imageInput', { static: false })
-  imageInputVar: ElementRef;
-  previews: string[] = [];
-  selectedFiles?: FileList = undefined;
-  selectedFileNames: string[] = [];
+  @ViewChild(ImageUploadPanelComponent, { static: true })
+  imageUploadPanel: ImageUploadPanelComponent;
+  clearImagePreviewEvent: Subject<void> = new Subject<void>();
 
   createNewStory = true;
 
@@ -74,34 +72,11 @@ export class StoryTabComponent implements OnInit {
     });
     this.selectedStory = clickedStory;
     this.createNewStory = false;
-    this.previews = [];
-    this.selectedFiles = undefined;
-    this.imageInputVar.nativeElement.value = '';
+    this.clearImagePreviewEvent.next();
   }
 
   getFlag(iso: string) {
     return this.flagService.get(iso);
-  }
-
-  getImage(imgName: string) {
-    return this.storyService.getPicture(imgName);
-  }
-
-  selectFiles(event: any): void {
-    this.selectedFiles = event.target.files;
-    this.previews = [];
-
-    if (this.selectedFiles && this.selectedFiles[0]) {
-      const numberOfFiles = this.selectedFiles.length;
-      for (let i = 0; i < numberOfFiles; i++) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.previews.push(e.target.result);
-        };
-        reader.readAsDataURL(this.selectedFiles[i]);
-        this.selectedFileNames.push(this.selectedFiles[i].name);
-      }
-    }
   }
 
   async onSubmit() {
@@ -110,6 +85,7 @@ export class StoryTabComponent implements OnInit {
     }
     this.showLoading = true;
 
+    const imageFiles = this.imageUploadPanel.getImageFiles();
     const title = this.storyForm.get('title')?.value;
     const place = this.storyForm.get('place')?.value;
     const text = this.storyForm.get('content')?.value;
@@ -131,8 +107,8 @@ export class StoryTabComponent implements OnInit {
       // Create Story
       this.storyService.createStory(story).subscribe((story) => {
         // Update the new story locally
-        if (this.selectedFiles) {
-          this.uploadImagesAndUpdateStory(story.id, story);
+        if (imageFiles) {
+          this.uploadImagesAndUpdateStory(story.id, story, imageFiles);
         } else {
           this.fetchStories();
         }
@@ -147,9 +123,9 @@ export class StoryTabComponent implements OnInit {
       const id = this.selectedStory.id;
       story.imgNames = this.selectedStory.imgNames;
 
-      if (this.selectedFiles) {
+      if (imageFiles) {
         // Upload selected images and update the story with the generated image names
-        this.uploadImagesAndUpdateStory(id, story);
+        this.uploadImagesAndUpdateStory(id, story, imageFiles);
       } else {
         // No images where added
         this.storyService.updateStory(id, story).subscribe((story) => {
@@ -172,12 +148,16 @@ export class StoryTabComponent implements OnInit {
     });
   }
 
-  uploadImagesAndUpdateStory(id: number, story: Partial<StoryInterface>) {
-    if (this.selectedFiles) {
+  uploadImagesAndUpdateStory(
+    id: number,
+    story: Partial<StoryInterface>,
+    imageFiles: FileList
+  ) {
+    if (imageFiles) {
       // Create array of tasks. One task is to upload an image
       const tasks: Observable<{ imagePath: string }>[] = [];
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        const file = this.selectedFiles.item(i);
+      for (let i = 0; i < imageFiles.length; i++) {
+        const file = imageFiles.item(i);
         if (!file) {
           continue;
         }
@@ -214,28 +194,6 @@ export class StoryTabComponent implements OnInit {
     });
   }
 
-  deleteImage(imageName: string) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '450px',
-      data: {
-        titel: 'Deleting Image?',
-        text: 'Are you sure you want to delete the selected image?',
-      },
-    });
-
-    const dialogSubmitSubscription =
-      dialogRef.componentInstance.submitClicked.subscribe(() => {
-        this.selectedStory?.imgNames.forEach((img, index) => {
-          if (imageName === img) this.selectedStory?.imgNames.splice(index, 1);
-        });
-        dialogSubmitSubscription.unsubscribe();
-      });
-  }
-
-  uploadImage(id: number, file: File) {
-    return this.storyService.uploadImage(id, file);
-  }
-
   resetSelection() {
     this.storyForm.setValue({
       title: '',
@@ -269,10 +227,7 @@ export class StoryTabComponent implements OnInit {
     this.selectedStory = story;
 
     // Reset selection
-    this.selectedFileNames = [];
-    this.selectedFiles = undefined;
-    this.previews = [];
-    this.imageInputVar.nativeElement.value = '';
+    this.clearImagePreviewEvent.next();
 
     this.fetchStories();
   }
@@ -305,5 +260,24 @@ export class StoryTabComponent implements OnInit {
     });
 
     return result;
+  }
+
+  getPictures() {
+    const images: string[] = [];
+    if (!this.selectedStory) {
+      return images;
+    }
+    for (let i = 0; i < this.selectedStory.imgNames.length; i++) {
+      const imageName = this.selectedStory.imgNames[i];
+      images.push(this.storyService.getPicture(imageName));
+    }
+    return images;
+  }
+
+  deleteImage(index: number) {
+    if (!this.selectedStory) {
+      return;
+    }
+    this.selectedStory.imgNames.splice(index, 1);
   }
 }

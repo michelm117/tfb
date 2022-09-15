@@ -49,14 +49,13 @@ export class RaceTabComponent implements OnInit {
   results = new MatTableDataSource<ResultInterface>([]);
   selectedResult: ResultInterface | undefined;
 
+  @ViewChild(ImageUploadPanelComponent, { static: true })
+  imageUploadPanel: ImageUploadPanelComponent;
   clearImagePreviewEvent: Subject<void> = new Subject<void>();
 
   selectedRace: RaceInterface | undefined;
   races: RaceInterface[] = [];
   raceForm!: FormGroup;
-
-  @ViewChild(ImageUploadPanelComponent, { static: true })
-  imageUploadPanel: ImageUploadPanelComponent;
 
   createNewRace = true;
 
@@ -232,10 +231,6 @@ export class RaceTabComponent implements OnInit {
     });
   }
 
-  uploadImage(id: number, file: File) {
-    return this.raceService.uploadImage(id, file);
-  }
-
   resetSelection() {
     this.raceForm.setValue({
       title: '',
@@ -333,7 +328,6 @@ export class RaceTabComponent implements OnInit {
     return result;
   }
 
-  // new
   getPictures() {
     const images: string[] = [];
     if (!this.selectedRace) {
