@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -24,8 +24,8 @@ import {
   RiderService,
   AgeCategoryService,
 } from '@tfb/web/data';
-import { DialogComponent } from '@tfb/web/shared';
-import { Observable, forkJoin } from 'rxjs';
+import { ImageUploadPanelComponent } from '@tfb/web/shared';
+import { Observable, forkJoin, Subject } from 'rxjs';
 
 @Component({
   selector: 'tfb-race-tab',
@@ -49,13 +49,14 @@ export class RaceTabComponent implements OnInit {
   results = new MatTableDataSource<ResultInterface>([]);
   selectedResult: ResultInterface | undefined;
 
+  clearImagePreviewEvent: Subject<void> = new Subject<void>();
+
   selectedRace: RaceInterface | undefined;
   races: RaceInterface[] = [];
   raceForm!: FormGroup;
 
-  previews: string[] = [];
-  selectedFiles?: FileList = undefined;
-  selectedFileNames: string[] = [];
+  @ViewChild(ImageUploadPanelComponent, { static: true })
+  imageUploadPanel: ImageUploadPanelComponent;
 
   createNewRace = true;
 
@@ -110,6 +111,7 @@ export class RaceTabComponent implements OnInit {
     });
     this.selectedRace = clickedRace;
     this.createNewRace = false;
+    this.clearImagePreviewEvent.next();
   }
 
   resultRowClicked(clickedResult: ResultInterface) {
@@ -120,36 +122,12 @@ export class RaceTabComponent implements OnInit {
     return this.flagService.get(iso);
   }
 
-  getImage(imgName: string) {
-    return this.raceService.getPicture(imgName);
-  }
-
-  addImage() {
-    console.log('CLICK');
-  }
-
-  selectFiles(event: any): void {
-    this.selectedFiles = event.target.files;
-    this.previews = [];
-    if (this.selectedFiles && this.selectedFiles[0]) {
-      const numberOfFiles = this.selectedFiles.length;
-      for (let i = 0; i < numberOfFiles; i++) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.previews.push(e.target.result);
-        };
-        reader.readAsDataURL(this.selectedFiles[i]);
-        this.selectedFileNames.push(this.selectedFiles[i].name);
-      }
-    }
-  }
-
   async onSubmit() {
     if (this.getFormValidationErrors()?.length > 0) {
       return;
     }
     this.showLoading = true;
-
+    const imageFiles = this.imageUploadPanel.getImageFiles();
     const title = this.raceForm.get('title')?.value;
     const place = this.raceForm.get('place')?.value;
     const text = this.raceForm.get('content')?.value;
@@ -169,8 +147,8 @@ export class RaceTabComponent implements OnInit {
       // Create Race
       this.raceService.createRace(race).subscribe((race) => {
         // Update the new race locally
-        if (this.selectedFiles) {
-          this.uploadImagesAndUpdateRace(race.id, race);
+        if (imageFiles) {
+          this.uploadImagesAndUpdateRace(race.id, race, imageFiles);
         } else {
           this.fetchRaces();
         }
@@ -184,9 +162,9 @@ export class RaceTabComponent implements OnInit {
       const id = this.selectedRace.id;
       race.imgNames = this.selectedRace.imgNames;
 
-      if (this.selectedFiles) {
+      if (imageFiles) {
         // Upload selected images and update the race with the generated image names
-        this.uploadImagesAndUpdateRace(id, race);
+        this.uploadImagesAndUpdateRace(id, race, imageFiles);
       } else {
         // No images where added
         this.raceService.updateRace(id, race).subscribe((race) => {
@@ -203,18 +181,21 @@ export class RaceTabComponent implements OnInit {
       return;
     }
     const id = this.selectedRace.id;
-    this.raceService.deleteRace(id).subscribe((res) => {
-      console.log(res);
+    this.raceService.deleteRace(id).subscribe(() => {
       this.fetchRaces();
     });
   }
 
-  uploadImagesAndUpdateRace(id: number, race: Partial<RaceInterface>) {
-    if (this.selectedFiles) {
+  uploadImagesAndUpdateRace(
+    id: number,
+    race: Partial<RaceInterface>,
+    imageFiles: FileList
+  ) {
+    if (imageFiles) {
       // Create array of tasks. One task is to upload an image
       const tasks: Observable<{ imagePath: string }>[] = [];
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        const file = this.selectedFiles.item(i);
+      for (let i = 0; i < imageFiles.length; i++) {
+        const file = imageFiles.item(i);
         if (!file) {
           continue;
         }
@@ -249,24 +230,6 @@ export class RaceTabComponent implements OnInit {
     this.raceService.createRace(race).subscribe((race) => {
       this.fetchRaces();
     });
-  }
-
-  deleteImage(imageName: string) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '450px',
-      data: {
-        titel: 'Deleting Image?',
-        text: 'Are you sure you want to delete the selected image?',
-      },
-    });
-
-    const dialogSubmitSubscription =
-      dialogRef.componentInstance.submitClicked.subscribe(() => {
-        this.selectedRace?.imgNames.forEach((img, index) => {
-          if (imageName === img) this.selectedRace?.imgNames.splice(index, 1);
-        });
-        dialogSubmitSubscription.unsubscribe();
-      });
   }
 
   uploadImage(id: number, file: File) {
@@ -327,8 +290,6 @@ export class RaceTabComponent implements OnInit {
   }
 
   private updateLocalRace(id: number, race: RaceInterface) {
-    console.log('updateLocalRace');
-
     const foundIndex = this.races.findIndex((x) => x.id == id);
     if (foundIndex >= 0) {
       this.races[foundIndex] = race;
@@ -337,9 +298,7 @@ export class RaceTabComponent implements OnInit {
     this.selectedRace = race;
 
     // Reset selection
-    this.selectedFileNames = [];
-    this.selectedFiles = undefined;
-    this.previews = [];
+    this.clearImagePreviewEvent.next();
 
     this.fetchRaces();
   }
@@ -372,5 +331,25 @@ export class RaceTabComponent implements OnInit {
     });
 
     return result;
+  }
+
+  // new
+  getPictures() {
+    const images: string[] = [];
+    if (!this.selectedRace) {
+      return images;
+    }
+    for (let i = 0; i < this.selectedRace.imgNames.length; i++) {
+      const imageName = this.selectedRace.imgNames[i];
+      images.push(this.raceService.getPicture(imageName));
+    }
+    return images;
+  }
+
+  deleteImage(index: number) {
+    if (!this.selectedRace) {
+      return;
+    }
+    this.selectedRace.imgNames.splice(index, 1);
   }
 }

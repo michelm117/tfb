@@ -23,7 +23,8 @@ export class RaceService {
   }
 
   getPicture(imageName: string) {
-    return `${this.url}/image/${imageName}`;
+    const url = `${this.url}/image/${imageName}`;
+    return url;
   }
 
   getYearsRacesMap() {

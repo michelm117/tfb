@@ -14,6 +14,7 @@ import { ResultService } from '../result/result.service';
 import { CreateRaceDto } from './dto/create-race.dto';
 import { UpdateRaceDto } from './dto/update-race.dto';
 import { Race } from './entities/race.entity';
+import * as fs from 'fs';
 
 @Injectable()
 export class RacesService {
@@ -75,8 +76,35 @@ export class RacesService {
     return race;
   }
 
-  update(id: number, updateRaceDto: UpdateRaceDto) {
-    return `This action updates a #${id} race`;
+  async update(id: number, updateRaceDto: UpdateRaceDto) {
+    const race = await this.raceRepository.findOneBy({ id });
+    if (!race) {
+      return;
+    }
+
+    if (updateRaceDto.countryId) {
+      const countryEntity = await this.countryService.findOne(
+        updateRaceDto.countryId
+      );
+      if (!countryEntity) {
+        throw new BadRequestException('Country nof found');
+      }
+      race.country = countryEntity;
+    }
+
+    // Remove deleted images
+    if (updateRaceDto.imgNames) {
+      const diff = race.imgNames.filter((item) => {
+        if (updateRaceDto.imgNames) {
+          return updateRaceDto.imgNames.indexOf(item) < 0;
+        }
+      });
+      this.deletePictures(diff);
+    }
+
+    const newRace = { ...race, ...updateRaceDto };
+    await this.raceRepository.update(id, newRace);
+    return newRace;
   }
 
   remove(id: number) {
@@ -102,7 +130,33 @@ export class RacesService {
     return Object.keys(map);
   }
 
-  addPicture(arg0: number, filename: string) {
-    throw new Error('Method not implemented.');
+  async addPicture(id: number, filename: string) {
+    const story = await this.raceRepository.findOneBy({ id });
+    if (!story) {
+      return;
+    }
+
+    // Adding new image to array
+    let images = story.imgNames;
+    if (!images) {
+      images = [];
+    }
+    images.push(filename);
+    return await this.raceRepository.update(id, { imgNames: images });
+  }
+
+  async deletePictures(filenames: string[]) {
+    filenames.forEach((filename) => {
+      this.deletePicture(filename);
+    });
+  }
+
+  async deletePicture(filename: string) {
+    const path = './upload/races';
+    fs.unlink(`${path}/${filename}`, (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
   }
 }

@@ -87,10 +87,6 @@ export class StoryTabComponent implements OnInit {
     return this.storyService.getPicture(imgName);
   }
 
-  addImage() {
-    console.log('CLICK');
-  }
-
   selectFiles(event: any): void {
     this.selectedFiles = event.target.files;
     this.previews = [];

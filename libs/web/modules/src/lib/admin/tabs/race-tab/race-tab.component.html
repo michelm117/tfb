@@ -191,7 +191,9 @@
 
               </div>
 
-              <tfb-image-upload-panel class="w-full"></tfb-image-upload-panel>
+              <tfb-image-upload-panel class="w-full" [imgNames]="getPictures()"
+                [clearPreviewEvent]="clearImagePreviewEvent" (imageDeletedEvent)="deleteImage($event)">
+              </tfb-image-upload-panel>
               <!-- <div class="w-full">
                 <mat-card-subtitle>Images</mat-card-subtitle>
                 <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"

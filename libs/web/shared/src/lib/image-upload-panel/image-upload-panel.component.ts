@@ -1,5 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable, Subscription } from 'rxjs';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -7,29 +16,51 @@ import { DialogComponent } from '../dialog/dialog.component';
   templateUrl: './image-upload-panel.component.html',
   styleUrls: ['./image-upload-panel.component.scss'],
 })
-export class ImageUploadPanelComponent {
+export class ImageUploadPanelComponent implements OnInit {
   // current event images
-  imgNames: string[] = [];
+  @Input() imgNames: string[] = [];
+  @Input() clearPreviewEvent: Observable<void>;
+  @Output() imageDeletedEvent = new EventEmitter<number>();
 
-  // new event images
+  private clearPreviewSubscription: Subscription;
+
+  // new images variables
+  @ViewChild('imageInput', { static: false })
+  imageInputVar: ElementRef;
   previews: string[] = [];
-  selectedFiles?: FileList = undefined;
+  imageFiles?: FileList = undefined;
   selectedFileNames: string[] = [];
 
   constructor(public dialog: MatDialog) {}
 
+  ngOnInit(): void {
+    this.clearPreviewSubscription = this.clearPreviewEvent.subscribe(() => {
+      this.imgNames = [];
+      this.previews = [];
+      this.selectedFileNames = [];
+      this.imageFiles = undefined;
+      this.imageInputVar.nativeElement.value = '';
+    });
+  }
+
+  ngOnDestroy() {
+    this.clearPreviewSubscription.unsubscribe();
+  }
+
   selectFiles(event: any): void {
-    this.selectedFiles = event.target.files;
+    this.imageFiles = event.target.files;
+    console.log(this.imageFiles?.length);
+
     this.previews = [];
-    if (this.selectedFiles && this.selectedFiles[0]) {
-      const numberOfFiles = this.selectedFiles.length;
+    if (this.imageFiles && this.imageFiles[0]) {
+      const numberOfFiles = this.imageFiles.length;
       for (let i = 0; i < numberOfFiles; i++) {
         const reader = new FileReader();
         reader.onload = (e: any) => {
           this.previews.push(e.target.result);
         };
-        reader.readAsDataURL(this.selectedFiles[i]);
-        this.selectedFileNames.push(this.selectedFiles[i].name);
+        reader.readAsDataURL(this.imageFiles[i]);
+        this.selectedFileNames.push(this.imageFiles[i].name);
       }
     }
   }
@@ -46,9 +77,16 @@ export class ImageUploadPanelComponent {
     const dialogSubmitSubscription =
       dialogRef.componentInstance.submitClicked.subscribe(() => {
         this.imgNames.forEach((img, index) => {
-          if (imageName === img) this.imgNames.splice(index, 1);
+          if (imageName === img) {
+            this.imgNames.splice(index, 1);
+            this.imageDeletedEvent.emit(index);
+          }
         });
         dialogSubmitSubscription.unsubscribe();
       });
+  }
+
+  public getImageFiles() {
+    return this.imageFiles;
   }
 }

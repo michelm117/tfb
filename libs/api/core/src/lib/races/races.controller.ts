@@ -87,6 +87,6 @@ export class RacesController {
     @Param('fileName') fileName: string,
     @Res() res: Response
   ) {
-    return res.sendFile(join(process.cwd(), 'upload/stories/' + fileName));
+    return res.sendFile(join(process.cwd(), 'upload/races/' + fileName));
   }
 }
