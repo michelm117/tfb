@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ImgDialogComponent } from './imgDialog/img-dialog.component';
 import { SkeletonLoaderComponent } from './skeleton-loader/skeleton-loader.component';
 import { SkeletonRiderCardComponent } from './skeleton-rider-card/skeleton-rider-card.component';
+import { ImageUploadPanelComponent } from './image-upload-panel/image-upload-panel.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { SkeletonRiderCardComponent } from './skeleton-rider-card/skeleton-rider
     ImgDialogComponent,
     SkeletonLoaderComponent,
     SkeletonRiderCardComponent,
+    ImageUploadPanelComponent,
   ],
   exports: [
     SocialBarComponent,
@@ -54,6 +56,7 @@ import { SkeletonRiderCardComponent } from './skeleton-rider-card/skeleton-rider
     ImgDialogComponent,
     DialogComponent,
     SkeletonRiderCardComponent,
+    ImageUploadPanelComponent,
     SkeletonLoaderComponent,
   ],
 })

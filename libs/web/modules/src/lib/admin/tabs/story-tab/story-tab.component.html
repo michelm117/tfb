@@ -114,7 +114,7 @@
         <div class="w-full">
           <mat-card-subtitle>Images</mat-card-subtitle>
           <!-- image input -->
-          <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
+          <input #imageInput type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
             (change)="selectFiles($event)" />
 
           <div class="flex card-grid">

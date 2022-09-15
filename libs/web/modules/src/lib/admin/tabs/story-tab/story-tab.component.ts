@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CountryInterface, StoryInterface } from '@tfb/api-interfaces';
 import { CountryService, FlagService, StoryService } from '@tfb/web/data';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
@@ -28,6 +28,8 @@ export class StoryTabComponent implements OnInit {
   stories: StoryInterface[] = [];
   storyForm!: FormGroup;
 
+  @ViewChild('imageInput', { static: false })
+  imageInputVar: ElementRef;
   previews: string[] = [];
   selectedFiles?: FileList = undefined;
   selectedFileNames: string[] = [];
@@ -72,6 +74,9 @@ export class StoryTabComponent implements OnInit {
     });
     this.selectedStory = clickedStory;
     this.createNewStory = false;
+    this.previews = [];
+    this.selectedFiles = undefined;
+    this.imageInputVar.nativeElement.value = '';
   }
 
   getFlag(iso: string) {
@@ -89,6 +94,7 @@ export class StoryTabComponent implements OnInit {
   selectFiles(event: any): void {
     this.selectedFiles = event.target.files;
     this.previews = [];
+
     if (this.selectedFiles && this.selectedFiles[0]) {
       const numberOfFiles = this.selectedFiles.length;
       for (let i = 0; i < numberOfFiles; i++) {
@@ -138,6 +144,7 @@ export class StoryTabComponent implements OnInit {
     } else {
       // Update Story
       if (!this.selectedStory) {
+        this.showLoading = false;
         return;
       }
 
@@ -258,8 +265,6 @@ export class StoryTabComponent implements OnInit {
   }
 
   private updateLocalStory(id: number, story: StoryInterface) {
-    console.log('updateLocalStory');
-
     const foundIndex = this.stories.findIndex((x) => x.id == id);
     if (foundIndex >= 0) {
       this.stories[foundIndex] = story;
@@ -271,6 +276,7 @@ export class StoryTabComponent implements OnInit {
     this.selectedFileNames = [];
     this.selectedFiles = undefined;
     this.previews = [];
+    this.imageInputVar.nativeElement.value = '';
 
     this.fetchStories();
   }

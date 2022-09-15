@@ -1,0 +1,15 @@
+<div class="w-full">
+  <h2 class="text-gray-500">Images</h2>
+  <!-- image input -->
+  <input type="file" id="fileInput" name="fileInput" accept="image/*" [multiple]="true"
+    (change)="selectFiles($event)" />
+
+  <div class="flex card-grid">
+    <!-- current images -->
+    <img *ngFor="let image of imgNames" class="object-cover w-32 h-32 m-5 cursor-pointer" src="{{image}}" alt=""
+      (click)="deleteImage(image)">
+
+    <!-- images to add -->
+    <img *ngFor='let preview of previews' [src]="preview" class="object-cover w-32 h-32 m-5">
+  </div>
+</div>
