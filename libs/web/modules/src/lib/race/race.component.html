@@ -33,15 +33,15 @@
       {{race.text}}
     </div>
 
-    <div class="w-full pt-4 mx-auto md:w-2/3">
+    <div class="w-full pt-4 pb-10 mx-auto md:w-2/3">
       <tfb-race-results [results]="race.results"></tfb-race-results>
     </div>
 
     <tfb-gallery *ngIf="race.imgNames!.length > 0" [imgUrls]=getImageUrls()></tfb-gallery>
 
 
-    <div class="pt-10 md:pt-16">
-      <!-- <app-quote></app-quote> -->
-    </div>
+    <!-- <div class="pt-10 md:pt-16">
+      <app-quote></app-quote> 
+    </div> -->
   </div>
 </div>

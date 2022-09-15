@@ -1,12 +1,14 @@
-<div x-data="imageSlider" class="relative p-2 mx-auto overflow-hidden rounded-md  sm:p-4"
-  [ngClass]="{'shadow-xl': imgUrls.length >= 2}">
+<div x-data="imageSlider" class="relative p-2 mx-auto overflow-hidden rounded-md sm:p-4"
+  [ngClass]="{'shadow-2xl': imgUrls.length >= 2}">
 
   <div class="absolute px-2 text-sm text-center text-white bg-gray-600 rounded-full indexShow top-5 right-5"
     [ngClass]="{'hide': imgUrls.length <= 1}">
     <span>{{imgIndex + 1}}</span> / <span>{{imgUrls.length}}</span>
   </div>
 
-  <button (click)="previousImage()" class="absolute z-10 flex items-center justify-center transition duration-200 transform -translate-y-1/2 bg-gray-100 rounded-full shadow-md left-5 top-1/2 w-11 h-11 hover:scale-110" [ngClass]="{'hide': imgUrls.length <= 1}">
+  <button (click)="previousImage()"
+    class="absolute z-10 flex items-center justify-center transition duration-200 transform -translate-y-1/2 bg-gray-100 rounded-full shadow-md left-5 top-1/2 w-11 h-11 hover:scale-110"
+    [ngClass]="{'hide': imgUrls.length <= 1}">
     <svg class="w-8 h-8 font-bold text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7">
@@ -14,7 +16,9 @@
     </svg>
   </button>
 
-  <button (click)="nextImage()" class="absolute z-10 flex items-center justify-center transition duration-200 transform -translate-y-1/2 bg-gray-100 rounded-full shadow-md right-5 top-1/2 w-11 h-11 hover:scale-110" [ngClass]="{'hide': imgUrls.length <= 1}">
+  <button (click)="nextImage()"
+    class="absolute z-10 flex items-center justify-center transition duration-200 transform -translate-y-1/2 bg-gray-100 rounded-full shadow-md right-5 top-1/2 w-11 h-11 hover:scale-110"
+    [ngClass]="{'hide': imgUrls.length <= 1}">
     <svg class="w-8 h-8 font-bold text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
