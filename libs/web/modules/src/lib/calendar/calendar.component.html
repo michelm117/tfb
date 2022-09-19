@@ -1,0 +1,77 @@
+<div class="container mx-auto mt-10 ">
+  <div class="w-full rounded shadow wrapper ">
+    <div class="flex justify-between w-full p-2 border-b header">
+      <span class="text-lg font-bold">
+        {{ year }} {{ monthNames[month] }}
+      </span>
+      <div class="buttons">
+        <button mat-icon-button class="p-1" (click)="previousMonth()">
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <button mat-icon-button class="p-1" (click)="nextMonth()">
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+      </div>
+    </div>
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th class="w-10 h-10 p-2 text-xs border-r xl:w-32 lg:w-30 md:w-30 sm:w-20 xl:text-sm">
+            <span class="hidden xl:block lg:block md:block sm:block">Monday</span>
+            <span class="block xl:hidden lg:hidden md:hidden sm:hidden">Mon</span>
+          </th>
+          <th class="w-10 h-10 p-2 text-xs border-r xl:w-32 lg:w-30 md:w-30 sm:w-20 xl:text-sm">
+            <span class="hidden xl:block lg:block md:block sm:block">Tuesday</span>
+            <span class="block xl:hidden lg:hidden md:hidden sm:hidden">Tue</span>
+          </th>
+          <th class="w-10 h-10 p-2 text-xs border-r xl:w-32 lg:w-30 md:w-30 sm:w-20 xl:text-sm">
+            <span class="hidden xl:block lg:block md:block sm:block">Wednesday</span>
+            <span class="block xl:hidden lg:hidden md:hidden sm:hidden">Wed</span>
+          </th>
+          <th class="w-10 h-10 p-2 text-xs border-r xl:w-32 lg:w-30 md:w-30 sm:w-20 xl:text-sm">
+            <span class="hidden xl:block lg:block md:block sm:block">Thursday</span>
+            <span class="block xl:hidden lg:hidden md:hidden sm:hidden">Thu</span>
+          </th>
+          <th class="w-10 h-10 p-2 text-xs border-r xl:w-32 lg:w-30 md:w-30 sm:w-20 xl:text-sm">
+            <span class="hidden xl:block lg:block md:block sm:block">Friday</span>
+            <span class="block xl:hidden lg:hidden md:hidden sm:hidden">Fri</span>
+          </th>
+          <th class="w-10 h-10 p-2 text-xs border-r xl:w-32 lg:w-30 md:w-30 sm:w-20 xl:text-sm">
+            <span class="hidden xl:block lg:block md:block sm:block">Saturday</span>
+            <span class="block xl:hidden lg:hidden md:hidden sm:hidden">Sat</span>
+          </th>
+          <th class="w-10 h-10 p-2 text-xs border-r xl:w-32 lg:w-30 md:w-30 sm:w-20 xl:text-sm">
+            <span class="hidden xl:block lg:block md:block sm:block">Sunday</span>
+            <span class="block xl:hidden lg:hidden md:hidden sm:hidden">Sun</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="h-20 text-center" *ngFor="let week of weekDay; let i = index">
+          <td *ngFor="let day of week"
+            [ngClass]="{'bg-gray-100': (i === 0 && day.getDate() > 7) || (i === weeks.length - 1 && day.getDate() < 8)}"
+            class="w-10 h-40 p-1 overflow-auto transition duration-500 border cursor-pointer xl:w-32 lg:w-30 md:w-30 sm:w-20 ease hover:bg-gray-300">
+            <div class="flex flex-col w-10 h-40 mx-auto overflow-hidden xl:w-32 lg:w-30 md:w-30 sm:w-full">
+              <div class="w-full h-5 top">
+                <span class="text-gray-600"
+                  [ngClass]="{'text-gray-400': (i === 0 && day.getDate() > 7) || (i === weeks.length - 1 && day.getDate() < 8)}">
+                  {{ day.getDate() }}
+                </span>
+              </div>
+              <div class="flex-grow w-full py-1 cursor-pointer bottom h-30"
+                [ngClass]="{'hidden': !hasEntry(year, month, day.getDate())}">
+                <a [routerLink]="'/' +getEntryUrl(year, month, day.getDate())" [replaceUrl]="true">
+                  <div class="p-1 mb-1 text-sm text-white rounded bg-secondary-color event">
+                    <span class="event-name">
+                      {{ getEntryName(year, month, day.getDate()) }}
+                    </span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

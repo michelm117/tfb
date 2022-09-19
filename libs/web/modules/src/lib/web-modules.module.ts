@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -41,6 +42,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AgeCategoryTabComponent } from './admin/tabs/age-category-tab/age-category-tab.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from '@tfb/web/data';
+import { CalendarComponent } from './calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -74,6 +76,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
+      },
+      {
+        path: 'calendar',
+        component: CalendarComponent,
       },
       {
         canActivate: [AuthGuard],
@@ -118,6 +124,7 @@ const routes: Routes = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
+    MatIconModule,
     MatProgressBarModule,
     MatTooltipModule,
     NgxMatFileInputModule,
@@ -141,6 +148,7 @@ const routes: Routes = [
     PageNotFoundComponent,
     AgeCategoryTabComponent,
     LoginComponent,
+    CalendarComponent,
   ],
   exports: [AboutComponent, StoriesOverviewComponent],
 })
