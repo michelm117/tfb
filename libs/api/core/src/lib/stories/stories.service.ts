@@ -28,6 +28,13 @@ export class StoriesService {
     return await this.storiesRepository.find({ relations: ['country'] });
   }
 
+  async findAllChecked() {
+    return await this.storiesRepository.find({
+      where: { show: true },
+      relations: ['country'],
+    });
+  }
+
   async findOne(id: number) {
     const story = await this.storiesRepository.findOne({
       where: { id },
@@ -66,6 +73,8 @@ export class StoriesService {
     }
 
     const newStory = { ...story, ...updateStoryDto };
+    console.log('NEW', newStory);
+
     await this.storiesRepository.update(id, newStory);
     return newStory;
   }
@@ -110,6 +119,20 @@ export class StoriesService {
   }
 
   async getMap() {
+    const stories = await this.findAllChecked();
+
+    const map: Record<number, StoryInterface[]> = {};
+    for (const story of stories) {
+      const year = new Date(story.date).getFullYear();
+      if (!map[year]) {
+        map[year] = [];
+      }
+      map[year].push(story);
+    }
+    return map;
+  }
+
+  async getMapAll() {
     const stories = await this.findAll();
 
     const map: Record<number, StoryInterface[]> = {};
@@ -133,7 +156,7 @@ export class StoriesService {
       number,
       Record<number, Record<number, string[][]>>
     > = {};
-    const map = await this.getMap();
+    const map = await this.getMapAll();
     const years = Object.keys(map);
 
     for (let i = 0; i < years.length; i++) {
@@ -154,7 +177,12 @@ export class StoriesService {
         if (!monthDateRecord[month][day]) {
           monthDateRecord[month][day] = [];
         }
-        monthDateRecord[month][day].push([story.title, `stories/${story.id}`]);
+
+        let link = 'stories/-1';
+        if (story.show) {
+          link = `stories/${story.id}`;
+        }
+        monthDateRecord[month][day].push([story.title, link]);
       }
       records[year] = monthDateRecord;
     }

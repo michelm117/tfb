@@ -24,8 +24,16 @@ export class StoryService {
     });
   }
 
+  getAllStories(): Observable<StoryInterface[]> {
+    return this.http.get<StoryInterface[]>(`${this.url}/all`, {
+      responseType: 'json',
+    });
+  }
+
   getStories(): Observable<StoryInterface[]> {
-    return this.http.get<StoryInterface[]>(this.url, { responseType: 'json' });
+    return this.http.get<StoryInterface[]>(this.url, {
+      responseType: 'json',
+    });
   }
 
   getCalendar(): Observable<
@@ -47,6 +55,7 @@ export class StoryService {
         date: story.date,
         text: story.text,
         podium: story.podium,
+        show: story.show,
       },
       {
         responseType: 'json',

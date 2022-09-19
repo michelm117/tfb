@@ -16,8 +16,14 @@ export class RaceService {
     });
   }
 
+  getAllRaces(): Observable<RaceInterface[]> {
+    return this.http.get<RaceInterface[]>(`${this.url}/all`, {
+      responseType: 'json',
+    });
+  }
+
   getRaces(): Observable<RaceInterface[]> {
-    return this.http.get<RaceInterface[]>(`${this.url}`, {
+    return this.http.get<RaceInterface[]>(this.url, {
       responseType: 'json',
     });
   }
@@ -57,6 +63,7 @@ export class RaceService {
         imgNames: race.imgNames,
         date: race.date,
         text: race.text,
+        show: race.show,
       },
       {
         responseType: 'json',
@@ -91,7 +98,8 @@ export class RaceService {
     riderId: number,
     result: number,
     ageCategoryId: number,
-    acResult: number
+    acResult: number,
+    show: boolean
   ) {
     return this.http.patch<RaceInterface>(
       `${this.url}/add-result/${id}`,
@@ -101,6 +109,7 @@ export class RaceService {
         ageCategoryId: ageCategoryId,
         acResult: acResult,
         raceId: id,
+        show: show,
       },
       {
         responseType: 'json',

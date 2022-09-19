@@ -50,7 +50,7 @@
         <tr class="h-20 text-center" *ngFor="let week of weekDay; let i = index">
           <td *ngFor="let day of week"
             [ngClass]="{'bg-gray-100': (i === 0 && day.getDate() > 7) || (i === weeks.length - 1 && day.getDate() < 8)}"
-            class="w-10 h-40 p-1 overflow-auto transition duration-500 border cursor-pointer xl:w-32 lg:w-30 md:w-30 sm:w-20 ease hover:bg-gray-300">
+            class="w-10 h-40 p-1 overflow-auto transition duration-500 border xl:w-32 lg:w-30 md:w-30 sm:w-20 ease hover:bg-gray-300">
             <div class="flex flex-col w-10 h-40 mx-auto overflow-hidden xl:w-32 lg:w-30 md:w-30 sm:w-full">
               <div class="w-full h-5 top">
                 <span class="text-gray-600"

@@ -2,6 +2,7 @@ import { CountryInterface } from './country.interface';
 
 export interface EventInterface {
   id: number;
+  show: boolean;
   title: string;
   place: string;
   country: CountryInterface;

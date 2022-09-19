@@ -39,4 +39,7 @@ export class Race implements RaceInterface {
 
   @Column({ default: false })
   podium: boolean;
+
+  @Column({ default: false })
+  show: boolean;
 }

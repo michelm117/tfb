@@ -44,6 +44,11 @@ export class StoriesController {
 
   @Get()
   findAll() {
+    return this.storiesService.findAllChecked();
+  }
+
+  @Get('all')
+  findAllShow() {
     return this.storiesService.findAll();
   }
 

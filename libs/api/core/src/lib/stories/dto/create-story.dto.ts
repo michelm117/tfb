@@ -8,4 +8,5 @@ export class CreateStoryDto {
   text: string;
   imgNames: string[];
   podium: boolean;
+  show: boolean;
 }

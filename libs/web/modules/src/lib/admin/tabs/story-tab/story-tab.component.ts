@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CountryInterface, StoryInterface } from '@tfb/api-interfaces';
 import { CountryService, FlagService, StoryService } from '@tfb/web/data';
-import { faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { faTrophy, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, ImageUploadPanelComponent } from '@tfb/web/shared';
@@ -22,7 +22,15 @@ import { forkJoin, Observable, of, Subject } from 'rxjs';
 export class StoryTabComponent implements OnInit {
   countries: CountryInterface[] = [];
 
-  displayedColumns = ['id', 'title', 'place', 'country', 'date', 'podium'];
+  displayedColumns = [
+    'show',
+    'id',
+    'title',
+    'place',
+    'country',
+    'date',
+    'podium',
+  ];
 
   selectedStory: StoryInterface | undefined;
   stories: StoryInterface[] = [];
@@ -35,7 +43,9 @@ export class StoryTabComponent implements OnInit {
   createNewStory = true;
 
   faTrophy = faTrophy;
+  faEye = faEye;
   faBan = faBan;
+  faEyeSlash = faEyeSlash;
   showLoading = false;
 
   constructor(
@@ -51,9 +61,10 @@ export class StoryTabComponent implements OnInit {
       title: ['', [Validators.required]],
       place: ['', [Validators.required]],
       content: ['', [Validators.required, Validators.minLength(450)]],
-      podium: [false, [Validators.required]],
+      podium: [false],
       country: [-1, [Validators.required, Validators.min(0)]],
       date: [null, [Validators.required]],
+      show: [false],
     });
     this.fetchStories();
     this.countryService.getCountries().subscribe((countries) => {
@@ -69,6 +80,7 @@ export class StoryTabComponent implements OnInit {
       date: clickedStory.date,
       place: clickedStory.place,
       podium: clickedStory.podium,
+      show: clickedStory.show,
     });
     this.selectedStory = clickedStory;
     this.createNewStory = false;
@@ -90,6 +102,7 @@ export class StoryTabComponent implements OnInit {
     const place = this.storyForm.get('place')?.value;
     const text = this.storyForm.get('content')?.value;
     const podium = this.storyForm.get('podium')?.value;
+    const show = this.storyForm.get('show')?.value;
     const country = this.storyForm.get('country')?.value;
     const date = this.storyForm.get('date')?.value;
 
@@ -99,6 +112,7 @@ export class StoryTabComponent implements OnInit {
       place,
       text,
       podium,
+      show,
       date,
       imgNames: [],
     };
@@ -202,13 +216,14 @@ export class StoryTabComponent implements OnInit {
       date: null,
       place: '',
       podium: false,
+      show: false,
     });
     this.selectedStory = undefined;
     this.createNewStory = true;
   }
 
   private fetchStories() {
-    this.storyService.getStories().subscribe((stories) => {
+    this.storyService.getAllStories().subscribe((stories) => {
       stories.sort((a, b) => {
         return a.id - b.id;
       });

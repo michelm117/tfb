@@ -46,6 +46,11 @@ export class RacesController {
 
   @Get()
   findAll() {
+    return this.racesService.findAllChecked();
+  }
+
+  @Get('all')
+  findAllShow() {
     return this.racesService.findAll();
   }
 

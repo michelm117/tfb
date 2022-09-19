@@ -69,6 +69,13 @@ export class RacesService {
     });
   }
 
+  async findAllChecked() {
+    return await this.raceRepository.find({
+      where: { show: true },
+      relations: ['country', 'results', 'results.rider', 'results.ageCategory'],
+    });
+  }
+
   async findOne(id: number) {
     const race = await this.raceRepository.findOne({
       where: { id },
@@ -116,6 +123,20 @@ export class RacesService {
   }
 
   async getMap() {
+    const races = await this.findAllChecked();
+
+    const map: Record<number, RaceInterface[]> = {};
+    for (const race of races) {
+      const year = new Date(race.date).getFullYear();
+      if (!map[year]) {
+        map[year] = [];
+      }
+      map[year].push(race);
+    }
+    return map;
+  }
+
+  async getMapAll() {
     const races = await this.findAll();
 
     const map: Record<number, RaceInterface[]> = {};
@@ -240,7 +261,7 @@ export class RacesService {
       number,
       Record<number, Record<number, string[][]>>
     > = {};
-    const map = await this.getMap();
+    const map = await this.getMapAll();
     const years = Object.keys(map);
 
     for (let i = 0; i < years.length; i++) {
@@ -261,7 +282,11 @@ export class RacesService {
         if (!monthDateRecord[month][day]) {
           monthDateRecord[month][day] = [];
         }
-        monthDateRecord[month][day].push([race.title, `races/${race.id}`]);
+        let link = 'races/-1';
+        if (race.show) {
+          link = `races/${race.id}`;
+        }
+        monthDateRecord[month][day].push([race.title, link]);
       }
       records[year] = monthDateRecord;
     }

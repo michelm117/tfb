@@ -29,7 +29,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { StoryTabComponent } from './admin/tabs/story-tab/story-tab.component';
 import { RaceTabComponent } from './admin/tabs/race-tab/race-tab.component';
-import { CalendarTabComponent } from './admin/tabs/calendar-tab/calendar-tab.component';
 import { AboutTabComponent } from './admin/tabs/about-tab/about-tab.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -139,7 +138,6 @@ const routes: Routes = [
     RiderTabComponent,
     StoryTabComponent,
     RaceTabComponent,
-    CalendarTabComponent,
     AboutTabComponent,
     DeleteRiderPanelComponent,
     UpdateRiderPanelComponent,

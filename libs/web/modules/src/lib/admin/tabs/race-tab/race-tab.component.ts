@@ -9,7 +9,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { faTrophy, faBan } from '@fortawesome/free-solid-svg-icons';
+import { faTrophy, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import {
   AgeCategoryInterface,
   CountryInterface,
@@ -37,7 +37,15 @@ export class RaceTabComponent implements OnInit {
   riders: RiderInterface[] = [];
   ageCategories: AgeCategoryInterface[] = [];
 
-  displayedColumnsRaces = ['id', 'title', 'place', 'country', 'date', 'delete'];
+  displayedColumnsRaces = [
+    'show',
+    'id',
+    'title',
+    'place',
+    'country',
+    'date',
+    'delete',
+  ];
 
   displayedColumnsResults = [
     'id',
@@ -61,7 +69,8 @@ export class RaceTabComponent implements OnInit {
   createNewRace = true;
 
   faTrophy = faTrophy;
-  faBan = faBan;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
   showLoading = false;
 
   constructor(
@@ -81,6 +90,7 @@ export class RaceTabComponent implements OnInit {
       content: ['', [Validators.required, Validators.minLength(450)]],
       country: [-1, [Validators.required, Validators.min(0)]],
       date: [null, [Validators.required]],
+      show: [false],
     });
 
     // this.fetchRaces();
@@ -108,6 +118,7 @@ export class RaceTabComponent implements OnInit {
       country: clickedRace.country.id,
       date: clickedRace.date,
       place: clickedRace.place,
+      show: clickedRace.show,
     });
     this.selectedRace = clickedRace;
     this.createNewRace = false;
@@ -133,6 +144,7 @@ export class RaceTabComponent implements OnInit {
     const text = this.raceForm.get('content')?.value;
     const country = this.raceForm.get('country')?.value;
     const date = this.raceForm.get('date')?.value;
+    const show = this.raceForm.get('show')?.value;
 
     const race: Partial<RaceInterface> = {
       title,
@@ -140,6 +152,7 @@ export class RaceTabComponent implements OnInit {
       place,
       text,
       date,
+      show,
       imgNames: [],
     };
 
@@ -239,6 +252,7 @@ export class RaceTabComponent implements OnInit {
       country: -1,
       date: null,
       place: '',
+      show: false,
     });
     this.selectedRace = undefined;
     this.createNewRace = true;
@@ -246,7 +260,7 @@ export class RaceTabComponent implements OnInit {
   }
 
   private fetchRaces() {
-    this.raceService.getRaces().subscribe((races) => {
+    this.raceService.getAllRaces().subscribe((races) => {
       races.sort((a, b) => {
         return a.id - b.id;
       });
@@ -362,7 +376,8 @@ export class RaceTabComponent implements OnInit {
         result.rider.id,
         result.result,
         result.ageCategory.id,
-        result.acResult
+        result.acResult,
+        this.selectedRace.show
       )
       .subscribe(() => {
         this.fetchRaces();

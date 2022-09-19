@@ -29,4 +29,7 @@ export class Story implements StoryInterface {
 
   @Column({ default: false })
   podium: boolean;
+
+  @Column({ default: false })
+  show: boolean;
 }
