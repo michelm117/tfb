@@ -90,8 +90,6 @@ export class AuthService {
   }
 
   logout(): void {
-    console.log('Logging out user');
-
     if (this.tokenService.hasAccessToken()) {
       this.http.post(url + '/logout', httpOptions).subscribe();
     }

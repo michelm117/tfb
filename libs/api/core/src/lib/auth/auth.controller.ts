@@ -111,8 +111,6 @@ export class AuthController {
   @Get('refresh')
   @UseGuards(JwtRefreshGuard)
   refresh(@Req() req: RequestWithUser): any {
-    console.log('Refreshed cookie');
-
     const accessTokenCookie = this.authService.getCookieWithJwtAccessToken(
       req.user.id
     );

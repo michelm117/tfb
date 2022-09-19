@@ -200,7 +200,6 @@ export class RacesService {
       }
 
       const results: Result[] = race.results;
-      console.log('createResultDto', createResultDto);
 
       const result = await this.resultService.create(createResultDto);
       if (!result) {
@@ -212,7 +211,6 @@ export class RacesService {
       if (result.acResult < 4 || result.result < 4) {
         podium = true;
       }
-      console.log('UPDATE', { podium: podium, results: results });
 
       return await this.raceRepository.update(raceId, {
         podium: podium,

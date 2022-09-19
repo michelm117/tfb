@@ -73,8 +73,6 @@ export class StoriesService {
     }
 
     const newStory = { ...story, ...updateStoryDto };
-    console.log('NEW', newStory);
-
     await this.storiesRepository.update(id, newStory);
     return newStory;
   }

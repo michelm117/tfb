@@ -46,8 +46,6 @@ export class RaceService {
   }
 
   createRace(race: Partial<RaceInterface>) {
-    console.log('RACE', race);
-
     return this.http.post<RaceInterface>(this.url, race, {
       responseType: 'json',
     });
@@ -118,8 +116,6 @@ export class RaceService {
   }
 
   deleteResult(id: number, resultId: number) {
-    console.log('ResultId', resultId);
-
     return this.http.patch<RaceInterface>(
       `${this.url}/delete-result/${id}`,
       { resultId },
