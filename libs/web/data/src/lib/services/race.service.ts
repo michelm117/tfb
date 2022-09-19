@@ -40,6 +40,8 @@ export class RaceService {
   }
 
   createRace(race: Partial<RaceInterface>) {
+    console.log('RACE', race);
+
     return this.http.post<RaceInterface>(this.url, race, {
       responseType: 'json',
     });
@@ -82,5 +84,39 @@ export class RaceService {
 
   deleteRace(id: number) {
     return this.http.delete<any>(`${this.url}/${id}`, { responseType: 'json' });
+  }
+
+  addResult(
+    id: number,
+    riderId: number,
+    result: number,
+    ageCategoryId: number,
+    acResult: number
+  ) {
+    return this.http.patch<RaceInterface>(
+      `${this.url}/add-result/${id}`,
+      {
+        riderId: riderId,
+        result: result,
+        ageCategoryId: ageCategoryId,
+        acResult: acResult,
+        raceId: id,
+      },
+      {
+        responseType: 'json',
+      }
+    );
+  }
+
+  deleteResult(id: number, resultId: number) {
+    console.log('ResultId', resultId);
+
+    return this.http.patch<RaceInterface>(
+      `${this.url}/delete-result/${id}`,
+      { resultId },
+      {
+        responseType: 'json',
+      }
+    );
   }
 }

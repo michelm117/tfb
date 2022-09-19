@@ -24,8 +24,8 @@ import {
   RiderService,
   AgeCategoryService,
 } from '@tfb/web/data';
-import { ImageUploadPanelComponent } from '@tfb/web/shared';
-import { Observable, forkJoin, Subject } from 'rxjs';
+import { DialogComponent, ImageUploadPanelComponent } from '@tfb/web/shared';
+import { Observable, forkJoin, Subject, max } from 'rxjs';
 
 @Component({
   selector: 'tfb-race-tab',
@@ -37,7 +37,7 @@ export class RaceTabComponent implements OnInit {
   riders: RiderInterface[] = [];
   ageCategories: AgeCategoryInterface[] = [];
 
-  displayedColumnsRaces = ['id', 'title', 'place', 'country', 'date'];
+  displayedColumnsRaces = ['id', 'title', 'place', 'country', 'date', 'delete'];
 
   displayedColumnsResults = [
     'id',
@@ -45,6 +45,7 @@ export class RaceTabComponent implements OnInit {
     'ageCategory',
     'result',
     'acResult',
+    'delete',
   ];
   results = new MatTableDataSource<ResultInterface>([]);
   selectedResult: ResultInterface | undefined;
@@ -74,8 +75,6 @@ export class RaceTabComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.results.data = [];
-
     this.raceForm = this.formBuilder.group({
       title: ['', [Validators.required]],
       place: ['', [Validators.required]],
@@ -84,18 +83,20 @@ export class RaceTabComponent implements OnInit {
       date: [null, [Validators.required]],
     });
 
-    this.fetchRaces();
+    // this.fetchRaces();
 
-    this.countryService.getCountries().subscribe((countries) => {
+    const tasks: Observable<any>[] = [
+      this.countryService.getCountries(),
+      this.riderService.getRiders(),
+      this.ageCatService.getAgeCats(),
+    ];
+
+    forkJoin(tasks).subscribe(([countries, riders, ageCats]) => {
       this.countries = countries;
-    });
-
-    this.riderService.getRiders().subscribe((riders) => {
       this.riders = riders;
-    });
-
-    this.ageCatService.getAgeCats().subscribe((ageCats) => {
       this.ageCategories = ageCats;
+
+      this.fetchRaces();
     });
   }
 
@@ -250,32 +251,18 @@ export class RaceTabComponent implements OnInit {
         return a.id - b.id;
       });
 
+      // add empty result to each race result
       for (let i = 0; i < races.length; i++) {
         const race = races[i];
-        const maxId =
-          // eslint-disable-next-line prefer-spread
-          Math.max.apply(
-            Math,
-            race.results.map((o) => {
-              return o.id;
-            })
-          ) + 1;
+        const maxId = Math.max(...race.results.map((result) => result.id)) + 1;
+        console.log(maxId);
 
         race.results.push({
-          acResult: 0,
           id: maxId,
-          ageCategory: { id: -1, name: '' },
-          result: 0,
-          rider: {
-            id: -1,
-            imgName: '',
-            name: 'rider',
-            surname: 'rider',
-            country: { id: 0, iso: 'zzz', name: 'Country' },
-          },
-        });
-        race.results.sort((a, b) => {
-          return a.id - b.id;
+          acResult: 1,
+          ageCategory: this.ageCategories[0],
+          result: 1,
+          rider: this.riders[0],
         });
       }
       this.races = races;
@@ -345,5 +332,72 @@ export class RaceTabComponent implements OnInit {
       return;
     }
     this.selectedRace.imgNames.splice(index, 1);
+  }
+
+  openDeleteRaceDialog(id: number): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '350px',
+      data: {
+        titel: 'Deleting Race?',
+        text: `Are you sure you want to delete race "${id}"?`,
+      },
+    });
+
+    const dialogSubmitSubscription =
+      dialogRef.componentInstance.submitClicked.subscribe((result) => {
+        this.raceService.deleteRace(id).subscribe(() => {
+          this.fetchRaces();
+        });
+        dialogSubmitSubscription.unsubscribe();
+      });
+  }
+
+  addResult(result: ResultInterface) {
+    if (!result || !this.selectedRace) {
+      return;
+    }
+    this.raceService
+      .addResult(
+        this.selectedRace.id,
+        result.rider.id,
+        result.result,
+        result.ageCategory.id,
+        result.acResult
+      )
+      .subscribe(() => {
+        this.fetchRaces();
+        this.selectedResult = undefined;
+      });
+  }
+
+  openDeleteResultDialog(result: ResultInterface) {
+    console.log(result);
+
+    if (!this.selectedRace || !result.id) {
+      return;
+    }
+
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '350px',
+      data: {
+        titel: 'Deleting Result?',
+        text: `Are you sure you want to delete result "${result.id}"?`,
+      },
+    });
+
+    const dialogSubmitSubscription =
+      dialogRef.componentInstance.submitClicked.subscribe((res) => {
+        if (!this.selectedRace || !result.id) {
+          return;
+        }
+        this.raceService
+          .deleteResult(this.selectedRace.id, result.id)
+          .subscribe((res) => {
+            console.log(res);
+
+            this.fetchRaces();
+          });
+        dialogSubmitSubscription.unsubscribe();
+      });
   }
 }

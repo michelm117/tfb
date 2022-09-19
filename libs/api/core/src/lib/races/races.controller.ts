@@ -20,6 +20,8 @@ import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import path = require('path');
 import { join } from 'path';
+import { CreateResultDto } from '../result/dto/create-result.dto';
+import { DeleteResultDto } from './dto/delete-result.dto';
 
 export const storage = {
   storage: diskStorage({
@@ -88,5 +90,21 @@ export class RacesController {
     @Res() res: Response
   ) {
     return res.sendFile(join(process.cwd(), 'upload/races/' + fileName));
+  }
+
+  @Patch('add-result/:id')
+  async addResult(
+    @Param('id') id: string,
+    @Body() createResultDto: CreateResultDto
+  ) {
+    return await this.racesService.addResult(+id, createResultDto);
+  }
+
+  @Patch('delete-result/:id')
+  async deleteResult(
+    @Param('id') id: string,
+    @Body() deleteResultDto: DeleteResultDto
+  ) {
+    return await this.racesService.deleteResult(+id, deleteResultDto.resultId);
   }
 }

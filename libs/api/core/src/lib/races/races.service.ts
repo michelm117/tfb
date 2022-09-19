@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RaceInterface } from '@tfb/api-interfaces';
+import { RaceInterface, ResultInterface } from '@tfb/api-interfaces';
 import { Repository } from 'typeorm';
 import { CountryService } from '../country/country.service';
 import { Result } from '../result/entities/result.entity';
@@ -15,6 +15,8 @@ import { CreateRaceDto } from './dto/create-race.dto';
 import { UpdateRaceDto } from './dto/update-race.dto';
 import { Race } from './entities/race.entity';
 import * as fs from 'fs';
+import { CreateResultDto } from '../result/dto/create-result.dto';
+import { DeleteResultDto } from './dto/delete-result.dto';
 
 @Injectable()
 export class RacesService {
@@ -42,16 +44,18 @@ export class RacesService {
     race.podium = false;
 
     const results: Result[] = [];
-    for (let i = 0; i < createRaceDto.results.length; i++) {
-      const resultDto = createRaceDto.results[i];
-      try {
-        const result = await this.resultService.create(resultDto);
-        if (result.acResult < 4 || result.result < 4) {
-          race.podium = true;
+    if (createRaceDto.results) {
+      for (let i = 0; i < createRaceDto.results.length; i++) {
+        const resultDto = createRaceDto.results[i];
+        try {
+          const result = await this.resultService.create(resultDto);
+          if (result.acResult < 4 || result.result < 4) {
+            race.podium = true;
+          }
+          results.push(result);
+        } catch (err: any) {
+          throw new BadRequestException(err);
         }
-        results.push(result);
-      } catch (err: any) {
-        throw new BadRequestException(err);
       }
     }
     race.results = results;
@@ -71,7 +75,7 @@ export class RacesService {
       relations: ['country', 'results', 'results.rider', 'results.ageCategory'],
     });
     if (!race) {
-      return new NotFoundException('Race was not found');
+      throw new NotFoundException('Race was not found');
     }
     return race;
   }
@@ -158,5 +162,76 @@ export class RacesService {
         console.error(err);
       }
     });
+  }
+
+  async addResult(raceId: number, createResultDto: CreateResultDto) {
+    if (!raceId || !createResultDto) {
+      return;
+    }
+
+    try {
+      const race = await this.raceRepository.findOne({
+        where: { id: raceId },
+        relations: ['results', 'results.rider', 'results.ageCategory'],
+      });
+      if (!race) {
+        return new NotFoundException('Race was not found');
+      }
+
+      const results: Result[] = race.results;
+      console.log('createResultDto', createResultDto);
+
+      const result = await this.resultService.create(createResultDto);
+      if (!result) {
+        return new NotFoundException('Could not create result entity');
+      }
+      results.push(result);
+
+      let podium = race.podium;
+      if (result.acResult < 4 || result.result < 4) {
+        podium = true;
+      }
+      console.log('UPDATE', { podium: podium, results: results });
+
+      return await this.raceRepository.update(raceId, {
+        podium: podium,
+        // results: results,
+      });
+    } catch (err: any) {
+      console.error(err);
+      throw new BadRequestException(err);
+    }
+  }
+
+  async deleteResult(id: number, resultId: number) {
+    if (!id || !resultId) {
+      return;
+    }
+
+    try {
+      await this.resultService.remove(resultId);
+
+      // Check if  podium is still true
+      const race = await this.raceRepository.findOne({
+        where: { id },
+        relations: ['results'],
+      });
+      if (!race) {
+        return new NotFoundException('Race was not found');
+      }
+
+      let podium = false;
+      for (let i = 0; i < race.results.length; i++) {
+        const result = race.results[i];
+        if (result.acResult < 4 || result.result < 4) {
+          podium = true;
+        }
+      }
+
+      return await this.raceRepository.update(id, { podium: podium });
+    } catch (err: any) {
+      console.error(err);
+      throw new BadRequestException('Something went wrong');
+    }
   }
 }

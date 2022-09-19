@@ -26,6 +26,11 @@ export class ResultService {
   ) {}
 
   async create(createResultDto: CreateResultDto) {
+    const race = await this.raceService.findOne(createResultDto.raceId);
+    if (!race) {
+      throw new BadRequestException('Race does not exists');
+    }
+
     const rider = await this.riderService.findOne(createResultDto.riderId);
     if (!rider) {
       throw new BadRequestException('Rider does not exists');
@@ -40,6 +45,7 @@ export class ResultService {
 
     const result = this.resultRepository.create(createResultDto);
     result.rider = rider;
+    result.race = race;
     result.ageCategory = ageCategory;
     return await this.resultRepository.save(result);
   }
@@ -76,7 +82,7 @@ export class ResultService {
     return `This action updates a #${id} result`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} result`;
+  async remove(id: number) {
+    return await this.resultRepository.delete(id);
   }
 }
