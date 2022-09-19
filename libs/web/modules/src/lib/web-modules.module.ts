@@ -39,6 +39,7 @@ import { CountryTabComponent } from './admin/tabs/country-tab/country-tab.compon
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AgeCategoryTabComponent } from './admin/tabs/age-category-tab/age-category-tab.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from '@tfb/web/data';
 
 const routes: Routes = [
   {
@@ -70,12 +71,13 @@ const routes: Routes = [
         component: RaceComponent,
       },
       {
-        path: 'admin',
-        component: AdminComponent,
-      },
-      {
         path: 'login',
         component: LoginComponent,
+      },
+      {
+        canActivate: [AuthGuard],
+        path: 'admin',
+        component: AdminComponent,
       },
     ],
   },
