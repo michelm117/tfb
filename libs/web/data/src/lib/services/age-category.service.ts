@@ -10,33 +10,31 @@ export class AgeCategoryService {
   url = 'age-category';
   constructor(private http: HttpClient) {}
 
-  createAgeCat(name: string, surname: string, country: number) {
+  create(name: string) {
     return this.http.post<AgeCategoryInterface>(this.url, {
       name: name,
-      surname: surname,
-      country: country,
     });
   }
 
-  getAgeCatById(id: number): Observable<AgeCategoryInterface> {
+  get(id: number): Observable<AgeCategoryInterface> {
     return this.http.get<AgeCategoryInterface>(`${this.url}/${id}`, {
       responseType: 'json',
     });
   }
 
-  getAgeCats(): Observable<AgeCategoryInterface[]> {
+  getAll(): Observable<AgeCategoryInterface[]> {
     return this.http.get<AgeCategoryInterface[]>(`${this.url}`, {
       responseType: 'json',
     });
   }
 
-  updateAgeCat(ageCat: AgeCategoryInterface) {
+  update(ageCat: AgeCategoryInterface) {
     return this.http.patch(`${this.url}/${ageCat.id}`, {
       name: ageCat.name,
     });
   }
 
-  deleteAgeCat(id: number) {
+  delete(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }
 }

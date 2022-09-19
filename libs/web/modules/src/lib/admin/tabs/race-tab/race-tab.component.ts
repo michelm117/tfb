@@ -88,7 +88,7 @@ export class RaceTabComponent implements OnInit {
     const tasks: Observable<any>[] = [
       this.countryService.getCountries(),
       this.riderService.getRiders(),
-      this.ageCatService.getAgeCats(),
+      this.ageCatService.getAll(),
     ];
 
     forkJoin(tasks).subscribe(([countries, riders, ageCats]) => {
