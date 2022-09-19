@@ -127,4 +127,38 @@ export class StoriesService {
     const map = await this.getMap();
     return Object.keys(map);
   }
+
+  async getCalendar() {
+    const records: Record<
+      number,
+      Record<number, Record<number, string[][]>>
+    > = {};
+    const map = await this.getMap();
+    const years = Object.keys(map);
+
+    for (let i = 0; i < years.length; i++) {
+      const year = years[i];
+      const stories: StoryInterface[] = map[year];
+      const monthDateRecord: Record<number, Record<number, string[][]>> = {};
+      for (let j = 0; j < stories.length; j++) {
+        const story = stories[j];
+        if (!story) {
+          continue;
+        }
+        const date = new Date(story.date);
+        const day = date.getDate();
+        const month = date.getMonth();
+        if (!monthDateRecord[month]) {
+          monthDateRecord[month] = {};
+        }
+        if (!monthDateRecord[month][day]) {
+          monthDateRecord[month][day] = [];
+        }
+        monthDateRecord[month][day].push([story.title, `stories/${story.id}`]);
+      }
+      records[year] = monthDateRecord;
+    }
+
+    return records;
+  }
 }

@@ -119,4 +119,12 @@ export class RaceService {
       }
     );
   }
+
+  getCalendar(): Observable<
+    Record<number, Record<number, Record<number, string[][]>>>
+  > {
+    return this.http.get<
+      Record<number, Record<number, Record<number, string[][]>>>
+    >(this.url + '/calendar', { responseType: 'json' });
+  }
 }

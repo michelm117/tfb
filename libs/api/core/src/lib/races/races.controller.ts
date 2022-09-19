@@ -59,6 +59,11 @@ export class RacesController {
     return await this.racesService.getYears();
   }
 
+  @Get('calendar')
+  async getCalendar() {
+    return await this.racesService.getCalendar();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.racesService.findOne(+id);

@@ -57,6 +57,11 @@ export class StoriesController {
     return this.storiesService.getYears();
   }
 
+  @Get('calendar')
+  getCalendar() {
+    return this.storiesService.getCalendar();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.storiesService.findOne(+id);

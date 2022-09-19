@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RaceService, StoryService } from '@tfb/web/data';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: 'tfb-calendar',
@@ -26,10 +28,13 @@ export class CalendarComponent implements OnInit {
     'December',
   ];
 
-  records: Record<number, Record<number, Record<number, string[]>>> = {};
+  records: Record<number, Record<number, Record<number, string[][]>>> = {};
 
-  constructor() {
-    this.records[2022] = { 8: { 10: ['Ridermann', 'stories/30'] } };
+  constructor(
+    private raceService: RaceService,
+    private stroyService: StoryService
+  ) {
+    this.records[2022] = { 8: { 10: [['Ridermann', 'stories/30']] } };
   }
 
   ngOnInit(): void {
@@ -37,6 +42,58 @@ export class CalendarComponent implements OnInit {
     this.year = date.getFullYear();
     this.month = date.getMonth();
     this.initWeekDay(this.month, this.year);
+
+    const tasks: Observable<
+      Record<number, Record<number, Record<number, string[][]>>>
+    >[] = [this.raceService.getCalendar(), this.stroyService.getCalendar()];
+
+    forkJoin(tasks).subscribe(([races, stories]) => {
+      this.records = {};
+
+      for (const year in stories) {
+        if (!this.records[year]) {
+          this.records[year] = {};
+        }
+        for (const month in stories[year]) {
+          if (!this.records[year][month]) {
+            this.records[year][month] = {};
+          }
+          for (const day in stories[year][month]) {
+            if (!this.records[year][month][day]) {
+              this.records[year][month][day] = [];
+            }
+            const el = stories[year][month][day];
+            for (let i = 0; i < el.length; i++) {
+              const element = el[i];
+              this.records[year][month][day].push(element);
+            }
+          }
+        }
+      }
+
+      for (const year in races) {
+        if (!this.records[year]) {
+          this.records[year] = {};
+        }
+        for (const month in races[year]) {
+          if (!this.records[year][month]) {
+            this.records[year][month] = {};
+          }
+          for (const day in races[year][month]) {
+            if (!this.records[year][month][day]) {
+              this.records[year][month][day] = [];
+            }
+            const el = races[year][month][day];
+            for (let i = 0; i < el.length; i++) {
+              const element = el[i];
+              this.records[year][month][day].push(element);
+            }
+          }
+        }
+      }
+
+      console.log(this.records);
+    });
   }
 
   initCurrentDays(month: number, year: number): void {
@@ -126,23 +183,24 @@ export class CalendarComponent implements OnInit {
   }
 
   hasEntry(year: number, month: number, day: number) {
-    if (this.records[year][month][day]) {
-      return true;
+    if (this.records[year]) {
+      if (this.records[year][month]) {
+        if (this.records[year][month][day]) {
+          return true;
+        }
+      }
     }
     return false;
   }
 
-  getEntryName(year: number, month: number, day: number) {
-    if (this.records[year][month][day]) {
-      return this.records[year][month][day][0];
+  getEntries(year: number, month: number, day: number) {
+    if (!this.hasEntry(year, month, day)) {
+      return [];
     }
-    return '';
-  }
 
-  getEntryUrl(year: number, month: number, day: number) {
     if (this.records[year][month][day]) {
-      return this.records[year][month][day][1];
+      return this.records[year][month][day];
     }
-    return '';
+    return [];
   }
 }

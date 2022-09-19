@@ -28,6 +28,14 @@ export class StoryService {
     return this.http.get<StoryInterface[]>(this.url, { responseType: 'json' });
   }
 
+  getCalendar(): Observable<
+    Record<number, Record<number, Record<number, string[][]>>>
+  > {
+    return this.http.get<
+      Record<number, Record<number, Record<number, string[][]>>>
+    >(this.url + '/calendar', { responseType: 'json' });
+  }
+
   updateStory(id: number, story: Partial<StoryInterface>) {
     return this.http.patch<StoryInterface>(
       `${this.url}/${id}`,

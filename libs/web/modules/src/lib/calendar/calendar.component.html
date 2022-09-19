@@ -58,15 +58,17 @@
                   {{ day.getDate() }}
                 </span>
               </div>
-              <div class="flex-grow w-full py-1 cursor-pointer bottom h-30"
-                [ngClass]="{'hidden': !hasEntry(year, month, day.getDate())}">
-                <a [routerLink]="'/' +getEntryUrl(year, month, day.getDate())" [replaceUrl]="true">
-                  <div class="p-1 mb-1 text-sm text-white rounded bg-secondary-color event">
-                    <span class="event-name">
-                      {{ getEntryName(year, month, day.getDate()) }}
-                    </span>
-                  </div>
-                </a>
+              <div [ngClass]="{'hidden': !hasEntry(year, month, day.getDate())}">
+                <div class="flex-grow w-full py-1 cursor-pointer bottom h-30"
+                  *ngFor="let entry of getEntries(year,month,day.getDate()); let j=index">
+                  <a [routerLink]="'/' + entry[1]" [replaceUrl]="true">
+                    <div class="p-1 mb-1 text-sm text-white rounded bg-secondary-color event">
+                      <span class="event-name">
+                        {{ entry[0] }}
+                      </span>
+                    </div>
+                  </a>
+                </div>
               </div>
             </div>
           </td>

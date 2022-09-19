@@ -234,4 +234,38 @@ export class RacesService {
       throw new BadRequestException('Something went wrong');
     }
   }
+
+  async getCalendar() {
+    const records: Record<
+      number,
+      Record<number, Record<number, string[][]>>
+    > = {};
+    const map = await this.getMap();
+    const years = Object.keys(map);
+
+    for (let i = 0; i < years.length; i++) {
+      const year = years[i];
+      const races: RaceInterface[] = map[year];
+      const monthDateRecord: Record<number, Record<number, string[][]>> = {};
+      for (let j = 0; j < races.length; j++) {
+        const race = races[j];
+        if (!race) {
+          continue;
+        }
+        const date = new Date(race.date);
+        const day = date.getDate();
+        const month = date.getMonth();
+        if (!monthDateRecord[month]) {
+          monthDateRecord[month] = {};
+        }
+        if (!monthDateRecord[month][day]) {
+          monthDateRecord[month][day] = [];
+        }
+        monthDateRecord[month][day].push([race.title, `races/${race.id}`]);
+      }
+      records[year] = monthDateRecord;
+    }
+
+    return records;
+  }
 }
