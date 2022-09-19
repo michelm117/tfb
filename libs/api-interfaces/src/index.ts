@@ -8,3 +8,6 @@ export * from './lib/race.interface';
 export * from './lib/result.interface';
 export * from './lib/rider.interface';
 export * from './lib/story.interface';
+export * from './lib/token-payload.interface';
+export * from './lib/request-with-user.interface';
+export * from './lib/user-exposed.interface';

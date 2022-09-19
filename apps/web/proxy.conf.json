@@ -6,6 +6,20 @@
       "/riders": "/"
     }
   },
+  "/user": {
+    "target": "http://localhost:3333/api/user",
+    "secure": false,
+    "pathRewrite": {
+      "/user": "/"
+    }
+  },
+  "/auth": {
+    "target": "http://localhost:3333/api/auth",
+    "secure": false,
+    "pathRewrite": {
+      "/auth": "/"
+    }
+  },
   "/myrace": {
     "target": "http://localhost:3333/api/myrace",
     "secure": false,

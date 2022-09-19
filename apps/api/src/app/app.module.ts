@@ -21,6 +21,9 @@ import {
   AgeCategoryModule,
   ResultModule,
   RacesModule,
+  User,
+  UserModule,
+  AuthModule,
 } from '@tfb/api/core';
 
 @Module({
@@ -35,7 +38,16 @@ import {
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
-        entities: [Rider, Country, About, Story, Result, AgeCategory, Race],
+        entities: [
+          Rider,
+          Country,
+          About,
+          Story,
+          Result,
+          AgeCategory,
+          Race,
+          User,
+        ],
         synchronize: true,
         logging: true,
       }),
@@ -47,6 +59,8 @@ import {
     RacesModule,
     AgeCategoryModule,
     ResultModule,
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

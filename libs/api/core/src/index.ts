@@ -18,3 +18,8 @@ export * from './lib/races/entities/race.entity';
 
 export * from './lib/result/result.module';
 export * from './lib/result/entities/result.entity';
+
+export * from './lib/user/user.module';
+export * from './lib/user/entities/user.entity';
+
+export * from './lib/auth/auth.module';
