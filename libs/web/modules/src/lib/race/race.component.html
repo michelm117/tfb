@@ -34,7 +34,7 @@
     </div>
 
     <div class="w-full pt-4 pb-10 mx-auto md:w-2/3">
-      <tfb-race-results [results]="race.results"></tfb-race-results>
+      <tfb-race-results [ngClass]="{'hidden': race.results.length < 1}" [results]="race.results"></tfb-race-results>
     </div>
 
     <tfb-gallery *ngIf="race.imgNames!.length > 0" [imgUrls]=getImageUrls()></tfb-gallery>
