@@ -1,8 +1,15 @@
 import { Injectable, IterableDiffers } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+  HttpResponse,
+} from '@angular/common/http';
 import {
   BehaviorSubject,
+  catchError,
   delay,
+  EMPTY,
   map,
   Observable,
   of,
@@ -13,7 +20,7 @@ import { UserExposedInterface } from '@tfb/api-interfaces';
 import { TokenService } from './token.service';
 import { UsersService } from './users.service';
 
-const AUTH_API = '/auth';
+const url = 'auth';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -41,7 +48,7 @@ export class AuthService {
 
   register(name: string, email: string, password: string): Observable<any> {
     return this.http.post(
-      AUTH_API + '/' + 'register',
+      url + '/register',
       {
         email,
         password,
@@ -51,10 +58,13 @@ export class AuthService {
     );
   }
 
-  login(email: string, password: string): Observable<number> {
+  login(
+    email: string,
+    password: string
+  ): Observable<number | HttpErrorResponse> {
     const statusCode = this.http
       .post(
-        AUTH_API + 'login',
+        url + '/login',
         {
           email,
           password,
@@ -66,12 +76,14 @@ export class AuthService {
       )
       .pipe(
         map((res) => {
-          this.setLogoutTimer();
-          const user = <UserExposedInterface>res.body;
-          this.userSubject.next(user);
-
+          if (res.ok) {
+            this.setLogoutTimer();
+            const user = <UserExposedInterface>res.body;
+            this.userSubject.next(user);
+          }
           return res.status;
-        })
+        }),
+        catchError((err) => of('error', err))
       );
 
     return statusCode;
@@ -81,14 +93,14 @@ export class AuthService {
     console.log('Logging out user');
 
     if (this.tokenService.hasAccessToken()) {
-      this.http.post(AUTH_API + 'logout', httpOptions).subscribe();
+      this.http.post(url + '/logout', httpOptions).subscribe();
     }
     this.userSubject.next(null);
     this.router.navigate(['login']);
   }
 
   refresh(): Observable<any> {
-    return this.http.get(AUTH_API + 'refresh', httpOptions);
+    return this.http.get(url + 'refresh', httpOptions);
   }
 
   expirationCounter(timeout: number) {

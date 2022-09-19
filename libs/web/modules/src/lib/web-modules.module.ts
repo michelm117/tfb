@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
@@ -111,6 +112,7 @@ const routes: Routes = [
     MatCardModule,
     MatExpansionModule,
     MatDialogModule,
+    MatSnackBarModule,
     MatTableModule,
     MatSortModule,
     MatDatepickerModule,
