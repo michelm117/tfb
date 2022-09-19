@@ -269,7 +269,6 @@ export class RaceTabComponent implements OnInit {
       for (let i = 0; i < races.length; i++) {
         const race = races[i];
         const maxId = Math.max(...race.results.map((result) => result.id)) + 1;
-        console.log(maxId);
 
         race.results.push({
           id: maxId,
@@ -386,8 +385,6 @@ export class RaceTabComponent implements OnInit {
   }
 
   openDeleteResultDialog(result: ResultInterface) {
-    console.log(result);
-
     if (!this.selectedRace || !result.id) {
       return;
     }
@@ -408,8 +405,6 @@ export class RaceTabComponent implements OnInit {
         this.raceService
           .deleteResult(this.selectedRace.id, result.id)
           .subscribe((res) => {
-            console.log(res);
-
             this.fetchRaces();
           });
         dialogSubmitSubscription.unsubscribe();

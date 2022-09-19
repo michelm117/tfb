@@ -49,7 +49,6 @@ export class ImageUploadPanelComponent implements OnInit {
 
   selectFiles(event: any): void {
     this.imageFiles = event.target.files;
-    console.log(this.imageFiles?.length);
 
     this.previews = [];
     if (this.imageFiles && this.imageFiles[0]) {

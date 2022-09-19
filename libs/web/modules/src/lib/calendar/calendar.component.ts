@@ -91,8 +91,6 @@ export class CalendarComponent implements OnInit {
           }
         }
       }
-
-      console.log(this.records);
     });
   }
 

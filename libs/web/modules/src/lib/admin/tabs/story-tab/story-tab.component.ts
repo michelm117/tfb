@@ -157,7 +157,6 @@ export class StoryTabComponent implements OnInit {
     }
     const id = this.selectedStory.id;
     this.storyService.deleteStory(id).subscribe((res) => {
-      console.log(res);
       this.fetchStories();
     });
   }
