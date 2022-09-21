@@ -27,7 +27,7 @@ export class CountryService {
   }
 
   findOne(id: number) {
-    return this.countryRepository.findOne({ where: { id } });
+    return this.countryRepository.findOneBy({ id });
   }
 
   async update(id: number, updateCountryDto: UpdateCountryDto) {

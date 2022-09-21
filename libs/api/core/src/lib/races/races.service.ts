@@ -35,6 +35,7 @@ export class RacesService {
     }
 
     const country = await this.countryService.findOne(createRaceDto.countryId);
+
     if (!country) {
       return new NotFoundException(
         `Country with id ${createRaceDto.countryId} was not found.}`

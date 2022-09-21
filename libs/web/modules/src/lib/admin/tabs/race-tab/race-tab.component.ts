@@ -158,14 +158,16 @@ export class RaceTabComponent implements OnInit {
 
     if (this.createNewRace) {
       // Create Race
-      this.raceService.createRace(race).subscribe((race) => {
-        // Update the new race locally
-        if (imageFiles) {
-          this.uploadImagesAndUpdateRace(race.id, race, imageFiles);
-        } else {
-          this.fetchRaces();
-        }
-      });
+      this.raceService
+        .createRace(title, place, country, date, text, [], show)
+        .subscribe((race) => {
+          // Update the new race locally
+          if (imageFiles) {
+            this.uploadImagesAndUpdateRace(race.id, race, imageFiles);
+          } else {
+            this.fetchRaces();
+          }
+        });
     } else {
       // Update Race
       if (!this.selectedRace) {
@@ -238,11 +240,22 @@ export class RaceTabComponent implements OnInit {
     }
   }
 
-  createRace(race: Partial<RaceInterface>) {
+  createRace(
+    title: string,
+    place: string,
+    countryId: number,
+    date: Date,
+    text: string,
+    imgNames: string[],
+    show: boolean
+  ) {
     this.showLoading = true;
-    this.raceService.createRace(race).subscribe((race) => {
-      this.fetchRaces();
-    });
+
+    this.raceService
+      .createRace(title, place, countryId, date, text, imgNames, show)
+      .subscribe((race) => {
+        this.fetchRaces();
+      });
   }
 
   resetSelection() {
@@ -366,8 +379,6 @@ export class RaceTabComponent implements OnInit {
   }
 
   addResult(result: ResultInterface) {
-    console.log(result.acResult);
-
     if (!result || !this.selectedRace) {
       return;
     }

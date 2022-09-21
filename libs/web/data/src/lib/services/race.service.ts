@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RaceInterface, ResultInterface } from '@tfb/api-interfaces';
-import { Observable } from 'rxjs';
+import { RaceInterface } from '@tfb/api-interfaces';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -45,10 +45,30 @@ export class RaceService {
     });
   }
 
-  createRace(race: Partial<RaceInterface>) {
-    return this.http.post<RaceInterface>(this.url, race, {
-      responseType: 'json',
-    });
+  createRace(
+    title: string,
+    place: string,
+    countryId: number,
+    date: Date,
+    text: string,
+    imgNames: string[],
+    show: boolean
+  ) {
+    return this.http.post<RaceInterface>(
+      this.url,
+      {
+        title: title,
+        place: place,
+        countryId: countryId,
+        date: date,
+        text: text,
+        img: imgNames,
+        show: show,
+      },
+      {
+        responseType: 'json',
+      }
+    );
   }
 
   updateRace(id: number, race: Partial<RaceInterface>) {
