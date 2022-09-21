@@ -366,6 +366,8 @@ export class RaceTabComponent implements OnInit {
   }
 
   addResult(result: ResultInterface) {
+    console.log(result.acResult);
+
     if (!result || !this.selectedRace) {
       return;
     }
@@ -409,5 +411,13 @@ export class RaceTabComponent implements OnInit {
           });
         dialogSubmitSubscription.unsubscribe();
       });
+  }
+
+  onChangeAcResultEvent(result: ResultInterface, event: any) {
+    result.acResult = event.target.value;
+  }
+
+  onChangeResultEvent(result: ResultInterface, event: any) {
+    result.result = event.target.value;
   }
 }

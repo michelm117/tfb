@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RaceInterface } from '@tfb/api-interfaces';
+import { RaceInterface, ResultInterface } from '@tfb/api-interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({

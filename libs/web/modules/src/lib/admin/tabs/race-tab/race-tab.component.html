@@ -183,7 +183,8 @@
             <th mat-header-cell *matHeaderCellDef> Result </th>
             <td mat-cell *matCellDef="let result">
               <mat-form-field>
-                <input matInput type="number" [value]="result.result" autocomplete="false">
+                <input matInput type="number" [value]="result.result" autocomplete="false"
+                  (change)="onChangeResultEvent(result, $event)">
               </mat-form-field>
             </td>
           </ng-container>
@@ -202,10 +203,11 @@
           </ng-container>
 
           <ng-container matColumnDef="acResult">
-            <th mat-header-cell *matHeaderCellDef> Category Position</th>
+            <th mat-header-cell *matHeaderCellDef> Category Result </th>
             <td mat-cell *matCellDef="let result">
               <mat-form-field>
-                <input matInput type="number" [value]="result.acResult" autocomplete="false">
+                <input matInput type="number" [value]="result.acResult" autocomplete="false"
+                  (change)="onChangeAcResultEvent(result, $event)">
               </mat-form-field>
             </td>
           </ng-container>
