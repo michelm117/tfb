@@ -1,5 +1,4 @@
 <div class="container mx-auto">
-  <div *ngIf="!race">UPS</div>
   <div *ngIf="race">
     <!-- Social Media Buttons -->
     <tfb-social-bar></tfb-social-bar>
@@ -11,7 +10,7 @@
       </tfb-heading>
 
       <div class="flex mt-4 space-x-2">
-        <fa-icon [icon]="faTrophy" [ngClass]="{'hide': !race.podium}"></fa-icon>
+        <fa-icon [icon]="faTrophy" *ngIf="race.podium"></fa-icon>
 
         <div>
           <span>{{getFlag()}}</span>
