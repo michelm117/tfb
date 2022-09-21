@@ -27,11 +27,11 @@ import { CookieModule } from 'ngx-cookie';
     CookieModule.withOptions(),
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: RefreshTokenInterceptor,
-    //   multi: true,
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokenInterceptor,
+      multi: true,
+    },
     AuthGuard,
   ],
   bootstrap: [AppComponent],
