@@ -148,7 +148,6 @@ export class AuthService {
    *
    * ! To overwrite the old cookie the domain and path properties must be the
    * ! same ass the original cookie.
-   * @param {number} userId
    * @returns {string} cookie with empty access and refresh token.
    */
   public getCookiesForLogout() {

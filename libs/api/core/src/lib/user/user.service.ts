@@ -83,7 +83,7 @@ export class UserService {
    * matches the given refresh token.
    * @param {string} refreshToken
    * @param {number} userId
-   * @returns {Promise<UserInterface>}
+   * @returns {Promise<User>}
    */
   async getUserIfRefreshTokenMatches(
     refreshToken: string,

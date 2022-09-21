@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { UserService } from '../../user/user.service';
 import { TokenPayload } from '@tfb/api-interfaces';
+import { AuthService } from '../auth.service';
 
 /**
  * JwtRefreshTokenStrategy is used to verify if the request has an valid refresh token.
@@ -24,7 +25,8 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
    */
   constructor(
     private readonly configService: ConfigService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly authService: AuthService
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
@@ -42,15 +44,21 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
    *
    * Because of option passReqToCallback inside the constructor we have access
    * on the request.
-   * @param request
+   * @param req
    * @param payload
    * @returns
    */
-  async validate(request: Request, payload: TokenPayload) {
-    const refreshToken = request.cookies?.Refresh;
-    return this.userService.getUserIfRefreshTokenMatches(
+  async validate(req: Request, payload: TokenPayload) {
+    const refreshToken = req.cookies?.Refresh;
+
+    const user = await this.userService.getUserIfRefreshTokenMatches(
       refreshToken,
       payload.userId
     );
+
+    if (!user) {
+      req.res.setHeader('Set-Cookie', this.authService.getCookiesForLogout());
+    }
+    return user;
   }
 }

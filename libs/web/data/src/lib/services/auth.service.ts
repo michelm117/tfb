@@ -94,7 +94,9 @@ export class AuthService {
       this.http.post(url + '/logout', httpOptions).subscribe();
     }
     this.userSubject.next(null);
-    this.router.navigate(['login']);
+    if (this.router.url.includes('admin')) {
+      this.router.navigate(['login']);
+    }
   }
 
   refresh(): Observable<any> {
