@@ -7,7 +7,8 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class RaceService {
-  url = 'myrace';
+  url = 'https://api.michel.lu/myrace';
+
   constructor(private http: HttpClient) {}
 
   getRace(id: number): Observable<RaceInterface> {

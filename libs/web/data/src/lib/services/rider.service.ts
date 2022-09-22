@@ -7,7 +7,8 @@ import { RiderInterface } from '@tfb/api-interfaces';
   providedIn: 'root',
 })
 export class RiderService {
-  url = 'riders';
+  url = 'https://api.michel.lu/riders';
+
   constructor(private http: HttpClient) {}
 
   getRiderById(id: number): Observable<RiderInterface> {
