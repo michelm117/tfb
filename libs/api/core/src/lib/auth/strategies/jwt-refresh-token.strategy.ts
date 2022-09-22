@@ -22,11 +22,12 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
    * needed providers.
    * @param {ConfigService} configService
    * @param {UserService} userService
+   * @param {AuthService} authService
    */
   constructor(
-    private readonly configService: ConfigService,
-    private readonly userService: UserService,
-    private readonly authService: AuthService
+    private userService: UserService,
+    private authService: AuthService,
+    configService: ConfigService
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([

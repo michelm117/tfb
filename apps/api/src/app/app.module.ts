@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -25,9 +24,14 @@ import {
   UserModule,
   AuthModule,
 } from '@tfb/api/core';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -52,6 +56,18 @@ import {
         logging: true,
       }),
     }),
+    // TypeOrmModule.forRoot({
+    //   type: 'postgres',
+    //   host: 'abul.db.elephantsql.com',
+    //   port: 5432,
+    //   username: 'encsnhea',
+    //   password: 'DjjOGRRegOkNJsH6fql1sOxOQqlveYpw',
+    //   database: 'encsnhea',
+    //   entities: [Rider, Country, About, Story, Result, AgeCategory, Race, User],
+    //   synchronize: true,
+    //   logging: false,
+    // }),
+
     RidersModule,
     CountryModule,
     AboutModule,

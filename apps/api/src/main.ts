@@ -20,13 +20,11 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.use(cookieParser());
 
-  const configService = app.get(ConfigService);
-  const POSTGRES_HOST = configService.get('POSTGRES_HOST');
-  console.log(POSTGRES_HOST);
-
   const globalPrefix = 'tfb';
   app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT || 3333;
+
+  const configService = app.get(ConfigService);
+  const port = configService.get('PORT') || 3333;
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`

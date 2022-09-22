@@ -20,10 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
    * @param {ConfigService} configService
    * @param {UserService} userService
    */
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly userService: UserService
-  ) {
+  constructor(configService: ConfigService, private userService: UserService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => {
