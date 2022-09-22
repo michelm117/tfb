@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuard, RefreshTokenInterceptor } from '@tfb/web/data';
 import { CookieModule } from 'ngx-cookie';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { CookieModule } from 'ngx-cookie';
     CookieModule.withOptions(),
   ],
   providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RefreshTokenInterceptor,
