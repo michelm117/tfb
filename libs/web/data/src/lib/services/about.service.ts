@@ -6,7 +6,7 @@ import { AboutInterface } from '@tfb/api-interfaces';
   providedIn: 'root',
 })
 export class AboutService {
-  url = 'http://api.michel.lu/abouttext';
+  url = 'https://api.michel.lu/abouttext';
 
   constructor(private http: HttpClient) {}
 
