@@ -8,6 +8,7 @@ import {
   Logger,
   ValidationPipe,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import cookieParser = require('cookie-parser');
 
@@ -19,7 +20,11 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.use(cookieParser());
 
-  const globalPrefix = 'api';
+  const configService = app.get(ConfigService);
+  const POSTGRES_HOST = configService.get('POSTGRES_HOST');
+  console.log(POSTGRES_HOST);
+
+  const globalPrefix = 'tfb';
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3333;
   await app.listen(port);

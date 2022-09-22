@@ -1,65 +1,65 @@
 {
   "/riders": {
-    "target": "http://localhost:3333/api/riders",
+    "target": "http://localhost:3333/tfb/riders",
     "secure": false,
     "pathRewrite": {
       "/riders": "/"
     }
   },
   "/user": {
-    "target": "http://localhost:3333/api/user",
+    "target": "http://localhost:3333/tfb/user",
     "secure": false,
     "pathRewrite": {
       "/user": "/"
     }
   },
   "/auth": {
-    "target": "http://localhost:3333/api/auth",
+    "target": "http://localhost:3333/tfb/auth",
     "secure": false,
     "pathRewrite": {
       "/auth": "/"
     }
   },
   "/myrace": {
-    "target": "http://localhost:3333/api/myrace",
+    "target": "http://localhost:3333/tfb/myrace",
     "secure": false,
     "pathRewrite": {
       "/myrace": "/"
     }
   },
   "/age-category": {
-    "target": "http://localhost:3333/api/age-category",
+    "target": "http://localhost:3333/tfb/age-category",
     "secure": false,
     "pathRewrite": {
       "/age-category": "/"
     }
   },
   "/story": {
-    "target": "http://localhost:3333/api/story",
+    "target": "http://localhost:3333/tfb/story",
     "secure": false,
     "pathRewrite": {
       "/story": "/"
     }
   },
   "/abouttext": {
-    "target": "http://localhost:3333/api/abouttext",
+    "target": "http://localhost:3333/tfb/abouttext",
     "secure": false,
     "pathRewrite": {
       "/abouttext": "/"
     }
   },
   "/country": {
-    "target": "http://localhost:3333/api/country",
+    "target": "http://localhost:3333/tfb/country",
     "secure": false,
     "pathRewrite": {
       "/country": "/"
     }
   },
-  "/api": {
-    "target": "http://localhost:3333/api",
+  "/tfb": {
+    "target": "http://localhost:3333/tfb",
     "secure": false,
     "pathRewrite": {
-      "/api": "/"
+      "/tfb": "/"
     }
   }
 }
