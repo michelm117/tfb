@@ -1,62 +1,62 @@
 {
   "/riders": {
-    "target": "http://api.michel.lu/tfb/api/riders",
+    "target": "http://api.michel.lu/riders",
     "secure": false,
     "pathRewrite": {
       "/riders": "/"
     }
   },
   "/user": {
-    "target": "http://api.michel.lu/tfb/api/user",
+    "target": "http://api.michel.lu/user",
     "secure": false,
     "pathRewrite": {
       "/user": "/"
     }
   },
   "/auth": {
-    "target": "http://api.michel.lu/tfb/api/auth",
+    "target": "http://api.michel.lu/auth",
     "secure": false,
     "pathRewrite": {
       "/auth": "/"
     }
   },
   "/myrace": {
-    "target": "http://api.michel.lu/tfb/api/myrace",
+    "target": "http://api.michel.lu/myrace",
     "secure": false,
     "pathRewrite": {
       "/myrace": "/"
     }
   },
   "/age-category": {
-    "target": "http://api.michel.lu/tfb/api/age-category",
+    "target": "http://api.michel.lu/age-category",
     "secure": false,
     "pathRewrite": {
       "/age-category": "/"
     }
   },
   "/story": {
-    "target": "http://api.michel.lu/tfb/api/story",
+    "target": "http://api.michel.lu/story",
     "secure": false,
     "pathRewrite": {
       "/story": "/"
     }
   },
   "/abouttext": {
-    "target": "http://api.michel.lu/tfb/api/abouttext",
+    "target": "http://api.michel.lu/abouttext",
     "secure": false,
     "pathRewrite": {
       "/abouttext": "/"
     }
   },
   "/country": {
-    "target": "http://api.michel.lu/tfb/api/country",
+    "target": "http://api.michel.lu/country",
     "secure": false,
     "pathRewrite": {
       "/country": "/"
     }
   },
   "/api": {
-    "target": "http://api.michel.lu/tfb/api",
+    "target": "http://api.michel.lu",
     "secure": false,
     "pathRewrite": {
       "/api": "/"
