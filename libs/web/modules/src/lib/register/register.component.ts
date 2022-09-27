@@ -30,11 +30,10 @@ export class RegisterComponent {
       .subscribe((user) => {
         if (user instanceof HttpErrorResponse) {
           this._snackBar.open('Secret Key is incorrect', 'OK');
-          return;
+        } else {
+          this._snackBar.open('Successfully registered', 'OK');
+          this.router.navigate(['login']);
         }
-
-        this._snackBar.open('Successfully registered', 'OK');
-        this.router.navigate(['login']);
       });
   }
 }
