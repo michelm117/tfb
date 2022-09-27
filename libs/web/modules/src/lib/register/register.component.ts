@@ -27,13 +27,15 @@ export class RegisterComponent {
   onSubmit(user: any) {
     this.authService
       .register(user.name, user.email, user.password, user.key)
-      .subscribe((user) => {
-        if (user instanceof HttpErrorResponse) {
-          this._snackBar.open('Secret Key is incorrect', 'OK');
-        } else {
-          this._snackBar.open('Successfully registered', 'OK');
-          this.router.navigate(['login']);
+      .subscribe((res) => {
+        if (res instanceof Number) {
+          if (res === 200) {
+            this._snackBar.open('Successfully registered', 'OK');
+            this.router.navigate(['login']);
+            return;
+          }
         }
+        this._snackBar.open('Secret Key is incorrect', 'OK');
       });
   }
 }

@@ -52,8 +52,8 @@ export class AuthService {
     email: string,
     password: string,
     key: string
-  ): Observable<any | HttpErrorResponse> {
-    return this.http
+  ): Observable<number | HttpErrorResponse> {
+    const statusCode = this.http
       .post(
         this.url + '/register',
         {
@@ -70,6 +70,8 @@ export class AuthService {
         }),
         catchError((err) => of('error', err))
       );
+
+    return statusCode;
   }
 
   login(
