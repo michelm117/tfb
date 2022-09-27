@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RiderInterface } from '@tfb/api-interfaces';
 
@@ -8,19 +8,22 @@ import { RiderInterface } from '@tfb/api-interfaces';
 })
 export class RiderService {
   url = 'https://api.michel.lu/riders';
+  httpOptions = {
+    headers: new HttpHeaders({
+      // 'Authorization': fooBarToken,
+      'Content-Type': 'application/json',
+    }),
+    withCredentials: true,
+  };
 
   constructor(private http: HttpClient) {}
 
   getRiderById(id: number): Observable<RiderInterface> {
-    return this.http.get<RiderInterface>(`${this.url}/${id}`, {
-      responseType: 'json',
-    });
+    return this.http.get<RiderInterface>(`${this.url}/${id}`, this.httpOptions);
   }
 
   getRiders(): Observable<RiderInterface[]> {
-    return this.http.get<RiderInterface[]>(`${this.url}`, {
-      responseType: 'json',
-    });
+    return this.http.get<RiderInterface[]>(`${this.url}`, this.httpOptions);
   }
 
   getProfilePicture(imageName: string) {
@@ -38,26 +41,37 @@ export class RiderService {
       reportProgress: true,
     };
 
-    return this.http.post(`${this.url}/upload/${id}`, formData, options);
+    return this.http.post(`${this.url}/upload/${id}`, formData, {
+      ...options,
+      ...this.httpOptions,
+    });
   }
 
   updateRider(rider: RiderInterface) {
-    return this.http.patch(`${this.url}/${rider.id}`, {
-      name: rider.name,
-      surname: rider.surname,
-      country: rider.country.id,
-    });
+    return this.http.patch(
+      `${this.url}/${rider.id}`,
+      {
+        name: rider.name,
+        surname: rider.surname,
+        country: rider.country.id,
+      },
+      this.httpOptions
+    );
   }
 
   deleteRider(id: number) {
-    return this.http.delete(`${this.url}/${id}`);
+    return this.http.delete(`${this.url}/${id}`, this.httpOptions);
   }
 
   addRider(name: string, surname: string, country: number) {
-    return this.http.post<RiderInterface>(this.url, {
-      name: name,
-      surname: surname,
-      country: country,
-    });
+    return this.http.post<RiderInterface>(
+      this.url,
+      {
+        name: name,
+        surname: surname,
+        country: country,
+      },
+      this.httpOptions
+    );
   }
 }

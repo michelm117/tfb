@@ -1,15 +1,13 @@
-import { Injectable, IterableDiffers } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
-  HttpResponse,
 } from '@angular/common/http';
 import {
   BehaviorSubject,
   catchError,
   delay,
-  EMPTY,
   map,
   Observable,
   of,
@@ -20,12 +18,6 @@ import { UserExposedInterface } from '@tfb/api-interfaces';
 import { TokenService } from './token.service';
 import { UsersService } from './users.service';
 
-const url = 'https://api.michel.lu/auth';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-};
-
 @Injectable({
   providedIn: 'root',
 })
@@ -33,6 +25,15 @@ export class AuthService {
   private userSubject: BehaviorSubject<UserExposedInterface | null>;
   public user: Observable<UserExposedInterface | null>;
   private tokenSubscription = new Subscription();
+
+  url = 'https://api.michel.lu/auth';
+  httpOptions = {
+    headers: new HttpHeaders({
+      // 'Authorization': fooBarToken,
+      'Content-Type': 'application/json',
+    }),
+    withCredentials: true,
+  };
 
   constructor(
     private router: Router,
@@ -48,13 +49,13 @@ export class AuthService {
 
   register(name: string, email: string, password: string): Observable<any> {
     return this.http.post(
-      url + '/register',
+      this.url + '/register',
       {
         email,
         password,
         name,
       },
-      httpOptions
+      this.httpOptions
     );
   }
 
@@ -64,7 +65,7 @@ export class AuthService {
   ): Observable<number | HttpErrorResponse> {
     const statusCode = this.http
       .post(
-        url + '/login',
+        this.url + '/login',
         {
           email,
           password,
@@ -91,7 +92,7 @@ export class AuthService {
 
   logout(): void {
     if (this.tokenService.hasAccessToken()) {
-      this.http.post(url + '/logout', httpOptions).subscribe();
+      this.http.post(this.url + '/logout', this.httpOptions).subscribe();
     }
     this.userSubject.next(null);
     this.router.navigate(['login']);
@@ -101,7 +102,7 @@ export class AuthService {
   }
 
   refresh(): Observable<any> {
-    return this.http.get(url + 'refresh', httpOptions);
+    return this.http.get(this.url + 'refresh', this.httpOptions);
   }
 
   expirationCounter(timeout: number) {

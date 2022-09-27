@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RaceInterface } from '@tfb/api-interfaces';
 import { Observable, of } from 'rxjs';
@@ -8,25 +8,26 @@ import { Observable, of } from 'rxjs';
 })
 export class RaceService {
   url = 'https://api.michel.lu/myrace';
+  httpOptions = {
+    headers: new HttpHeaders({
+      // 'Authorization': fooBarToken,
+      'Content-Type': 'application/json',
+    }),
+    withCredentials: true,
+  };
 
   constructor(private http: HttpClient) {}
 
   getRace(id: number): Observable<RaceInterface> {
-    return this.http.get<RaceInterface>(`${this.url}/${id}`, {
-      responseType: 'json',
-    });
+    return this.http.get<RaceInterface>(`${this.url}/${id}`, this.httpOptions);
   }
 
   getAllRaces(): Observable<RaceInterface[]> {
-    return this.http.get<RaceInterface[]>(`${this.url}/all`, {
-      responseType: 'json',
-    });
+    return this.http.get<RaceInterface[]>(`${this.url}/all`, this.httpOptions);
   }
 
   getRaces(): Observable<RaceInterface[]> {
-    return this.http.get<RaceInterface[]>(this.url, {
-      responseType: 'json',
-    });
+    return this.http.get<RaceInterface[]>(this.url, this.httpOptions);
   }
 
   getPicture(imageName: string) {
@@ -35,15 +36,14 @@ export class RaceService {
   }
 
   getYearsRacesMap() {
-    return this.http.get<Record<string, RaceInterface[]>>(`${this.url}/map`, {
-      responseType: 'json',
-    });
+    return this.http.get<Record<string, RaceInterface[]>>(
+      `${this.url}/map`,
+      this.httpOptions
+    );
   }
 
   getYears() {
-    return this.http.get<string[]>(`${this.url}/years`, {
-      responseType: 'json',
-    });
+    return this.http.get<string[]>(`${this.url}/years`, this.httpOptions);
   }
 
   createRace(
@@ -66,9 +66,7 @@ export class RaceService {
         img: imgNames,
         show: show,
       },
-      {
-        responseType: 'json',
-      }
+      this.httpOptions
     );
   }
 
@@ -84,9 +82,7 @@ export class RaceService {
         text: race.text,
         show: race.show,
       },
-      {
-        responseType: 'json',
-      }
+      this.httpOptions
     );
   }
 
@@ -104,12 +100,12 @@ export class RaceService {
     return this.http.post<{ imagePath: string }>(
       `${this.url}/upload/${id}`,
       formData,
-      options
+      { ...options, ...this.httpOptions }
     );
   }
 
   deleteRace(id: number) {
-    return this.http.delete<any>(`${this.url}/${id}`, { responseType: 'json' });
+    return this.http.delete<any>(`${this.url}/${id}`, this.httpOptions);
   }
 
   addResult(
@@ -130,9 +126,7 @@ export class RaceService {
         raceId: id,
         show: show,
       },
-      {
-        responseType: 'json',
-      }
+      this.httpOptions
     );
   }
 
@@ -140,9 +134,7 @@ export class RaceService {
     return this.http.patch<RaceInterface>(
       `${this.url}/delete-result/${id}`,
       { resultId },
-      {
-        responseType: 'json',
-      }
+      this.httpOptions
     );
   }
 
@@ -151,6 +143,6 @@ export class RaceService {
   > {
     return this.http.get<
       Record<number, Record<number, Record<number, string[][]>>>
-    >(this.url + '/calendar', { responseType: 'json' });
+    >(this.url + '/calendar', this.httpOptions);
   }
 }
