@@ -20,7 +20,7 @@ import { UserExposedInterface } from '@tfb/api-interfaces';
 import { TokenService } from './token.service';
 import { UsersService } from './users.service';
 
-const url = 'auth';
+const url = 'https://api.michel.lu/auth';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

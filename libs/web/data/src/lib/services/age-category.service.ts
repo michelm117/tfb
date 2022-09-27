@@ -7,7 +7,7 @@ import { AgeCategoryInterface } from '@tfb/api-interfaces';
   providedIn: 'root',
 })
 export class AgeCategoryService {
-  url = 'age-category';
+  url = 'https://api.michel.lu/age-category';
   constructor(private http: HttpClient) {}
 
   create(name: string) {

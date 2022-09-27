@@ -7,7 +7,7 @@ import { CountryInterface, RiderInterface } from '@tfb/api-interfaces';
   providedIn: 'root',
 })
 export class CountryService {
-  url = 'country';
+  url = 'https://api.michel.lu/country';
   constructor(private http: HttpClient) {}
 
   getCountryById(id: number): Observable<CountryInterface> {

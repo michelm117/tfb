@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
 export class StoryService {
   stories: EventInterface[] = [];
 
-  url = 'story';
+  url = 'https://api.michel.lu/story';
   constructor(private http: HttpClient) {}
 
   createStory(story: Partial<StoryInterface>) {
