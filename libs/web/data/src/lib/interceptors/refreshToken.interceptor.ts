@@ -47,6 +47,10 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
       return next.handle(req);
     }
 
+    if (!req.url.includes('admin')) {
+      return next.handle(req);
+    }
+
     const accessExpired = this.tokenService.isAccessTokenExpired();
     const refreshExpired = this.tokenService.isRefreshTokenExpired();
 
