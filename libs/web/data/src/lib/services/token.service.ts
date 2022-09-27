@@ -39,6 +39,8 @@ export class TokenService {
   }
 
   isAccessTokenExpired() {
+    console.log('Cookies', this.cookieService.getAll());
+
     const token = this.getAccessToken();
     return this.isTokenExpired(token);
   }
