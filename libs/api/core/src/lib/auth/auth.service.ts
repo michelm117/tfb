@@ -107,6 +107,7 @@ export class AuthService {
    * @returns {string} cookie with access token.
    */
   public getCookieWithJwtAccessToken(userId: number): string {
+    const key = 'Authentication';
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
@@ -115,8 +116,11 @@ export class AuthService {
       )}s`,
     });
     const maxAge = this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME');
+    const domain = 'michel.lu';
+    const path = '/';
+    const sameSite = 'LAX';
 
-    const cookie = `Authentication=${token}; Path=/; Max-Age=${maxAge}`;
+    const cookie = `${key}=${token};Path=${path}; Max-Age=${maxAge}; Domain=${domain}; SameSite=${sameSite}`;
     return cookie;
   }
 
@@ -127,6 +131,8 @@ export class AuthService {
    * @returns {string} cookie with refresh token.
    */
   public getCookieWithJwtRefreshToken(userId: number) {
+    const key = 'Refresh';
+
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
@@ -135,7 +141,12 @@ export class AuthService {
       )}s`,
     });
     const maxAge = this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME');
-    const cookie = `Refresh=${token}; Path=/; Max-Age=${maxAge}`;
+    const domain = 'michel.lu';
+    const path = '/';
+    const sameSite = 'LAX';
+
+    const cookie = `${key}=${token}; Path=${path}; Max-Age=${maxAge}; Domain=${domain}; SameSite=${sameSite}`;
+
     return {
       cookie,
       token,
@@ -151,9 +162,13 @@ export class AuthService {
    * @returns {string} cookie with empty access and refresh token.
    */
   public getCookiesForLogout() {
+    const domain = 'michel.lu';
+    const path = '/';
+    const sameSite = 'LAX';
+
     return [
-      'Authentication=; Path=/; Max-Age=0',
-      'Refresh=; Path=/; Max-Age=0',
+      `Authentication=; Path=${path}; Max-Age=0; Domain=${domain}; SameSite=${sameSite}`,
+      `Refresh=; Path=${path}; Max-Age=0; Domain=${domain}; SameSite=${sameSite}`,
     ];
   }
 }

@@ -21,6 +21,12 @@ export class AuthGuard implements CanActivate {
   canActivate() {
     const accessExpired = this.tokenService.isAccessTokenExpired();
     const refreshExpired = this.tokenService.isRefreshTokenExpired();
+    console.log(
+      'accessExpired:',
+      accessExpired,
+      'refreshExpired:',
+      refreshExpired
+    );
 
     if (accessExpired && refreshExpired) {
       return this.redirectToLoginPage();
