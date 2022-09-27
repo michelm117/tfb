@@ -26,4 +26,8 @@ export class RiderCardComponent implements OnInit {
   getPicture() {
     return this.riderService.getProfilePicture(this.rider.imgName);
   }
+
+  changeSource(event: any) {
+    event.target.src = 'assets/img/default/profile.jpg';
+  }
 }

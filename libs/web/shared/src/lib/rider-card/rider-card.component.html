@@ -2,7 +2,7 @@
 <div
   class="z-auto flex items-center w-full p-2 duration-300 ease-in-out transform border shadow bg-gray-50 hover:scale-105 focus:scale-105 md:hidden">
   <div class="flex items-center space-x-4">
-    <img class="object-cover w-16 h-16 rounded-xl" src={{getPicture()}} alt="My profile">
+    <img class="object-cover w-16 h-16 rounded-xl" src={{getPicture()}} alt="My profile" (error)="changeSource($event)">
   </div>
   <div class="flex-grow px-5 py-4 ">
     <div class="font-semibold text-gray-700">
@@ -18,7 +18,7 @@
 <!-- Desktop Card -->
 <div
   class="flex-col hidden h-full transition duration-500 transform bg-gray-100 shadow-lg md:flex w-60 hover:shadow-xl hover:scale-105">
-  <img class="object-cover h-64 w-60" src="{{getPicture()}}" alt="" />
+  <img class="object-cover h-64 w-60" src="{{getPicture()}}" alt="" (error)="changeSource($event)" />
   <div>
     <div class="flex flex-col justify-between px-4 py-2 ">
       <h1 class="flex-grow text-xl font-bold overflow-clip font-gray-700">
