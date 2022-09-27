@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
     );
 
     if (accessExpired && refreshExpired) {
-      // return this.redirectToLoginPage();
+      this.router.navigate(['login']);
       return false;
     } else if (accessExpired && !refreshExpired) {
       return this.authService.refresh().pipe(

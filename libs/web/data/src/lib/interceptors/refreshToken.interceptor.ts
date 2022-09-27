@@ -43,10 +43,6 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (req.url.includes('refresh') || req.url.includes('login')) {
-      return next.handle(req);
-    }
-
     if (!req.url.includes('admin')) {
       return next.handle(req);
     }
