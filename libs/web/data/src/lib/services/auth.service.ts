@@ -72,7 +72,7 @@ export class AuthService {
         },
         {
           observe: 'response',
-          headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+          ...this.httpOptions,
         }
       )
       .pipe(
