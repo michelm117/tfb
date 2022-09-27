@@ -116,7 +116,7 @@ export class AuthService {
       )}s`,
     });
     const maxAge = this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME');
-    const domain = 'michel.lu';
+    const domain = 'api.michel.lu';
     const path = '/';
     const sameSite = 'LAX';
 
@@ -141,7 +141,7 @@ export class AuthService {
       )}s`,
     });
     const maxAge = this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME');
-    const domain = 'michel.lu';
+    const domain = 'api.michel.lu';
     const path = '/';
     const sameSite = 'LAX';
 
@@ -162,7 +162,7 @@ export class AuthService {
    * @returns {string} cookie with empty access and refresh token.
    */
   public getCookiesForLogout() {
-    const domain = 'michel.lu';
+    const domain = 'api.michel.lu';
     const path = '/';
     const sameSite = 'LAX';
 
