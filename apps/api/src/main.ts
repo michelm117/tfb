@@ -14,6 +14,7 @@ import cookieParser = require('cookie-parser');
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment.prod';
+import { urlencoded, json } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -26,6 +27,9 @@ async function bootstrap() {
       allowedHeaders: ['Content-Type', 'x-requested-with'],
     });
   }
+
+  app.use(json({ limit: '500mb' }));
+  app.use(urlencoded({ extended: true, limit: '500mb' }));
 
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
