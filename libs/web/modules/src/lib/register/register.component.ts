@@ -27,17 +27,12 @@ export class RegisterComponent {
   onSubmit(user: any) {
     this.authService
       .register(user.name, user.email, user.password, user.key)
-      .pipe(
-        catchError((err) => {
-          this._snackBar.open('Provided key was incorrect', 'OK');
-          return of('Bad Request');
-        })
-      )
       .subscribe((user) => {
         if (user instanceof HttpErrorResponse) {
-          this._snackBar.open('Provided key was incorrect', 'OK');
+          this._snackBar.open('Secret Key is incorrect', 'OK');
           return;
         }
+
         this._snackBar.open('Successfully registered', 'OK');
         this.router.navigate(['login']);
       });

@@ -52,17 +52,24 @@ export class AuthService {
     email: string,
     password: string,
     key: string
-  ): Observable<any> {
-    return this.http.post(
-      this.url + '/register',
-      {
-        email,
-        password,
-        name,
-        key,
-      },
-      this.httpOptions
-    );
+  ): Observable<any | HttpErrorResponse> {
+    return this.http
+      .post(
+        this.url + '/register',
+        {
+          email,
+          password,
+          name,
+          key,
+        },
+        { observe: 'response', ...this.httpOptions }
+      )
+      .pipe(
+        map((res) => {
+          return res.status;
+        }),
+        catchError((err) => of('error', err))
+      );
   }
 
   login(
