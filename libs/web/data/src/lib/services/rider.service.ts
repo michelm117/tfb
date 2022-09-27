@@ -39,12 +39,10 @@ export class RiderService {
     const options = {
       params: params,
       reportProgress: true,
+      withCredentials: true,
     };
 
-    return this.http.post(`${this.url}/upload/${id}`, formData, {
-      ...options,
-      ...this.httpOptions,
-    });
+    return this.http.post(`${this.url}/upload/${id}`, formData, options);
   }
 
   updateRider(rider: RiderInterface) {

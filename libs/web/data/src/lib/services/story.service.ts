@@ -72,12 +72,13 @@ export class StoryService {
     const options = {
       params: params,
       reportProgress: true,
+      withCredentials: true,
     };
 
     return this.http.post<{ imagePath: string }>(
       `${this.url}/upload/${id}`,
       formData,
-      { ...options, ...this.httpOptions }
+      options
     );
   }
 
