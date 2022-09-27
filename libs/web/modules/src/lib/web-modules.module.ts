@@ -42,6 +42,7 @@ import { AgeCategoryTabComponent } from './admin/tabs/age-category-tab/age-categ
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from '@tfb/web/data';
 import { CalendarComponent } from './calendar/calendar.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
@@ -75,6 +76,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
       },
       {
         path: 'calendar',
@@ -146,6 +151,7 @@ const routes: Routes = [
     PageNotFoundComponent,
     AgeCategoryTabComponent,
     LoginComponent,
+    RegisterComponent,
     CalendarComponent,
   ],
   exports: [AboutComponent, StoriesOverviewComponent],

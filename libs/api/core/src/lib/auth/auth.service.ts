@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
@@ -35,6 +40,10 @@ export class AuthService {
    * @returns {Promise<UserInterface>}
    */
   public async register(registrationData: RegisterDto): Promise<User> {
+    if (registrationData.key != this.configService.get('REGISTER_KEY')) {
+      throw new BadRequestException('Secret does not match');
+    }
+
     const hashedPassword = await bcrypt.hash(registrationData.password, 10);
     try {
       const createdUser = await this.usersService.create({

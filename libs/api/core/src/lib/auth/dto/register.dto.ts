@@ -27,4 +27,12 @@ export class RegisterDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  /**
+   * Key - string that needs to match secret in env file.
+   * @type {string}
+   */
+  @IsString()
+  @IsNotEmpty()
+  key: string;
 }

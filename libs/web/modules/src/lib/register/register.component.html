@@ -1,0 +1,40 @@
+<form class="flex flex-col px-8 pt-6 pb-8 mx-auto mb-4 bg-white rounded shadow-xl md:w-96" #myForm="ngForm"
+  (ngSubmit)="onSubmit(myForm.value)">
+  <h1 class="mb-8 text-xl font-bold">Register</h1>
+  <mat-form-field class="mb-4">
+    <mat-label class="block mb-2 text-sm font-bold text-grey-darker" for="name">
+      Name
+    </mat-label>
+    <input matInput class="w-full px-3 py-2 border rounded shadow appearance-none text-grey-darker" id="name"
+      type="text" placeholder="Name" [ngModel]="user.name" required name="name">
+  </mat-form-field>
+
+  <mat-form-field class="mb-4">
+    <mat-label class="block mb-2 text-sm font-bold text-grey-darker" for="email">
+      Email
+    </mat-label>
+    <input matInput class="w-full px-3 py-2 border rounded shadow appearance-none text-grey-darker" id="email"
+      type="text" placeholder="Email" [ngModel]="user.email" required name="email">
+  </mat-form-field>
+
+  <mat-form-field class="mb-6">
+    <mat-label class="block mb-2 text-sm font-bold text-grey-darker" for="password">
+      Password
+    </mat-label>
+    <input matInput class="w-full px-3 py-2 mb-3 border rounded shadow appearance-none border-red text-grey-darker"
+      id="password" type="password" placeholder="******************" [ngModel]="user.password" required name="password">
+  </mat-form-field>
+
+  <mat-form-field class="mb-6">
+    <mat-label class="block mb-2 text-sm font-bold text-grey-darker" for="key">
+      Secret Key
+    </mat-label>
+    <input matInput class="w-full px-3 py-2 mb-3 border rounded shadow appearance-none border-red text-grey-darker"
+      id="key" type="key" placeholder="******************" [ngModel]="user.key" required name="key">
+  </mat-form-field>
+  <div class="flex items-center justify-end">
+    <button mat-raised-button color="warn" class="px-4 py-2 font-bold" type="submit" [disabled]="!myForm.valid">
+      Sign Up
+    </button>
+  </div>
+</form>

@@ -47,13 +47,19 @@ export class AuthService {
     this.setLogoutTimer();
   }
 
-  register(name: string, email: string, password: string): Observable<any> {
+  register(
+    name: string,
+    email: string,
+    password: string,
+    key: string
+  ): Observable<any> {
     return this.http.post(
       this.url + '/register',
       {
         email,
         password,
         name,
+        key,
       },
       this.httpOptions
     );
