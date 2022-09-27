@@ -120,7 +120,7 @@ export class AuthService {
     const path = '/';
     const sameSite = 'LAX';
 
-    const cookie = `${key}=${token};Path=${path}; Max-Age=${maxAge}; Domain=${domain}; SameSite=${sameSite}; Secure; HttpOnly`;
+    const cookie = `${key}=${token};Path=${path}; Max-Age=${maxAge}; Domain=${domain}; SameSite=${sameSite}`;
     return cookie;
   }
 
@@ -145,7 +145,7 @@ export class AuthService {
     const path = '/';
     const sameSite = 'LAX';
 
-    const cookie = `${key}=${token}; Path=${path}; Max-Age=${maxAge}; Domain=${domain}; SameSite=${sameSite}; Secure; HttpOnly`;
+    const cookie = `${key}=${token}; Path=${path}; Max-Age=${maxAge}; Domain=${domain}; SameSite=${sameSite}`;
 
     return {
       cookie,
@@ -167,8 +167,8 @@ export class AuthService {
     const sameSite = 'LAX';
 
     return [
-      `Authentication=; Path=${path}; Max-Age=0; Domain=${domain}; SameSite=${sameSite}; Secure; HttpOnly`,
-      `Refresh=; Path=${path}; Max-Age=0; Domain=${domain}; SameSite=${sameSite}; Secure; HttpOnly`,
+      `Authentication=; Path=${path}; Max-Age=0; Domain=${domain}; SameSite=${sameSite}`,
+      `Refresh=; Path=${path}; Max-Age=0; Domain=${domain}; SameSite=${sameSite}`,
     ];
   }
 }
