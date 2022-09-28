@@ -29,7 +29,7 @@ export class RegisterComponent {
       .register(user.name, user.email, user.password, user.key)
       .subscribe((res) => {
         if (res instanceof Number) {
-          if (res === 200) {
+          if (res === 200 || res === 201) {
             this._snackBar.open('Successfully registered', 'OK');
             this.router.navigate(['login']);
             return;
