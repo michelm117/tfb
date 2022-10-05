@@ -51,11 +51,16 @@ export class RaceComponent implements OnInit {
     if (!this.race) {
       return '';
     }
-    console.log('db:', this.race.date);
 
-    const d = new Date(this.race.date);
-    console.log('d:', d.getDate(), d.getUTCMonth());
-    return `${d.getUTCDate()}.${d.getUTCMonth()}.${d.getFullYear()}`;
+    const dateArray = this.race.date.toString().split('-');
+    // remove leading zeros
+    for (let i = 0; i < dateArray.length; i++) {
+      dateArray[i] = +dateArray[i] + '';
+    }
+    const year = dateArray[0];
+    const month = dateArray[1];
+    const day = dateArray[2];
+    return `${day}.${month}.${year}`;
   }
 
   getImageUrls() {

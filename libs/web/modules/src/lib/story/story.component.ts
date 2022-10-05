@@ -52,8 +52,16 @@ export class StoryComponent implements OnInit {
     if (!this.story) {
       return '';
     }
-    const d = new Date(this.story.date);
-    return `${d.getUTCDate()}.${d.getMonth()}.${d.getFullYear()}`;
+
+    const dateArray = this.story.date.toString().split('-');
+    // remove leading zeros
+    for (let i = 0; i < dateArray.length; i++) {
+      dateArray[i] = +dateArray[i] + '';
+    }
+    const year = dateArray[0];
+    const month = dateArray[1];
+    const day = dateArray[2];
+    return `${day}.${month}.${year}`;
   }
 
   getImageUrls() {
