@@ -56,18 +56,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         logging: true,
       }),
     }),
-    // TypeOrmModule.forRoot({
-    //   type: 'postgres',
-    //   host: 'abul.db.elephantsql.com',
-    //   port: 5432,
-    //   username: 'encsnhea',
-    //   password: 'DjjOGRRegOkNJsH6fql1sOxOQqlveYpw',
-    //   database: 'encsnhea',
-    //   entities: [Rider, Country, About, Story, Result, AgeCategory, Race, User],
-    //   synchronize: true,
-    //   logging: false,
-    // }),
-
     RidersModule,
     CountryModule,
     AboutModule,
