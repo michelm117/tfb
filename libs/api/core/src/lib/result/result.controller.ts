@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ResultService } from './result.service';
 import { CreateResultDto } from './dto/create-result.dto';
 import { UpdateResultDto } from './dto/update-result.dto';
@@ -9,6 +17,7 @@ export class ResultController {
 
   @Post()
   create(@Body() createResultDto: CreateResultDto) {
+    console.log('createResultDto', createResultDto);
     return this.resultService.create(createResultDto);
   }
 
