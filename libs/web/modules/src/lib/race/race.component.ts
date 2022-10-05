@@ -51,8 +51,11 @@ export class RaceComponent implements OnInit {
     if (!this.race) {
       return '';
     }
+    console.log('db:', this.race.date);
+
     const d = new Date(this.race.date);
-    return `${d.getUTCDate()}.${d.getMonth()}.${d.getFullYear()}`;
+    console.log('d:', d.getDate(), d.getUTCMonth());
+    return `${d.getUTCDate()}.${d.getUTCMonth()}.${d.getFullYear()}`;
   }
 
   getImageUrls() {
