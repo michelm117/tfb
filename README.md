@@ -26,14 +26,12 @@ To view a live demo visit [www.tfb.michel.lu](https://www.tfb.michel.lu)
 
 ### Visible to everyone
 <p float="left">
-  <img src="./docs/img/screenshot-index.png" width="350" />
-  <img src="./docs/img/screenshot-races.png" width="350" /> 
-  <img src="./docs/img/screenshot-story.png" width="350" />
-</p>
-<p float="left">
-  <img src="./docs/img/screenshot-race.png" width="350" />
-  <img src="./docs/img/screenshot-calendar.png" width="350" /> 
-  <img src="./docs/img/screenshot-navigation.png" width="350" />
+  <img src="./docs/img/screenshot-index.png" width="400" />
+  <img src="./docs/img/screenshot-races.png" width="400" /> 
+  <img src="./docs/img/screenshot-story.png" width="400" />
+  <img src="./docs/img/screenshot-race.png" width="400" />
+  <img src="./docs/img/screenshot-calendar.png" width="400" /> 
+  <img src="./docs/img/screenshot-navigation.png" width="400" />
 </p>
 
 ![Index Page](./docs/img/screenshot-index.png)
