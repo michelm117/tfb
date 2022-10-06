@@ -28,25 +28,21 @@ To view a live demo visit [www.tfb.michel.lu](https://www.tfb.michel.lu)
 <p float="left">
   <img src="./docs/img/screenshot-index.png" width="400" />
   <img src="./docs/img/screenshot-story.png" width="400" />
-  <img src="./docs/img/screenshot-races.png" width="400" /> 
   <img src="./docs/img/screenshot-race.png" width="400" />
   <img src="./docs/img/screenshot-calendar.png" width="400" /> 
   <img src="./docs/img/screenshot-navigation.png" width="400" />
+  <img src="./docs/img/screenshot-races.png" width="400" /> 
 </p>
 
-![Index Page](./docs/img/screenshot-index.png)
-![Race overview](./docs/img/screenshot-races.png)
-![Story page](./docs/img/screenshot-story.png)
-
-![Race page](./docs/img/screenshot-race.png)
-![Calendar page](./docs/img/screenshot-calendar.png)
-![Fullscreen navigation](./docs/img/screenshot-navigation.png)
 
 
 ### Restricted site access
-![Edit about text](./docs/img/screenshot-add_about.png)
-![Add a rider](./docs/img/screenshot-add_rider.png)
-![Add a Story](./docs/img/screenshot-add_story.png)
-![Edit the race results](./docs/img/screenshot-add_race_result.png)
-![Add a country](./docs/img/screenshot-add_category.png)
-![Add a race category](./docs/img/screenshot-add_cat.png)
+<p float="left">
+  <img src="./docs/img/screenshot-add_about.png" width="400" />
+  <img src="./docs/img/screenshot-add_rider.png" width="400" />
+  <img src="./docs/img/screenshot-add_story.png" width="400" />
+  <img src="./docs/img/screenshot-add_race_result.png" width="400" />
+  <img src="./docs/img/screenshot-add_category.png" width="400" />
+  <img src="./docs/img/screenshot-add_cat.png" width="400" />
+</p>
+
