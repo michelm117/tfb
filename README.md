@@ -25,11 +25,22 @@ To view a live demo visit [www.tfb.michel.lu](https://www.tfb.michel.lu)
 ## Screenshots
 
 ### Visible to everyone
+<p float="left">
+  <img src="./docs/img/screenshot-index.png" width="100" />
+  <img src="./docs/img/screenshot-races.png" width="100" /> 
+  <img src="./docs/img/screenshot-story.png" width="100" />
+</p>
+<p float="left">
+  <img src="./docs/img/screenshot-race.png" width="100" />
+  <img src="./docs/img/screenshot-calendar.png" width="100" /> 
+  <img src="./docs/img/screenshot-navigation.png" width="100" />
+</p>
+
 ![Index Page](./docs/img/screenshot-index.png)
 ![Race overview](./docs/img/screenshot-races.png)
 ![Story page](./docs/img/screenshot-story.png)
-![Race page](./docs/img/screenshot-race.png)
 
+![Race page](./docs/img/screenshot-race.png)
 ![Calendar page](./docs/img/screenshot-calendar.png)
 ![Fullscreen navigation](./docs/img/screenshot-navigation.png)
 
